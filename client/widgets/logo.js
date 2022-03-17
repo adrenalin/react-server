@@ -15,8 +15,8 @@ class Logo extends Widget {
   }
 
   render () {
-    const src = this.config.get('site.logo', 'musickickup.svg')
-    const title = this.config.get('site.title', 'Music Kickup')
+    const src = this.config.get('site.logo', 'visitkemijarvi.svg')
+    const title = this.config.get('site.title', 'Kemijärvi')
 
     return (
       <Link to='/'>

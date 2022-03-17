@@ -10,8 +10,8 @@ export default class Header extends Widget {
    * @return { ReactChild }           React child for rendering
    */
   render () {
-    const src = this.config.get('site.logo', 'musickickup.svg')
-    const title = this.config.get('site.title', 'Music Kickup')
+    const src = this.config.get('site.logo', 'visitkemijarvi.svg')
+    const title = this.config.get('site.title', 'Kemijärvi')
 
     return (
       <header id='header'>

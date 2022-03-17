@@ -17,7 +17,7 @@ export default class Footer extends Widget {
     const currentYear = d.getFullYear()
 
     const site = this.state.site || {}
-    const provider = site.provider || 'Music Kickup Oy'
+    const provider = site.provider || 'Kemijärvi'
 
     return (
       <footer id='footer'>
