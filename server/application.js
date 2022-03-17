@@ -2,7 +2,6 @@ const path = require('path')
 const EventEmitter = require('events')
 const Logger = require('@adrenalin/logger')
 const helpers = require('@adrenalin/helpers.js')
-const toTitleCase = require('../lib/helpers/toTitleCase')
 
 module.exports = async (opts = {}) => {
   const logger = new Logger('Application')
@@ -16,7 +15,7 @@ module.exports = async (opts = {}) => {
   app.helpers = helpers
 
   app.IS_DEVELOPMENT = ['dev', 'development'].includes(process.env.NODE_ENV)
-  app.CLIENT_ROOT = path.join(app.APPLICATION_ROOT, 'build', 'client', toTitleCase(app.environment))
+  app.CLIENT_ROOT = path.join(app.APPLICATION_ROOT, 'build', 'client', helpers.Localization.toCase(app.environment, 'title'))
   app.STATIC_ROOT = path.join(app.APPLICATION_ROOT, 'build', 'static')
   app.events = new EventEmitter()
 
