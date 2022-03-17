@@ -1,13 +1,13 @@
 const fs = require('fs')
 const path = require('path')
-const init = require('../../../init')
-const router = require('../../../../routes/lib/application/favicon')
-const configRouter = require('../../../../routes/lib/application/config')
-const errorRouter = require('../../../../routes/lib/renderers/errors/api')
+const init = require('../../init')
+const router = require('../../../routers/application/favicon')
+const configRouter = require('../../../routers/application/config')
+const errorRouter = require('../../../routers/renderers/errors/api')
 
 describe('routes/lib/application/favicon', () => {
   let app, favicon
-  const testUrl = '/tests/routes/lib/application/favicon'
+  const testUrl = '/tests/routers/application/favicon'
 
   before(async () => {
     app = await init()

@@ -1,9 +1,9 @@
 const expect = require('expect.js')
-const init = require('../../../../init')
+const init = require('../../../init')
 
-const router = require('../../../../../routes/lib/renderers/react')
-const configRouter = require('../../../../../routes/lib/application/config')
-const errorRouter = require('../../../../../routes/lib/renderers/errors/api')
+const router = require('../../../../routers/renderers/react')
+const configRouter = require('../../../../routers/application/config')
+const errorRouter = require('../../../../routers/renderers/errors/api')
 
 describe('routes/lib/renderers/react:render', () => {
   let app

@@ -1,11 +1,11 @@
 const expect = require('expect.js')
 const { getValue } = require('@adrenalin/helpers.js')
-const init = require('../../../init')
-const Metadata = require('../../../../client/lib/metadata')
+const init = require('../../init')
+const Metadata = require('../../../client/lib/metadata')
 
-const router = require('../../../../routes/lib/application/metadata')
-const altRouter = require('../../../../routes/lib/renderers/alt')
-const errorRouter = require('../../../../routes/lib/renderers/errors/api')
+const router = require('../../../routers/application/metadata')
+const altRouter = require('../../../routers/renderers/alt')
+const errorRouter = require('../../../routers/renderers/errors/api')
 
 describe('routes/lib/application/metadata', () => {
   let app

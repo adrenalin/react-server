@@ -1,10 +1,10 @@
 const expect = require('expect.js')
 const { getValue } = require('@adrenalin/helpers.js')
-const init = require('../../../init')
+const init = require('../../init')
 
-const router = require('../../../../routes/lib/application/config')
-const altRouter = require('../../../../routes/lib/renderers/alt')
-const errorRouter = require('../../../../routes/lib/renderers/errors/api')
+const router = require('../../../routers/application/config')
+const altRouter = require('../../../routers/renderers/alt')
+const errorRouter = require('../../../routers/renderers/errors/api')
 
 describe('routes/lib/application/config', () => {
   let app

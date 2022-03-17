@@ -7,17 +7,17 @@ const { renderToString } = require('react-dom/server')
 
 // Flux
 const Iso = require('iso').default
-const alt = require('../../../client/lib/alt')
+const alt = require('../../client/lib/alt')
 
 // Local components
 const Logger = require('@adrenalin/logger')
-const Metadata = require('../../../client/lib/metadata')
+const Metadata = require('../../client/lib/metadata')
 const { buildUrl, castToArray, getValue, setValue } = require('@adrenalin/helpers.js')
-const getStructuredData = require('../../../lib/helpers/getStructuredData')
-const getOpenGraph = require('../../../lib/helpers/getOpenGraph')
-const getMetaTags = require('../../../lib/helpers/getMetaTags')
+const getStructuredData = require('../../lib/helpers/getStructuredData')
+const getOpenGraph = require('../../lib/helpers/getOpenGraph')
+const getMetaTags = require('../../lib/helpers/getMetaTags')
 
-const getFingerPrint = require('../../../lib/helpers/getFingerPrint')
+const getFingerPrint = require('../../lib/helpers/getFingerPrint')
 
 module.exports = (app) => {
   const logger = new Logger('/routes/lib/renderers/helpers')

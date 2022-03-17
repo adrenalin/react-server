@@ -1,9 +1,9 @@
 const Logger = require('@adrenalin/logger')
-const Metadata = require('../../../../client/lib/metadata')
+const Metadata = require('../../../client/lib/metadata')
 const { castToArray, Localization } = require('@adrenalin/helpers.js')
 
-const getOpenGraph = require('../../../../lib/helpers/getOpenGraph')
-const getMetaTags = require('../../../../lib/helpers/getMetaTags')
+const getOpenGraph = require('../../../lib/helpers/getOpenGraph')
+const getMetaTags = require('../../../lib/helpers/getMetaTags')
 
 module.exports = (app) => {
   const renderErrorPage = (err, req, res, next) => {

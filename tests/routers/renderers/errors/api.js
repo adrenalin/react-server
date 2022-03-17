@@ -1,12 +1,12 @@
 const expect = require('expect.js')
 const errors = require('@adrenalin/errors')
-const init = require('../../../../init')
+const init = require('../../../init')
 
-const errorRouter = require('../../../../../routes/lib/renderers/errors/api')
+const errorRouter = require('../../../../routers/renderers/errors/api')
 
 describe('routes/lib/renderers/api', () => {
   let app, callback
-  const testUrl = '/tests/routes/lib/renderers/errors/api'
+  const testUrl = '/tests/routers/renderers/errors/api'
 
   before(async () => {
     app = await init()

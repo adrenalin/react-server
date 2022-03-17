@@ -1,12 +1,12 @@
 const expect = require('expect.js')
 const cheerio = require('cheerio')
 const errors = require('@adrenalin/errors')
-const init = require('../../../../init')
+const init = require('../../../init')
 
-const router = require('../../../../../routes/lib/renderers/react')
-const langRouter = require('../../../../../routes/lib/application/lang')
-const configRouter = require('../../../../../routes/lib/application/config')
-const errorRouter = require('../../../../../routes/lib/renderers/errors/react')
+const router = require('../../../../routers/renderers/react')
+const langRouter = require('../../../../routers/application/lang')
+const configRouter = require('../../../../routers/application/config')
+const errorRouter = require('../../../../routers/renderers/errors/react')
 
 describe('routes/lib/renderers/react:errors', () => {
   let app, callback

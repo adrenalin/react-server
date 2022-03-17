@@ -1,6 +1,6 @@
 {
   "name": "React server",
-  "version": "0.0.3",
+  "version": "0.1.0",
   "description": "React server",
   "main": "index.js",
   "scripts": {

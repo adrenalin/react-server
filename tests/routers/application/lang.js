@@ -1,9 +1,9 @@
 const expect = require('expect.js')
 const { Localization } = require('@adrenalin/helpers.js')
-const init = require('../../../init')
+const init = require('../../init')
 
-const router = require('../../../../routes/lib/application/lang')
-const configRouter = require('../../../../routes/lib/application/config')
+const router = require('../../../routers/application/lang')
+const configRouter = require('../../../routers/application/config')
 
 describe('routes/lib/application/lang', () => {
   let app, configuredLang, configuredLanguages, callback

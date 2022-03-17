@@ -1,13 +1,13 @@
 const expect = require('expect.js')
-const init = require('../../../init')
+const init = require('../../init')
 
-const router = require('../../../../routes/lib/application/entry')
-const configRouter = require('../../../../routes/lib/application/config')
-const errorRouter = require('../../../../routes/lib/renderers/errors/api')
+const router = require('../../../routers/application/entry')
+const configRouter = require('../../../routers/application/config')
+const errorRouter = require('../../../routers/renderers/errors/api')
 
 describe('routes/lib/application/entry', () => {
   let app, configuredLang, configuredLanguages
-  const testUrl = '/tests/routes/lib/application/entry'
+  const testUrl = '/tests/routers/application/entry'
 
   const languages = ['fi', 'en']
   const defaultLang = languages[0]

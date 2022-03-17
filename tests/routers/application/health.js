@@ -1,11 +1,11 @@
 const expect = require('expect.js')
-const init = require('../../../init')
+const init = require('../../init')
 
-const router = require('../../../../routes/lib/application/health')
+const router = require('../../../routers/application/health')
 
 describe('routes/lib/application/health', () => {
   let app
-  const testUrl = '/tests/routes/lib/application/health'
+  const testUrl = '/tests/routers/application/health'
 
   before(async () => {
     app = await init()

@@ -1,11 +1,11 @@
 const expect = require('expect.js')
-const init = require('../../../../init')
+const init = require('../../../init')
 
-const altRouter = require('../../../../../routes/lib/renderers/alt')
+const altRouter = require('../../../../routers/renderers/alt')
 
 describe('routes/lib/renderers/alt', () => {
   let app, callback
-  const testUrl = '/tests/routes/lib/renderers/alt'
+  const testUrl = '/tests/routers/renderers/alt'
 
   before(async () => {
     app = await init()

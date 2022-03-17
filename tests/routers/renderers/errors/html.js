@@ -1,14 +1,14 @@
 const expect = require('expect.js')
 const errors = require('@adrenalin/errors')
 const { Localization } = require('@adrenalin/helpers.js')
-const init = require('../../../../init')
+const init = require('../../../init')
 
-const configRouter = require('../../../../../routes/lib/application/config')
-const errorRouter = require('../../../../../routes/lib/renderers/errors/html')
+const configRouter = require('../../../../routers/application/config')
+const errorRouter = require('../../../../routers/renderers/errors/html')
 
 describe('routes/lib/renderers/html', () => {
   let app, callback
-  const testUrl = '/tests/routes/lib/renderers/errors/html'
+  const testUrl = '/tests/routers/renderers/errors/html'
 
   before(async () => {
     app = await init()

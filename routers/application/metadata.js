@@ -1,7 +1,7 @@
 const express = require('express')
 const Logger = require('@adrenalin/logger')
 const { buildUrl } = require('@adrenalin/helpers.js')
-const Metadata = require('../../../client/lib/metadata')
+const Metadata = require('../../client/lib/metadata')
 
 module.exports = (app, options = {}) => {
   const logger = new Logger('routes/lib/application/metadata')
