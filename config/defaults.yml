@@ -1,0 +1,12 @@
+---
+server:
+  port: 3000
+
+routers:
+  enabled: true
+
+react:
+  application:
+    languages:
+      - en
+    defaultLanguage: 'en'

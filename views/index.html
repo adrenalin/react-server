@@ -1,0 +1,77 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>${metadata.get('page', 'title')} | ${metadata.get('site', 'title') || 'Music Kickup'}</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=2.0, user-scalable=yes" />
+${
+  Object.keys(opengraph || {}).map((og) => {
+    const value = opengraph[og]
+
+    return castToArray(value)
+      .filter(v => v)
+      .map((v) => {
+        return `    <meta property="${og}" content="${v}" />`
+      })
+      .join('\n').replace(/\n+/g, "\n")
+  }).join('\n').replace(/\n+/g, "\n")
+}
+
+${
+  Object.keys(metatags || {}).map((key) => {
+    const value = metatags[key]
+
+    return castToArray(value)
+      .filter(v => v)
+      .map(() => {
+        return `    <meta name="${key}" content="${value}" />`
+      })
+      .join('\n').replace(/\n+/g, "\n")
+  }).join('\n').replace(/\n+/g, "\n")
+}
+
+${
+  castToArray(links)
+    .filter(link => link)
+    .map((link) => {
+      const parts = ['    <link']
+
+      Object.keys(link).map((key) => {
+        parts.push(`${key}="${link[key]}"`)
+      })
+
+      parts.push('/>')
+
+      return parts.join(' ')
+    })
+    .join('\n').replace(/\n+/g, "\n")
+}
+
+    <link rel="shortcut icon" type="image/x-icon" href="/images/favicon.ico" />
+    <link rel="icon" type="image/png" href="/images/favicon-64.png" />
+    <link rel="shortcut icon"  type="image/png" href="/images/favicon-64.png" />
+    <link rel="icon" type="image/vnd.microsoft.icon" href="/images/favicon.ico" />
+    <link rel="apple-touch-icon-precomposed" sizes="152x152" href="/images/favicon-152.png" />
+    <link rel="apple-touch-icon-precomposed" sizes="144x144" href="/images/favicon-144.png" />
+    <link rel="apple-touch-icon-precomposed" sizes="120x120" href="/images/favicon-120.png" />
+    <link rel="apple-touch-icon-precomposed" sizes="114x114" href="/images/favicon-114.png" />
+    <link rel="apple-touch-icon-precomposed" sizes="72x72" href="/images/favicon-72.png" />
+    <link rel="apple-touch-icon-precomposed" sizes="57x57" href="/images/favicon-57.png" />
+    <style type="text/css" id="printCSS" media="print"></style>
+${structured}
+  </head>
+  <body class="${metadata.get('page', 'className')}" data-site="${metadata.get('site', 'title') || 'Music Kickup'}" data-site-id="${metadata.get('site', 'id') || 'public'}">
+    ${html}
+    <script src="/js/jquery-3.2.1.min.js"></script>
+    <script src="/js/jquery-ui.min.js"></script>
+${
+  castToArray(jsFiles)
+    .filter(jsfile => jsfile)
+    .map((jsfile) => {
+      return `    <script src="${jsfile}"></script>`
+    })
+    .join("\n").replace(/\n+/g, "\n")
+}
+  </body>
+</html>

@@ -1,0 +1,14 @@
+---
+react:
+  enabled: true
+  entry: 'test'
+
+  application:
+    languages:
+      - en
+      - fi
+    defaultLanguage: 'fi'
+
+
+  stylesheets:
+    - '/css/test.min.css'

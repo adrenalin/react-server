@@ -1,0 +1,75 @@
+{
+  "name": "api",
+  "version": "1.0.0",
+  "description": "Kemijärvi API",
+  "main": "index.js",
+  "scripts": {
+    "test": "nyc --exclude client/ --exclude tests/ --exclude server/ mocha --require @babel/register --timeout 10000 --recursive tests/",
+    "coverage": "nyc report --reporter=text-lcov | coveralls"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git@git.kaktus.cc:kemijarvi/api.git"
+  },
+  "author": "Arttu Manninen <arttu@kaktus.cc>",
+  "license": "ISC",
+  "dependencies": {
+    "@adrenalin/errors": "github:adrenalin/errors#v1.0.5",
+    "@adrenalin/helpers.js": "github:adrenalin/helpers.js#v0.28.0",
+    "@adrenalin/logger": "github:adrenalin/logger#v1.0.5",
+    "alt": "^0.18.6",
+    "axios": "^0.25.0",
+    "express": "^4.17.2",
+    "express-es6-template-engine": "^2.2.3",
+    "iso": "^5.2.0",
+    "moment": "^2.29.1",
+    "moment-timezone": "^0.5.34",
+    "prop-types": "^15.8.1",
+    "react": "^17.0.2",
+    "react-dom": "^17.0.2",
+    "react-router": "^5.2.0",
+    "react-router-dom": "^5.2.0",
+    "reactstrap": "^9.0.1"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.16.12",
+    "@babel/node": "^7.16.8",
+    "@babel/plugin-proposal-class-properties": "^7.16.7",
+    "@babel/plugin-transform-react-jsx": "^7.16.7",
+    "@babel/plugin-transform-runtime": "^7.16.10",
+    "@babel/preset-env": "^7.16.11",
+    "@babel/preset-react": "^7.16.7",
+    "@babel/runtime": "^7.16.7",
+    "@babel/runtime-corejs3": "^7.16.8",
+    "babel-eslint": "^10.1.0",
+    "cheerio": "^1.0.0-rc.10",
+    "expect.js": "^0.3.1",
+    "mocha": "^9.2.0",
+    "nyc": "^15.1.0",
+    "should": "^13.2.3",
+    "standard": "^16.0.4",
+    "superagent": "^7.1.1",
+    "supertest": "^6.2.2",
+    "supertest-session": "^4.1.0"
+  },
+  "standard": {
+    "parser": "babel-eslint",
+    "globals": [
+      "$",
+      "alert",
+      "describe",
+      "it",
+      "before",
+      "beforeEach",
+      "after",
+      "afterEach",
+      "localStorage",
+      "state",
+      "propTypes",
+      "defaultProps",
+      "Worker",
+      "onmessage",
+      "postMessage"
+    ]
+  }
+}
