@@ -5,7 +5,9 @@
   "main": "index.js",
   "scripts": {
     "test": "nyc --exclude client/ --exclude tests/ --exclude server/ mocha --require @babel/register --timeout 10000 --recursive tests/",
-    "coverage": "nyc report --reporter=text-lcov | coveralls"
+    "coverage": "nyc report --reporter=text-lcov | coveralls",
+
+    "install": "node install.js"
   },
   "repository": {
     "type": "git",
