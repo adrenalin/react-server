@@ -1,13 +1,12 @@
 {
-  "name": "React server",
-  "version": "0.1.0",
+  "name": "@adrenalin/react-server",
+  "version": "0.2.0",
   "description": "React server",
   "main": "index.js",
   "scripts": {
     "test": "nyc --exclude client/ --exclude tests/ --exclude server/ mocha --require @babel/register --timeout 10000 --recursive tests/",
     "coverage": "nyc report --reporter=text-lcov | coveralls",
-
-    "install": "node install.js"
+    "postinstall": "node install.js"
   },
   "repository": {
     "type": "git",
@@ -19,10 +18,21 @@
     "@adrenalin/errors": "github:adrenalin/errors#v1.0.5",
     "@adrenalin/helpers.js": "github:adrenalin/helpers.js#v0.28.0",
     "@adrenalin/logger": "github:adrenalin/logger#v1.0.5",
+    "@babel/core": "^7.16.12",
+    "@babel/node": "^7.16.8",
+    "@babel/plugin-proposal-class-properties": "^7.16.7",
+    "@babel/plugin-transform-react-jsx": "^7.16.7",
+    "@babel/plugin-transform-runtime": "^7.16.10",
+    "@babel/preset-env": "^7.16.11",
+    "@babel/preset-react": "^7.16.7",
+    "@babel/runtime": "^7.16.7",
+    "@babel/runtime-corejs3": "^7.16.8",
     "alt": "^0.18.6",
     "axios": "^0.25.0",
     "express": "^4.17.2",
     "express-es6-template-engine": "^2.2.3",
+    "gulp": "^4.0.2",
+    "gulp-babel": "^8.0.0",
     "iso": "^5.2.0",
     "moment": "^2.29.1",
     "moment-timezone": "^0.5.34",
@@ -34,15 +44,6 @@
     "reactstrap": "^9.0.1"
   },
   "devDependencies": {
-    "@babel/core": "^7.16.12",
-    "@babel/node": "^7.16.8",
-    "@babel/plugin-proposal-class-properties": "^7.16.7",
-    "@babel/plugin-transform-react-jsx": "^7.16.7",
-    "@babel/plugin-transform-runtime": "^7.16.10",
-    "@babel/preset-env": "^7.16.11",
-    "@babel/preset-react": "^7.16.7",
-    "@babel/runtime": "^7.16.7",
-    "@babel/runtime-corejs3": "^7.16.8",
     "babel-eslint": "^10.1.0",
     "cheerio": "^1.0.0-rc.10",
     "expect.js": "^0.3.1",
