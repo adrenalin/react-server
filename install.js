@@ -10,8 +10,8 @@ const babelrc = JSON.parse(babelrcRaw)
 const reactstrap = path.join(__dirname, '..', 'reactstrap', 'dist')
 const reactstrapTarget = path.join(reactstrap, 'reactstrap.cjs.js')
 
-if (reactstrap.includes('node_modules') && !fs.existsSync(reactstrapTarget)) {
-  fs.symlink('reactstrap.cjs', reactstrapTarget)
+if (reactstrap.includes('node_modules') && fs.existsSync(reactstrap) && !fs.existsSync(reactstrapTarget)) {
+  fs.symlinkSync('reactstrap.cjs', reactstrapTarget)
 }
 
 // Build client that uses ES6 + JSX
