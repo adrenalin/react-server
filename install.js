@@ -7,7 +7,7 @@ const babelrcRaw = fs.readFileSync(path.join(__dirname, '.babelrc'))
 const babelrc = JSON.parse(babelrcRaw)
 
 // @PATCH: create a symlink to reactstrap
-const reactstrap = path.join(__dirname, '..', 'reactstrap', 'dist')
+const reactstrap = path.join(__dirname.replace(/node_modules.*/, 'node_modules'), 'reactstrap', 'dist')
 const reactstrapTarget = path.join(reactstrap, 'reactstrap.cjs.js')
 
 if (reactstrap.includes('node_modules') && fs.existsSync(reactstrap) && !fs.existsSync(reactstrapTarget)) {
