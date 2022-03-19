@@ -1,6 +1,6 @@
 const request = require('axios')
 const { getValue } = require('@adrenalin/helpers.js')
-const EventHandler = require('./events').default
+const EventHandler = require('./events')
 
 const events = new EventHandler()
 
