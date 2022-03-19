@@ -1,17 +1,17 @@
 module.exports = {
   // Core
   alt: require('./dist/lib/alt'),
-  events: require('./dist/lib/event'),
+  events: require('./dist/lib/events'),
   metadata: require('./dist/lib/metadata'),
   request: require('./dist/lib/request'),
 
   // Errors
-  DefaultError: require('./dist/errors/defaulterror'),
-  ErrorBoundary: require('./dist/errors/errorboundary'),
-  Forbidden: require('./dist/errors/forbidden'),
-  Found: require('./dist/errors/found'),
-  InvalidRequest: require('./dist/errors/invalidrequest'),
-  NotFound: require('./dist/errors/notfound'),
+  DefaultError: require('./dist/shared/errors/defaulterror'),
+  ErrorBoundary: require('./dist/shared/errors/errorboundary'),
+  Forbidden: require('./dist/shared/errors/forbidden'),
+  Found: require('./dist/shared/errors/found'),
+  InvalidRequest: require('./dist/shared/errors/invalidrequest'),
+  NotFound: require('./dist/shared/errors/notfound'),
 
   // Main component
   Component: require('./dist/lib/component'),
