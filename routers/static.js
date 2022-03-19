@@ -1,4 +1,6 @@
 const express = require('express')
+const errors = require('@adrenalin/errors')
+const { getValue } = require('@adrenalin/helpers.js')
 
 module.exports = (app, opts) => {
   const router = express.Router()
@@ -10,6 +12,14 @@ module.exports = (app, opts) => {
   }
 
   router.use(express.static(source))
+
+  router.use((req, res, next) => {
+    if (getValue(opts, 'fallthrough', true)) {
+      return next()
+    }
+
+    return next(new errors.NotFound('Page not found'))
+  })
 
   return router
 }

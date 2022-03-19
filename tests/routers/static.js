@@ -8,14 +8,29 @@ const errorRouter = require('../../routers/renderers/errors/api')
 
 describe('routers/static', () => {
   let app
+  let hasFallenThrough = false
   const testUrl = '/tests/routers/static'
   const testSource = path.join(__dirname, '..', 'resources', 'routers', 'static')
+  const opts = {
+    source: testSource
+  }
 
   before(async () => {
     app = await init()
 
-    app.use(testUrl, router(app, { source: testSource }))
+    app.use(testUrl, router(app, opts))
+    app.use(testUrl, (req, res, next) => {
+      hasFallenThrough = true
+      next()
+    })
+
     app.use(testUrl, errorRouter(app))
+  })
+
+  beforeEach(async () => {
+    hasFallenThrough = false
+    opts.source = testSource
+    opts.fallthrough = true
   })
 
   it('should throw an error when attaching without source', (done) => {
@@ -40,5 +55,15 @@ describe('routers/static', () => {
   it('should not find a file that does not exist', async () => {
     await app.tests.requests.create().get(`${testUrl}/undefined.txt`)
       .expect(404)
+
+    expect(hasFallenThrough).to.be(true)
+  })
+
+  it('should not fall through when fallthrough option is false', async () => {
+    opts.fallthrough = false
+    await app.tests.requests.create().get(`${testUrl}/undefined.txt`)
+      .expect(404)
+
+    expect(hasFallenThrough).to.be(false)
   })
 })
