@@ -135,7 +135,7 @@ function generateMethod (name, definition, sourceBase) {
   }
 }
 
-export default {
+module.exports = {
   build: function BuildSource (structure) {
     if (!structure.name) {
       throw new Error('no name defined for Source')

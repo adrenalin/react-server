@@ -10,7 +10,7 @@ import { Localization } from '@adrenalin/helpers.js'
 import Logger from '@adrenalin/logger'
 import ApplicationStore from '../../data/application/store'
 
-export default class ErrorBoundary extends React.Component {
+module.exports = class ErrorBoundary extends React.Component {
   state = {
     error: null
   }

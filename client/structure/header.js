@@ -3,7 +3,7 @@ import React from 'react'
 import Widget from '../widgets'
 import Img from '../widgets/image'
 
-export default class Header extends Widget {
+module.exports = class Header extends Widget {
   /**
    * Render the component
    *

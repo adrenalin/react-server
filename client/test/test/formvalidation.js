@@ -2,7 +2,7 @@ import React from 'react'
 import Component from '../../lib/component'
 import ErrorStore from '../../data/error/store'
 
-export default class TestFormValidation extends Component {
+module.exports = class TestFormValidation extends Component {
   /**
    * Get initial state for the component
    *

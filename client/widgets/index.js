@@ -2,7 +2,7 @@ import React from 'react'
 import Component from '../lib/component'
 import { getClassName } from '@adrenalin/helpers.js'
 
-export default class Widget extends Component {
+module.exports = class Widget extends Component {
   static propTypes = {
     id: Widget.PropTypes.string,
     className: Widget.PropTypes.string,

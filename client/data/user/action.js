@@ -1,1 +1,1 @@
-export default require('../basemodel/action').generate('UserActions', {})
+module.exports = require('../basemodel/action').generate('UserActions', {})

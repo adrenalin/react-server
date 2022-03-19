@@ -2,7 +2,7 @@ const { castToArray } = require('@adrenalin/helpers.js')
 const Logger = require('@adrenalin/logger')
 const events = {}
 
-export default class EventHandler {
+module.exports = class EventHandler {
   static LOG_LEVEL = 3
 
   constructor () {

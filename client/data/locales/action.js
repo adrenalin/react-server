@@ -1,1 +1,1 @@
-export default require('../basemodel/action').generate('LocalesActions', {})
+module.exports = require('../basemodel/action').generate('LocalesActions', {})

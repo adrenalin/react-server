@@ -28,7 +28,7 @@ import NotFound from '../shared/errors/notfound'
 import ApplicationStore from '../data/application/store'
 import LocalesStore from '../data/locales/store'
 
-export default class Application extends Widget {
+module.exports = class Application extends Widget {
   static propTypes = {
     children: Widget.PropTypes.child,
     context: Widget.PropTypes.object,

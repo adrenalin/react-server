@@ -1,7 +1,7 @@
 import SourceBuilder from '../builder'
 import LocalesActions from './action'
 
-export default SourceBuilder.build({
+module.exports = SourceBuilder.build({
   name: 'LocalesSource',
   actions: {
     base: LocalesActions,

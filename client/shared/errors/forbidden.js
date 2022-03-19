@@ -6,7 +6,7 @@ import {
 } from 'reactstrap'
 import DefaultError from './defaulterror'
 
-export default class Forbidden extends DefaultError {
+module.exports = class Forbidden extends DefaultError {
   static STATUS_CODE = 403
 
   static propTypes = {

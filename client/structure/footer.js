@@ -7,7 +7,7 @@ import {
 import Widget from '../widgets'
 import ApplicationStore from '../data/application/store'
 
-export default class Footer extends Widget {
+module.exports = class Footer extends Widget {
   state = {
     site: ApplicationStore.getState().site
   }

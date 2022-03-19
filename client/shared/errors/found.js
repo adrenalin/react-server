@@ -7,7 +7,7 @@ import {
 
 import DefaultError from './defaulterror'
 
-export default class Found extends DefaultError {
+module.exports = class Found extends DefaultError {
   static propTypes = {
     location: DefaultError.PropTypes.string.isRequired
   }

@@ -6,7 +6,7 @@ import {
 } from 'reactstrap'
 import Component from '../../lib/component'
 
-export default class DefaultError extends Component {
+module.exports = class DefaultError extends Component {
   static STATUS_CODE = 500
 
   static propTypes = {

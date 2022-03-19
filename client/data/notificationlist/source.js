@@ -1,7 +1,7 @@
 import SourceBuilder from '../builder'
 import NotificationListActions from './action'
 
-export default SourceBuilder.build({
+module.exports = SourceBuilder.build({
   name: 'NotificationListSource',
   actions: {
     base: NotificationListActions,

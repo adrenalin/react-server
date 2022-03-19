@@ -36,7 +36,7 @@ if (!PropTypes.child) {
   ])
 }
 
-export default class Component extends React.Component {
+module.exports = class Component extends React.Component {
   static LOG_LEVEL = 3
 
   static request = request

@@ -1,7 +1,7 @@
 import React from 'react'
 import Component from '../../lib/component'
 
-export default class Test extends Component {
+module.exports = class Test extends Component {
   /**
    * Get page title
    *

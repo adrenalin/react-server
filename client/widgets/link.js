@@ -2,7 +2,7 @@ import React from 'react'
 import { Link } from 'react-router-dom'
 import Widget from './'
 
-export default class LinkWidget extends Widget {
+module.exports = class LinkWidget extends Widget {
   static propTypes = {
     active: Widget.PropTypes.bool,
     selected: Widget.PropTypes.bool,

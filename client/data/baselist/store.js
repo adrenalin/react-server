@@ -1,7 +1,7 @@
 import alt from '../../lib/alt'
 const _debugger = require('debug')
 
-export default {
+module.exports = {
   generate: function generate (storeName, structure = {}) {
     const debug = _debugger(storeName)
 

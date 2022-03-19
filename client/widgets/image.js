@@ -1,7 +1,7 @@
 import React from 'react'
 import Widget from './'
 
-export default class ImageWidget extends Widget {
+module.exports = class ImageWidget extends Widget {
   static propTypes = {
     src: Widget.PropTypes.string.isRequired,
     alt: Widget.PropTypes.string,

@@ -1,7 +1,7 @@
 import SourceBuilder from '../builder'
 import UserActions from './action'
 
-export default SourceBuilder.build({
+module.exports = SourceBuilder.build({
   name: 'UserSource',
   actions: {
     base: UserActions,

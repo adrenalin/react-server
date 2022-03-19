@@ -12,7 +12,7 @@ import Link from '../widgets/link'
 
 import NotificationListStore from '../data/notificationlist/store'
 
-export default class Notifications extends Widget {
+module.exports = class Notifications extends Widget {
   static LOG_LEVEL = 3
 
   static STORES = [
