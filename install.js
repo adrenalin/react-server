@@ -6,7 +6,13 @@ const babel = require('gulp-babel')
 const babelrcRaw = fs.readFileSync(path.join(__dirname, '.babelrc'))
 const babelrc = JSON.parse(babelrcRaw)
 
-console.log(path.join(__dirname, 'dist'))
+// @PATCH: create a symlink to reactstrap
+const reactstrap = path.join(__dirname, '..', 'reactstrap', 'dist')
+const reactstrapTarget = path.join(reactstrap, 'reactstrap.cjs.js')
+
+if (reactstrap.includes('node_modules') && !fs.existsSync(reactstrapTarget)) {
+  fs.symlink('reactstrap.cjs', reactstrapTarget)
+}
 
 // Build client that uses ES6 + JSX
 gulp
