@@ -14,3 +14,7 @@ react:
       title: 'Site Title'
       logo: '/images/logo.svg'
       provider: 'Site Company, Ltd.'
+
+services:
+  cache:
+    enabled: true

@@ -16,6 +16,13 @@ module.exports = async (app) => {
   for (let i = 0; i < serviceFiles.length; i++) {
     const filename = serviceFiles[i]
     const ServiceClass = require(filename)
+
+    const name = ServiceClass.SERVICE_NAME || ServiceClass.name.toLowerCase().replace(/service$/, '')
+
+    if (!app.config.get(`services.${name}.enabled`)) {
+      continue
+    }
+
     const service = new ServiceClass(app)
     await service.register()
 
@@ -24,7 +31,6 @@ module.exports = async (app) => {
       continue
     }
 
-    const name = ServiceClass.SERVICE_NAME || ServiceClass.name.toLowerCase().replace(/service$/, '')
     app.services[name] = service
     logger.log('Registered service', name)
   }
