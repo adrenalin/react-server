@@ -2,6 +2,7 @@ const expect = require('expect.js')
 const init = require('../../init')
 
 const router = require('../../../routers/application/health')
+const altRouter = require('../../../routers/renderers/alt')
 
 describe('routes/lib/application/health', () => {
   let app
@@ -11,6 +12,7 @@ describe('routes/lib/application/health', () => {
     app = await init()
 
     app.use(testUrl, router(app))
+    app.use(testUrl, altRouter(app, ['Health']))
   })
 
   it('should find the health route', async () => {

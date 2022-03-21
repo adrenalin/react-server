@@ -21,6 +21,7 @@ module.exports = (app) => {
     }
 
     setValue(res, 'locals.data.HealthStore', health)
+    next()
   })
 
   return router
