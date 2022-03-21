@@ -10,3 +10,7 @@ react:
     languages:
       - en
     defaultLanguage: 'en'
+    site:
+      title: 'Site Title'
+      logo: '/images/logo.svg'
+      provider: 'Site Company, Ltd.'
