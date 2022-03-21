@@ -7,7 +7,6 @@ const { renderToString } = require('react-dom/server')
 
 // Flux
 const Iso = require('iso').default
-const alt = require('../../client/lib/alt')
 
 // Local components
 const Logger = require('@adrenalin/logger')
@@ -18,6 +17,14 @@ const getOpenGraph = require('../../lib/helpers/getOpenGraph')
 const getMetaTags = require('../../lib/helpers/getMetaTags')
 
 const getFingerPrint = require('../../lib/helpers/getFingerPrint')
+let alt
+
+/* istanbul ignore next try to load the Alt as singleton */
+try {
+  alt = require('../../dist/lib/alt')
+} catch (err) {
+  alt = require('../../client/lib/alt')
+}
 
 module.exports = (app) => {
   const logger = new Logger('/routers/renderers/helpers')
