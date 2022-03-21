@@ -20,7 +20,7 @@ const getMetaTags = require('../../lib/helpers/getMetaTags')
 const getFingerPrint = require('../../lib/helpers/getFingerPrint')
 
 module.exports = (app) => {
-  const logger = new Logger('/routes/lib/renderers/helpers')
+  const logger = new Logger('/routers/renderers/helpers')
   let fingerprint
 
   getFingerPrint()

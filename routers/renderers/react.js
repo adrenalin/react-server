@@ -2,7 +2,7 @@
 const Logger = require('@adrenalin/logger')
 
 module.exports = (app) => {
-  const logger = new Logger('/routes/lib/renderers/react')
+  const logger = new Logger('/routers/renderers/react')
   logger.setLevel(3)
   const { renderReactRequest } = require('./helpers')(app)
 

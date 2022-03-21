@@ -3,7 +3,7 @@ const express = require('express')
 
 module.exports = (app, storeNames) => {
   const router = express.Router()
-  const logger = new Logger('/routes/lib/renderers/alt')
+  const logger = new Logger('/routers/renderers/alt')
   logger.setLevel(3)
 
   storeNames = Array.isArray(storeNames) ? storeNames : [storeNames]

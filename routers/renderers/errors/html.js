@@ -7,7 +7,7 @@ const getMetaTags = require('../../../lib/helpers/getMetaTags')
 
 module.exports = (app) => {
   const renderErrorPage = (err, req, res, next) => {
-    const logger = new Logger('routes/lib/renderers/errors/html')
+    const logger = new Logger('routers/renderers/errors/html')
     logger.setLevel(3)
 
     const { getLinkTags, getJavaScriptFiles } = require('../helpers')(app)

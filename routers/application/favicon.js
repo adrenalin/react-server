@@ -5,7 +5,7 @@ const errors = require('@adrenalin/errors')
 const Logger = require('@adrenalin/logger')
 
 module.exports = (app) => {
-  const logger = new Logger('/routes/lib/application/favicon')
+  const logger = new Logger('/routers/application/favicon')
   logger.setLevel(3)
 
   const router = express.Router()
