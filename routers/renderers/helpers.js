@@ -180,7 +180,8 @@ module.exports = (app) => {
         }
       }
 
-      const Client = require(entry)
+      const C = require(entry)
+      const Client = C.default || C
 
       const context = {}
       const props = {
