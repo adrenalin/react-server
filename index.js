@@ -18,6 +18,7 @@ module.exports = {
   Widget: require('./dist/widgets'),
   Image: require('./dist/widgets/image'),
   Link: require('./dist/widgets/link'),
+  Notifications: require('./dist/shared/notifications'),
 
   // Alt
   BaseSourceBuilder: require('./dist/data/builder'),
