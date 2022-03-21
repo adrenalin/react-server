@@ -39,8 +39,8 @@ describe('routes/lib/renderers/react:render', () => {
   })
 
   it('should pass site title and logo to the view', async () => {
-    const testTitle = 'test-site-title'
-    const testLogo = 'test-site-logo.svg'
+    const testTitle = 'react-render-test-site-title'
+    const testLogo = 'react-render-test-site-logo.svg'
 
     app.config.set('react.application.site.title', testTitle)
     app.config.set('react.application.site.logo', testLogo)

@@ -76,8 +76,8 @@ describe('routes/lib/renderers/react:errors', () => {
   })
 
   it('should pass site title and logo to the view', async () => {
-    const testTitle = 'test-site-title'
-    const testLogo = 'test-site-logo.svg'
+    const testTitle = 'react-errors-test-site-title'
+    const testLogo = 'react-errors-test-site-logo.svg'
 
     app.config.set('react.application.site.title', testTitle)
     app.config.set('react.application.site.logo', testLogo)
