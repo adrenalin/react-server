@@ -9,7 +9,7 @@ const configRouter = require('../../../../routers/application/config')
 const errorRouter = require('../../../../routers/renderers/errors/react')
 
 describe('routes/lib/renderers/react:errors', () => {
-  let app, callback
+  let app, callback, siteTitle, siteLogo
   const testUrl = '/tests/lib/renderers/react/errors'
 
   before(async () => {
@@ -22,6 +22,14 @@ describe('routes/lib/renderers/react:errors', () => {
     })
     app.use(testUrl, router(app))
     app.use(testUrl, errorRouter(app))
+
+    siteTitle = app.config.get('react.application.site.title')
+    siteLogo = app.config.get('react.application.site.logo')
+  })
+
+  afterEach(async () => {
+    app.config.set('react.application.site.title', siteTitle)
+    app.config.set('react.application.site.logo', siteLogo)
   })
 
   beforeEach(async () => {
@@ -65,5 +73,20 @@ describe('routes/lib/renderers/react:errors', () => {
     const $ = cheerio.load(response.text)
     const stored = JSON.parse($('#errorStore').text())
     expect(stored).to.eql({ error, errors: errs, data })
+  })
+
+  it('should pass site title and logo to the view', async () => {
+    const testTitle = 'test-site-title'
+    const testLogo = 'test-site-logo.svg'
+
+    app.config.set('react.application.site.title', testTitle)
+    app.config.set('react.application.site.logo', testLogo)
+
+    const response = await app.tests.requests.create().get(`${testUrl}/fi`)
+      .expect(200)
+
+    const body = String(response.text)
+    expect(body).to.contain(testTitle)
+    expect(body).to.contain(testLogo)
   })
 })
