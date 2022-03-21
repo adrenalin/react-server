@@ -10,8 +10,8 @@ module.exports = class Header extends Widget {
    * @return { ReactChild }           React child for rendering
    */
   render () {
-    const src = this.config.get('site.logo', 'visitkemijarvi.svg')
-    const title = this.config.get('site.title', 'Kemijärvi')
+    const src = this.config.get('site.logo')
+    const title = this.config.get('site.title')
 
     return (
       <header id='header'>

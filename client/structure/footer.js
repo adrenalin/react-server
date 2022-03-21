@@ -16,8 +16,7 @@ module.exports = class Footer extends Widget {
     const d = new Date()
     const currentYear = d.getFullYear()
 
-    const site = this.state.site || {}
-    const provider = site.provider || 'Kemijärvi'
+    const provider = this.config.get('site.provider')
 
     return (
       <footer id='footer'>
@@ -25,7 +24,7 @@ module.exports = class Footer extends Widget {
           <Container>
             <Row>
               <Col className='py-4'>
-                <span className='copyright copyrights-year'>Copyright &copy; {currentYear} {provider}.</span>
+                <span className='copyright copyrights-year'>Copyright &copy; {currentYear} {provider}</span>
               </Col>
             </Row>
           </Container>

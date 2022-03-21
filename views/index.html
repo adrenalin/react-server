@@ -2,7 +2,7 @@
 <html>
   <head>
     <meta charset="utf-8" />
-    <title>${metadata.get('page', 'title')} | ${metadata.get('site', 'title') || 'Music Kickup'}</title>
+    <title>${metadata.get('page', 'title')} | ${metadata.get('site', 'title')}</title>
     <meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=2.0, user-scalable=yes" />
 ${
@@ -61,10 +61,9 @@ ${
     <style type="text/css" id="printCSS" media="print"></style>
 ${structured}
   </head>
-  <body class="${metadata.get('page', 'className')}" data-site="${metadata.get('site', 'title') || 'Music Kickup'}" data-site-id="${metadata.get('site', 'id') || 'public'}">
+  <body class="${metadata.get('page', 'className')}" data-site="${metadata.get('site', 'title')}" data-site-id="${metadata.get('site', 'id') || 'public'}">
     ${html}
-    <script src="/js/jquery-3.2.1.min.js"></script>
-    <script src="/js/jquery-ui.min.js"></script>
+    <script src="/js/jquery.min.js"></script>
 ${
   castToArray(jsFiles)
     .filter(jsfile => jsfile)
