@@ -20,6 +20,11 @@ class Service {
 
     this.logger.setLevel(this.constructor.LOG_LEVEL)
   }
+
+  /**
+   * Register service
+   */
+  async register () {}
 }
 
 module.exports = Service

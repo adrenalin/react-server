@@ -57,11 +57,11 @@ module.exports = async (opts = {}) => {
   // logger.debug('Apply constants')
   // await require('./constants')(app, opts)
   // logger.dt('Applied constants')
-  //
-  // logger.debug('Apply services')
-  // await require('./services')(app, opts)
-  // logger.dt('Applied services')
-  //
+
+  logger.debug('Apply services')
+  await require('./services')(app, opts)
+  logger.dt('Applied services')
+
   // logger.debug('Apply error handlers')
   // await require('./errors')(app, opts)
   // logger.dt('Applied error handlers')
