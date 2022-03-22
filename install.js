@@ -15,14 +15,16 @@ if (reactstrap.includes('node_modules') && fs.existsSync(reactstrap) && !fs.exis
 }
 
 // Build client that uses ES6 + JSX
-gulp
-  .src([
-    path.join(__dirname, 'client', '*.js'),
-    path.join(__dirname, 'client', '**', '*.js')
-  ])
-  .pipe(babel(babelrc))
-  .on('error', (err) => {
-    console.error('Caught an error', err)
-    process.exit(1)
-  })
-  .pipe(gulp.dest(path.join(__dirname, 'dist')))
+if (__dirname.includes('node_modules')) {
+  gulp
+    .src([
+      path.join(__dirname, 'client', '*.js'),
+      path.join(__dirname, 'client', '**', '*.js')
+    ])
+    .pipe(babel(babelrc))
+    .on('error', (err) => {
+      console.error('Caught an error', err)
+      process.exit(1)
+    })
+    .pipe(gulp.dest(path.join(__dirname, 'dist')))
+}
