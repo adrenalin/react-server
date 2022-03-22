@@ -5,7 +5,7 @@ const init = require('../../init')
 const router = require('../../../routers/application/lang')
 const configRouter = require('../../../routers/application/config')
 
-describe('routes/lib/application/lang', () => {
+describe('routers/application/lang', () => {
   let app, configuredLang, configuredLanguages, callback
   const testUrl = '/tests/lib/application/lang'
 

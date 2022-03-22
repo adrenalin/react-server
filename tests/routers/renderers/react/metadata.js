@@ -8,7 +8,7 @@ const langRouter = require('../../../../routers/application/lang')
 const configRouter = require('../../../../routers/application/config')
 const errorRouter = require('../../../../routers/renderers/errors/api')
 
-describe('routes/lib/renderers/react:metadata', () => {
+describe('routers/renderers/react:metadata', () => {
   let app, siteImage, defaultLocale, defaultLocales, defaultLanguages
   const testUrl = '/tests/lib/renderers/react/metadata'
 

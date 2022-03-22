@@ -4,7 +4,7 @@ const init = require('../../init')
 const router = require('../../../routers/application/health')
 const altRouter = require('../../../routers/renderers/alt')
 
-describe('routes/lib/application/health', () => {
+describe('routers/application/health', () => {
   let app
   const testUrl = '/tests/routers/application/health'
 

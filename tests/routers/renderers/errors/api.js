@@ -4,7 +4,7 @@ const init = require('../../../init')
 
 const errorRouter = require('../../../../routers/renderers/errors/api')
 
-describe('routes/lib/renderers/api', () => {
+describe('routers/renderers/api', () => {
   let app, callback
   const testUrl = '/tests/routers/renderers/errors/api'
 

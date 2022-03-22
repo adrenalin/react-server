@@ -5,7 +5,7 @@ const router = require('../../../routers/application/favicon')
 const configRouter = require('../../../routers/application/config')
 const errorRouter = require('../../../routers/renderers/errors/api')
 
-describe('routes/lib/application/favicon', () => {
+describe('routers/application/favicon', () => {
   let app, favicon
   const testUrl = '/tests/routers/application/favicon'
 

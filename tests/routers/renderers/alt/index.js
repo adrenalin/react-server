@@ -3,7 +3,7 @@ const init = require('../../../init')
 
 const altRouter = require('../../../../routers/renderers/alt')
 
-describe('routes/lib/renderers/alt', () => {
+describe('routers/renderers/alt', () => {
   let app, callback
   const testUrl = '/tests/routers/renderers/alt'
 

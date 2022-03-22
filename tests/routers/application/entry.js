@@ -5,7 +5,7 @@ const router = require('../../../routers/application/entry')
 const configRouter = require('../../../routers/application/config')
 const errorRouter = require('../../../routers/renderers/errors/api')
 
-describe('routes/lib/application/entry', () => {
+describe('routers/application/entry', () => {
   let app, configuredLang, configuredLanguages
   const testUrl = '/tests/routers/application/entry'
 

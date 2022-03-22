@@ -5,7 +5,7 @@ const router = require('../../../../routers/renderers/react')
 const configRouter = require('../../../../routers/application/config')
 const errorRouter = require('../../../../routers/renderers/errors/api')
 
-describe('routes/lib/renderers/react:files', () => {
+describe('routers/renderers/react:files', () => {
   let app, minified, fingerprint
   const testUrl = '/tests/lib/renderers/react/files'
 

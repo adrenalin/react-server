@@ -7,7 +7,7 @@ const router = require('../../../routers/application/metadata')
 const altRouter = require('../../../routers/renderers/alt')
 const errorRouter = require('../../../routers/renderers/errors/api')
 
-describe('routes/lib/application/metadata', () => {
+describe('routers/application/metadata', () => {
   let app
   const testUrl = '/tests/lib/application/metadata'
 

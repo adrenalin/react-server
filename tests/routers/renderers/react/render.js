@@ -5,7 +5,7 @@ const router = require('../../../../routers/renderers/react')
 const configRouter = require('../../../../routers/application/config')
 const errorRouter = require('../../../../routers/renderers/errors/api')
 
-describe('routes/lib/renderers/react:render', () => {
+describe('routers/renderers/react:render', () => {
   let app, siteTitle, siteLogo
   const testUrl = '/tests/lib/renderers/react/render'
 

@@ -6,7 +6,7 @@ const init = require('../../../init')
 const configRouter = require('../../../../routers/application/config')
 const errorRouter = require('../../../../routers/renderers/errors/html')
 
-describe('routes/lib/renderers/html', () => {
+describe('routers/renderers/html', () => {
   let app, callback
   const testUrl = '/tests/routers/renderers/errors/html'
 

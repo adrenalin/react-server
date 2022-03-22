@@ -8,7 +8,7 @@ const langRouter = require('../../../../routers/application/lang')
 const configRouter = require('../../../../routers/application/config')
 const errorRouter = require('../../../../routers/renderers/errors/react')
 
-describe('routes/lib/renderers/react:errors', () => {
+describe('routers/renderers/react:errors', () => {
   let app, callback, siteTitle, siteLogo
   const testUrl = '/tests/lib/renderers/react/errors'
 

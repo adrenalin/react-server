@@ -6,7 +6,7 @@ const router = require('../../../routers/application/config')
 const altRouter = require('../../../routers/renderers/alt')
 const errorRouter = require('../../../routers/renderers/errors/api')
 
-describe('routes/lib/application/config', () => {
+describe('routers/application/config', () => {
   let app
   const testUrl = '/tests/lib/application/config'
   const testConfigPath = testUrl.replace(/\//g, '.').replace(/^\./, '')

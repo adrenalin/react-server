@@ -8,7 +8,7 @@ const langRouter = require('../../../../routers/application/lang')
 const configRouter = require('../../../../routers/application/config')
 const errorRouter = require('../../../../routers/renderers/errors/api')
 
-describe('routes/lib/renderers/react:iso', () => {
+describe('routers/renderers/react:iso', () => {
   let app
   const react = {}
   const common = {}
