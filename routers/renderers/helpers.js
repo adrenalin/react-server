@@ -172,7 +172,7 @@ module.exports = (app) => {
   const renderReactRequest = (err, req, res, next) => {
     try {
       const metadata = req.metadata || new Metadata()
-      const entry = path.join(app.APPLICATION_ROOT, 'client', req.config.get('entry'), 'index.js')
+      const entry = path.join(app.APPLICATION_ROOT, 'client', req.config.get('entry'), 'application.js')
 
       if (err) {
         metadata.set('http', 'status', err.statusCode || 500)
