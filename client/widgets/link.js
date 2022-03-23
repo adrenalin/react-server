@@ -2,17 +2,7 @@ import React from 'react'
 import { Link } from 'react-router-dom'
 import Widget from './'
 
-let lang
-
 module.exports = class LinkWidget extends Widget {
-  static get lang () {
-    return lang
-  }
-
-  static set lang (value) {
-    lang = value
-  }
-
   static propTypes = {
     active: Widget.PropTypes.bool,
     selected: Widget.PropTypes.bool,
@@ -63,8 +53,8 @@ module.exports = class LinkWidget extends Widget {
 
     const props = this.helpers.copyObject(this.props)
 
-    if (this.constructor.lang && props.to) {
-      props.to = `/${this.constructor.lang}${props.to}`.replace(/^\/\//, '/')
+    if (this.lang && props.to) {
+      props.to = `/${this.lang}${props.to}`.replace(/^\/\//, '/')
     }
 
     nopass.forEach((key) => {
