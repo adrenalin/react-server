@@ -677,126 +677,10 @@ module.exports = class Component extends React.Component {
   }
 
   /**
-   * Get all user preferences
-   */
-  getPreferences () {
-    if (typeof localStorage === 'undefined') {
-      return {}
-    }
-
-    const user = this.user || {}
-    return user.preferences || JSON.parse(localStorage.getItem(this.constructor.USER_PREFERENCE_LOCALSTORAGE_PATH))
-  }
-
-  /**
-   * Get user preference value
-   *
-   * @param { string } path           Path to the preference
-   * @param { mixed } defaultValue    Default value
-   */
-  getPreference (path, defaultValue = null) {
-    if (typeof localStorage === 'undefined') {
-      return defaultValue
-    }
-
-    try {
-      return this.helpers.getValue(this.getPreferences(), path, defaultValue)
-    } catch (err) {
-      return defaultValue
-    }
-  }
-
-  /**
-   * Set user preference
-   */
-  setPreference (path, value) {
-    try {
-      this.logger.debug('Saving user preference to path', path, 'as value', value)
-      const stored = this.getPreferences() || {}
-      const preferences = this.helpers.setValue(stored, path, value)
-
-      localStorage.setItem(this.constructor.USER_PREFERENCE_LOCALSTORAGE_PATH, JSON.stringify(preferences))
-
-      // this.request.patch('/api/user/preferences', preferences)
-      //   .then((response) => {
-      //     this.logger.info('User preferences saved')
-      //     this.logger.debug('Response', response)
-      //     UserStore.fetchItem()
-      //   })
-      //   .catch((err) => {
-      //     this.logger.error('Failed to set preference', err.message)
-      //     this.logger.info('Stack', err.stack)
-      //     this.logger.info('Save to path', path)
-      //     this.logger.info('Save value', value)
-      //   })
-
-      return this
-    } catch (err) {
-      this.logger.error('Failed to set a preference', err)
-      return this
-    }
-  }
-
-  /**
-   * Get user roles
-   *
-   * @return { array }                User roles
-   */
-  getUserRoles () {
-    const user = UserStore.getState().user
-
-    if (!user) {
-      return []
-    }
-
-    return this.helpers.castToArray(user.roles || user.role)
-  }
-
-  /**
-   * Get user expiration
-   *
-   * @return { Moment }               Expiration moment
-   */
-  getUserExpiration () {
-    const user = UserStore.getState().user
-
-    if (!user) {
-      return null
-    }
-
-    const expires = new Moment(user.expires)
-    expires.set({
-      hours: 23,
-      minutes: 59,
-      seconds: 59
-    })
-
-    return expires
-  }
-
-  /**
    * Can user view the content
    */
   canUserView () {
-    const roles = this.getUserRoles()
-
-    if (roles.includes('admin')) {
-      this.logger.log('User is admin, allow viewing all resources')
-      return true
-    }
-
-    if (this.constructor.REQUIRED_ROLE && roles.includes(this.constructor.REQUIRED_ROLE)) {
-      this.logger.log('Required role', this.constructor.REQUIRED_ROLE, 'found for the user')
-      return true
-    }
-
-    const expiration = this.getUserExpiration()
-
-    if (!expiration) {
-      return false
-    }
-
-    return expiration.isAfter(new Date())
+    return true
   }
 
   /**
@@ -872,25 +756,19 @@ module.exports = class Component extends React.Component {
   }
 
   /**
-   * Render paywalled view
+   * Render forbidden
    *
    * @return { ReactChild }           React child for rendering
    */
-  renderPaywalled () {
+  renderForbidden () {
     return (
       <Container>
         <h1>{this.helpers.castToArray(this.getPageTitle())[0]}</h1>
         <Row>
           <Col className='content rounded-md p-2 p-lg-3'>
-            <p>
-              {this.l10n.get('requiresSubscription')}
+            <p className='mb-0'>
+              {this.l10n.get('accessForbidden')}
             </p>
-            <p
-              dangerouslySetInnerHTML={{
-                __html: this.getPageDescription()
-              }}
-              className='mb-0'
-            />
           </Col>
         </Row>
       </Container>
@@ -912,11 +790,7 @@ module.exports = class Component extends React.Component {
         return this.renderRoleRequired()
       }
 
-      const paywalled = this.renderPaywalled()
-
-      if (paywalled) {
-        return paywalled
-      }
+      return this.renderForbidden()
     }
 
     return this.renderView()
