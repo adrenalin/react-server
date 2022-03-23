@@ -28,36 +28,15 @@ const opts = {
 
 let app
 
-after((done) => {
-  if (!app || !app.close) {
-    setTimeout(() => {
-      process.exit()
-    }, 100)
-    return done()
-  }
-
-  app.close()
-    .then(() => {
-      done()
-      setTimeout(() => {
-        process.exit()
-      }, 100)
-    })
-    .catch((err) => {
-      done(err)
-
-      setTimeout(() => {
-        process.exit(1)
-      }, 100)
-    })
-})
-
-module.exports = async () => {
+module.exports = async (options = {}) => {
   if (app) {
     return app
   }
 
-  app = await initServer(opts)
+  app = await initServer({
+    ...opts,
+    ...options
+  })
 
   app.tests = {
     requests: {
