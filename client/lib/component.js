@@ -7,7 +7,6 @@ import {
   Row
 } from 'reactstrap'
 import PropTypes from 'prop-types'
-import Moment from 'moment-timezone'
 
 import EventHandler from './events'
 import Metadata from './metadata'
