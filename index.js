@@ -14,6 +14,7 @@ module.exports = {
   NotFound: require('./dist/shared/errors/notfound'),
 
   // Main component
+  Application: require('./dist/lib/application'),
   Component: require('./dist/lib/component'),
   Widget: require('./dist/widgets'),
   Image: require('./dist/widgets/image'),
