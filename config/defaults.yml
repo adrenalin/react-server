@@ -18,3 +18,7 @@ react:
 services:
   cache:
     enabled: true
+
+session:
+  enabled: true
+  secret: 'session secret'

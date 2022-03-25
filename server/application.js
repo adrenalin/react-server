@@ -74,21 +74,9 @@ module.exports = async (opts = {}) => {
   // await require('./bodyparsers')(app, opts)
   // logger.dt('Applied body parsers')
   //
-  // logger.debug('Apply Redis connection')
-  // await require('./redis')(app, opts)
-  // logger.dt('Applied Redis connection')
-  //
   // logger.debug('Apply cache')
   // await require('./cache')(app, opts)
   // logger.dt('Applied cache')
-  //
-  // logger.debug('Apply static paths')
-  // await require('./static')(app, opts)
-  // logger.dt('Applied static paths')
-  //
-  // logger.debug('Apply session storage')
-  // await require('./session')(app, opts)
-  // logger.dt('Applied session storage')
   //
   // logger.debug('Apply logger')
   // await require('./logger')(app, opts)
@@ -98,6 +86,11 @@ module.exports = async (opts = {}) => {
   // await require('./locales')(app, opts)
   // logger.dt('Applied locales')
   //
+
+  logger.debug('Apply session')
+  await require('./session')(app, opts)
+  logger.dt('Applied session')
+
   logger.debug('Apply routes')
   await require('./routes')(app, opts)
   logger.dt('Applied routes')
