@@ -1,0 +1,170 @@
+{
+  "description": "React server configuration schema",
+  "$id": "/config",
+  "type": "object",
+  "properties": {
+    "server": {
+      "description": "Server configuration",
+      "type": "object",
+      "properties": {
+        "port": {
+          "description": "Server port",
+          "type": "integer"
+        }
+      }
+    },
+
+    "react": {
+      "description": "React configuration",
+      "type": "object",
+      "properties": {
+        "application": {
+          "description": "Public application configuration",
+          "type": "object",
+          "properties": {
+            "defaultLanguage": {
+              "description": "Default language",
+              "$ref": "/config#/$defs/language"
+            },
+
+            "languages": {
+              "type": ["null", "array"],
+              "items": [
+                "/config#/$defs/language"
+              ]
+            },
+
+            "site": {
+              "description": "Site metadata definitions",
+              "type": "object",
+              "properties": {
+                "title": {
+                  "type": "string",
+                  "default": "Site title"
+                },
+                "logo": {
+                  "type": "string"
+                },
+                "provider": {
+                  "type": "string"
+                }
+              },
+              "required": ["title"]
+            }
+          }
+        }
+      }
+    },
+
+    "redis": {
+      "description": "Redis configuration",
+      "properties": {
+        "url": {
+          "description": "Connection string URL",
+          "type": ["null", "string"],
+          "format": "uri"
+        }
+      }
+    },
+
+    "renderers": {
+      "description": "Renderers",
+      "type": "object",
+      "patternProperties": {
+        "": {
+          "$ref": "/config#/$defs/renderer"
+        }
+      }
+    },
+
+    "services": {
+      "description": "Services",
+      "type": "object",
+      "patternProperties": {
+        "": {
+          "description": "Properties required for all services",
+          "$ref": "/config#/$defs/service"
+        }
+      },
+      "properties": {
+        "cache": {
+          "description": "Cache service",
+          "type": "object",
+          "properties": {
+            "engine": {
+              "type": "string",
+              "enum": ["memcache", "redis"],
+              "default": "memcache"
+            }
+          },
+          "required": ["engine"]
+        },
+
+        "l10n": {
+          "description": "Localization service",
+          "type": "object",
+          "properties": {
+            "path": {
+              "description": "Path to locales",
+              "type": "string",
+              "default": "locales"
+            }
+          }
+        }
+      }
+    },
+
+    "session": {
+      "description": "Request sessions",
+      "properties": {
+        "enabled": {
+          "description": "Service enabled flag",
+          "type": "boolean",
+          "default": true
+        },
+        "secret": {
+          "description": "Session secret key",
+          "type": "string",
+          "default": "session-secret"
+        }
+      },
+      "required": ["enabled", "secret"]
+    }
+  },
+
+  "$defs": {
+    "language": {
+      "description": "ISO-639-1 language codes",
+      "type": "string",
+      "pattern": "^[a-z]{2}$"
+    },
+
+    "renderer": {
+      "description": "Renderer",
+      "type": "object",
+      "properties": {
+        "module": {
+          "description": "Node module name",
+          "type": "string"
+        },
+        "path": {
+          "description": "View path",
+          "type": "string"
+        }
+      },
+      "required": ["module", "path"]
+    },
+
+    "service": {
+      "type": "object",
+      "properties": {
+        "enabled": {
+          "description": "Service enabled flag",
+          "type": "booleam",
+          "enum": [true, false],
+          "default": false
+        }
+      }
+    }
+  }
+}
