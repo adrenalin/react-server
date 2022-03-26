@@ -1,7 +1,6 @@
 const expect = require('expect.js')
 const errors = require('@adrenalin/errors')
 const CacheService = require('../../services/cache')
-const RedisEngine = require('../../lib/cache/redis')
 
 describe('services/cache', () => {
   it('should have interface methods get, set, del and expire', async () => {
