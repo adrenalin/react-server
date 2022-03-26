@@ -5,9 +5,21 @@ const Service = require('../services')
 
 module.exports = async (app) => {
   const logger = new Logger('Services')
-  logger.setLevel(5)
-  // Read project services
-  const serviceFiles = listFilesSync(path.join(__dirname, '..', 'services'), ['.js'])
+  logger.setLevel(4)
+
+  const packageRoot = path.join(__dirname, '..', 'services')
+  const applicationServicesRoot = path.join(app.APPLICATION_ROOT, 'services')
+
+  // Read library services
+  const systemServices = listFilesSync(packageRoot, ['.js'])
+  const applicationServices = packageRoot !== applicationServicesRoot
+    ? listFilesSync(applicationServicesRoot, ['.js'])
+    : []
+
+  const serviceFiles = [...systemServices, ...applicationServices]
+  logger.log('Load service files', serviceFiles)
+
+  // @TODO: read project services
 
   app.services = app.services || {}
 
@@ -17,19 +29,20 @@ module.exports = async (app) => {
     const filename = serviceFiles[i]
     const ServiceClass = require(filename)
 
+    // Skip the baseclass
+    if (ServiceClass.constructor === Service) {
+      continue
+    }
+
     const name = ServiceClass.SERVICE_NAME || ServiceClass.name.toLowerCase().replace(/service$/, '')
 
     if (!app.config.get(`services.${name}.enabled`)) {
+      logger.log('Service', name, 'is not enabled, skipping')
       continue
     }
 
     const service = new ServiceClass(app)
     await service.register()
-
-    // Skip the baseclass
-    if (ServiceClass.constructor === Service) {
-      continue
-    }
 
     app.services[name] = service
     logger.log('Registered service', name)

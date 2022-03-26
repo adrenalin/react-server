@@ -2,6 +2,7 @@ const fs = require('fs')
 const path = require('path')
 const YAML = require('yaml')
 const Service = require('./')
+const { Localization, castToArray, copyObject } = require('@adrenalin/helpers.js')
 const listFilesSync = require('../lib/helpers/listFilesSync')
 
 const registered = {}
@@ -18,7 +19,7 @@ module.exports = class LocalizationService extends Service {
   async register () {
     const files = listFilesSync(this.getLocalesPath())
 
-    this.l10n = new this.helpers.Localization()
+    this.l10n = new Localization()
     this.loadLocales(files)
   }
 
@@ -55,7 +56,7 @@ module.exports = class LocalizationService extends Service {
       if (ignorePrivate && registered[locale].private) {
         continue
       }
-      list[locale] = this.helpers.copyObject(lang ? registered[locale].translations[lang] : registered[locale].translations)
+      list[locale] = copyObject(lang ? registered[locale].translations[lang] : registered[locale].translations)
     }
 
     return list
@@ -96,7 +97,7 @@ module.exports = class LocalizationService extends Service {
         continue
       }
 
-      this.helpers.Localization.registerLocale(locale, translations)
+      Localization.registerLocale(locale, translations)
     }
 
     for (const locale in aliases) {
@@ -108,7 +109,7 @@ module.exports = class LocalizationService extends Service {
       }
 
       const translations = registered[locale].translations = registered[alias].translations || {}
-      this.helpers.Localization.registerLocale(locale, translations)
+      Localization.registerLocale(locale, translations)
     }
 
     return this
@@ -120,7 +121,7 @@ module.exports = class LocalizationService extends Service {
    * @param { string|array } filename   Locale files to load
    */
   loadLocales (filename) {
-    this.helpers.castToArray(filename).forEach((fn) => {
+    castToArray(filename).forEach((fn) => {
       try {
         if (fn.match(/^[a-zA-Z0-9\-_]+$/)) {
           this.logger.log(`Bare filename "${fn}" given, add application root and ".yml" suffix`)
