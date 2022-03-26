@@ -96,9 +96,9 @@ module.exports = async (opts = {}) => {
   await require('./session')(app, opts)
   logger.dt('Applied session')
 
-  logger.debug('Apply routes')
-  await require('./routes')(app, opts)
-  logger.dt('Applied routes')
+  logger.debug('Apply routers')
+  await require('./routers')(app, opts)
+  logger.dt('Applied routers')
 
   return app
 }
