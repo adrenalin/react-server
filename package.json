@@ -1,6 +1,6 @@
 {
   "name": "@adrenalin/react-server",
-  "version": "0.5.2",
+  "version": "0.5.3",
   "description": "React server",
   "main": "index.js",
   "scripts": {
@@ -31,6 +31,8 @@
     "axios": "^0.26.1",
     "express": "^4.17.3",
     "express-es6-template-engine": "^2.2.3",
+    "gulp": "^4.0.2",
+    "gulp-babel": "^8.0.0",
     "iso": "^5.2.0",
     "moment": "^2.29.1",
     "moment-timezone": "^0.5.34",
