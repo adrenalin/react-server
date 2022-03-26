@@ -9,7 +9,7 @@ module.exports = async (app) => {
   // redis@v4
   const { createClient } = require('redis')
   const redisClient = createClient({ legacyMode: true })
-  redisClient.connect().catch(console.error)
+  redisClient.connect(app.config.get('redis', {})).catch(console.error)
 
   app.use(
     session({
