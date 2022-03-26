@@ -13,7 +13,7 @@ class CacheService extends Service {
    * @return { CacheService }         This instance
    */
   async register () {
-    this.cache = Cache.getEngine(this.app, this.config.get('engine', 'memcache'))
+    this.cache = Cache.getEngine(this.app, this.config.get('services.cache.engine', 'memcache'))
     this.cache.setStorageKey(this.config.get('storageKey') || 'cache')
 
     return this
@@ -51,6 +51,11 @@ class CacheService extends Service {
     return await this.cache.del(key)
   }
 
+  /**
+   * Get the storage client
+   *
+   * @return { mixed }                Storage client
+   */
   getClient () {
     if (typeof this.cache.getClient !== 'function') {
       throw new errors.NotImplemented(`Method "getEngine" is not defined in cache engine "${this.cache.constructor.name}"`)
