@@ -1,4 +1,5 @@
 const fs = require('fs')
+const errors = require('@adrenalin/errors')
 const path = require('path')
 const listFilesSync = require('../lib/helpers/listFilesSync')
 const Logger = require('@adrenalin/logger')
@@ -7,6 +8,12 @@ module.exports = async (app) => {
   const logger = new Logger('Routes')
   logger.setLevel(4)
   logger.log('Load routes')
+
+  if (!app.config.get('routers.enabled')) {
+    return app
+  }
+
+  app.routers = []
 
   // Read project routes
   const routerFiles = []
@@ -18,13 +25,8 @@ module.exports = async (app) => {
     next()
   })
 
-  app.use((err, req, res, next) => {
-    res.locals.data = res.locals.data || {}
-    next(err)
-  })
-
   const routerEnvironments = [
-    path.join(app.APPLICATION_ROOT, 'routes', app.environment || 'public')
+    path.join(app.APPLICATION_ROOT, 'routers', app.environment || 'public')
   ]
 
   logger.debug('Router environments', routerEnvironments)
@@ -40,6 +42,7 @@ module.exports = async (app) => {
       })
     } catch (err) {
       logger.error('Failed to load paths', err)
+      throw new errors.InternalServerError(`Failed to load path "${env}"`)
     }
   })
 
@@ -48,6 +51,14 @@ module.exports = async (app) => {
       logger.debug('Loading routers from file', filename)
       const router = require(filename)
       logger.log('Got router', filename)
+
+      if (typeof router === 'function') {
+        routers.push({
+          priority: 0,
+          path: filename,
+          registerRouter: router
+        })
+      }
 
       if (!router || typeof router.registerRouter !== 'function') {
         logger.log('Router file does not register any routers', filename)
@@ -59,6 +70,7 @@ module.exports = async (app) => {
       routers.push(router)
     } catch (err) {
       logger.error('Failed to require the route', filename, err.stack)
+      throw new errors.InternalServerError(`Failed to require the route "${filename}"`)
     }
   })
 
@@ -84,6 +96,7 @@ module.exports = async (app) => {
       logger.log('Loaded router', router.path, 'in', dt, 'ms')
     } catch (err) {
       logger.error(err.message)
+      throw new errors.InternalServerError(`Failed to require router "${routers[i].path}"`)
     }
   }
 }
