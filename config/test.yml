@@ -12,3 +12,7 @@ react:
 
   stylesheets:
     - '/css/test.min.css'
+
+services:
+  l10n:
+    enabled: true
