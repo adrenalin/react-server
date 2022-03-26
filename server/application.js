@@ -75,10 +75,10 @@ module.exports = async (opts = {}) => {
   await require('./renderers')(app, opts)
   logger.dt('Applied renderers')
 
-  // logger.debug('Apply body parsers')
-  // await require('./bodyparsers')(app, opts)
-  // logger.dt('Applied body parsers')
-  //
+  logger.debug('Apply body parsers')
+  await require('./bodyparsers')(app, opts)
+  logger.dt('Applied body parsers')
+
   // logger.debug('Apply cache')
   // await require('./cache')(app, opts)
   // logger.dt('Applied cache')
