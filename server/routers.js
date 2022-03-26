@@ -1,8 +1,9 @@
 const fs = require('fs')
 const errors = require('@adrenalin/errors')
+const Logger = require('@adrenalin/logger')
+const { castToArray } = require('@adrenalin/helpers.js')
 const path = require('path')
 const listFilesSync = require('../lib/helpers/listFilesSync')
-const Logger = require('@adrenalin/logger')
 
 module.exports = async (app) => {
   const logger = new Logger('Routes')
@@ -25,9 +26,8 @@ module.exports = async (app) => {
     next()
   })
 
-  const routerEnvironments = [
-    path.join(app.APPLICATION_ROOT, 'routers', app.environment || 'public')
-  ]
+  const routerEnvironments = castToArray(app.config.get(['routers.paths', 'routers.path']) || path.join(app.APPLICATION_ROOT, 'routers', app.environment || 'public'))
+  routerEnvironments.push(path.join(app.APPLICATION_ROOT, 'routers', 'shared'))
 
   logger.debug('Router environments', routerEnvironments)
 

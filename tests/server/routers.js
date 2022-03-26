@@ -52,6 +52,26 @@ describe('server/routers', () => {
     expect(response.text).to.eql(testUrl)
   })
 
+  it('should load the routers from the configured path', async () => {
+    const testUrl = '/tests/server/routers/config/router'
+    const app = createApp()
+    app.APPLICATION_ROOT = path.join(__dirname)
+    app.config.set('routers.path', path.join(__dirname, '..', 'resources', 'server', 'routers', 'config'))
+    await routerLoader(app)
+    const response = await request(app).get(testUrl).expect(200)
+    expect(response.text).to.eql(testUrl)
+  })
+
+  it('should load the routers from the configured paths', async () => {
+    const testUrl = '/tests/server/routers/config/router'
+    const app = createApp()
+    app.APPLICATION_ROOT = path.join(__dirname)
+    app.config.set('routers.paths', [path.join(__dirname, '..', 'resources', 'server', 'routers', 'config')])
+    await routerLoader(app)
+    const response = await request(app).get(testUrl).expect(200)
+    expect(response.text).to.eql(testUrl)
+  })
+
   it('should load the routers from the environment when it is defined', async () => {
     const testUrl = '/tests/server/routers/environment/router'
     const app = createApp()
@@ -116,5 +136,15 @@ describe('server/routers', () => {
     await routerLoader(app)
     const response = await request(app).get(testUrl).expect(200)
     expect(response.text).to.eql('router2')
+  })
+
+  it('should always load the shared routers', async () => {
+    const testUrl = '/tests/server/routers/shared/router'
+    const app = createApp()
+    app.APPLICATION_ROOT = path.join(__dirname, '..', 'resources', 'server')
+    app.environment = 'public'
+    await routerLoader(app)
+    const response = await request(app).get(testUrl).expect(200)
+    expect(response.text).to.eql(testUrl)
   })
 })
