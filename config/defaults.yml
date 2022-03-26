@@ -23,6 +23,7 @@ react:
 services:
   cache:
     enabled: true
+    engine: 'memcache'
 
 session:
   enabled: true
