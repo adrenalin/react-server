@@ -5,6 +5,11 @@ server:
 routers:
   enabled: true
 
+renderers:
+  html:
+    module: 'express-es6-template-engine'
+    path: 'views'
+
 react:
   application:
     languages:

@@ -1,21 +1,27 @@
 const path = require('path')
 const Logger = require('@adrenalin/logger')
 
-module.exports = (app) => {
+module.exports = async (app) => {
   const logger = new Logger('Renderers')
   logger.log('Initializing renderers')
 
-  if (!app.config.get('routers.enabled')) {
-    logger.info('Routers not enabled in the configuration')
-    return app
+  app.renderers = {}
+  const renderers = app.config.get('renderers') || {}
+
+  for (const engine in renderers) {
+    const e = renderers[engine]
+
+    const r = app.renderers[engine] = {
+      engine,
+      module: e.module,
+      path: path.join(app.APPLICATION_ROOT, e.path || 'views'),
+      renderer: require(e.module)
+    }
+
+    app.set('view engine', engine)
+    app.set('views', r.path)
+    app.engine('html', r.renderer)
   }
 
-  // Setup ES6 template engine for HTML
-  const renderer = require('express-es6-template-engine')
-  const viewsPath = path.join(app.APPLICATION_ROOT, 'views')
-  app.set('view engine', 'html')
-  app.set('views', viewsPath)
-  app.engine('html', renderer)
-
-  return Promise.resolve(app)
+  return app
 }
