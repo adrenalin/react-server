@@ -3,19 +3,7 @@ const server = require('../../server')
 
 const L10nService = require('../../services/l10n')
 
-describe('services/l10n', () => {
-  const closeServers = (app) => {
-    const tasks = app.servers.map((server) => {
-      return new Promise((resolve, reject) => {
-        server.close(() => {
-          resolve()
-        })
-      })
-    })
-
-    return Promise.all(tasks)
-  }
-
+describe('server/services', () => {
   it('should not load l10n service when enabled flag is off', async () => {
     const app = await server({
       server: {
@@ -28,7 +16,7 @@ describe('services/l10n', () => {
       }
     })
 
-    await closeServers(app)
+    await app.close()
     expect(app.services).not.to.have.property('l10n')
   })
 
@@ -44,7 +32,7 @@ describe('services/l10n', () => {
       }
     })
 
-    await closeServers(app)
+    await app.close()
     expect(app.services).to.have.property('l10n')
     expect(app.services.l10n).to.be.a(L10nService)
   })
