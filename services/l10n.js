@@ -28,7 +28,8 @@ module.exports = class LocalizationService extends Service {
    * @return { string }               Path to the locales root
    */
   getLocalesPath () {
-    return this.app.config.get('services.l10n.path') || path.join(this.app.APPLICATION_ROOT, 'locales')
+    const p = this.app.config.get('services.l10n.path', path.join(this.app.APPLICATION_ROOT, 'locales'))
+    return p.match(/^\//) ? p : path.join(this.app.APPLICATION_ROOT, p)
   }
 
   /**

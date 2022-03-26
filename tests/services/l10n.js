@@ -15,10 +15,12 @@ describe('services/l10n', () => {
   })
 
   beforeEach(async () => {
+    app.config.set('services.l10n.enabled', false)
     app.config.set('services.l10n.path', localesPath)
   })
 
   it('should load l10n service', (done) => {
+    app.config.set('services.l10n.enabled', true)
     const l10n = new L10nService(app)
     expect(l10n).to.be.a(Service)
     done()
