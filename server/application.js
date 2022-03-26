@@ -26,11 +26,16 @@ module.exports = async (opts = {}) => {
   app.environment = helpers.getValue(process.env, 'ENVIRONMENT', 'public')
 
   app.close = () => {
-    const servers = app.servers || []
+    const servers = helpers.castToArray(app.servers)
+
     const tasks = servers.map((server) => {
       return new Promise((resolve, reject) => {
         server.on('close', (err) => {
+          /* istanbul ignore if error redundancy */
           if (err) {
+            logger.error('Failed to close a server', err.message)
+            logger.log(err.stack)
+
             return reject(err)
           }
 
