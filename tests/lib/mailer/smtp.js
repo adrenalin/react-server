@@ -6,15 +6,19 @@ const SMTPTester = require('smtp-tester')
 
 describe('lib/mailer/smtp', () => {
   let app, server, port
+  const smtpPort = 4001
 
   before(async () => {
     app = await init()
     port = app.config.get('services.mailer.smtp.server.port', 4001)
-    server = await SMTPTester.init(port)
+
+    app.config.set('services.mailer.smtp.server.port', smtpPort)
+    server = await SMTPTester.init(smtpPort)
   })
 
   after(async () => {
     await server.stop()
+    app.config.set('services.mailer.smtp.server.port', port)
   })
 
   it('should create an instance of MailerInterface with the factory method', (done) => {
