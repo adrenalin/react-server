@@ -29,7 +29,7 @@ describe('server/services', () => {
     expect(app.services.l10n).to.be.a(L10nService)
   })
 
-  it('should load l10n service when enabled flag is on', async () => {
+  it('should load services found from application root', async () => {
     const app = createApp()
     app.APPLICATION_ROOT = path.join(__dirname, '..', 'resources', 'server')
     app.config.set('services.test.enabled', true)
@@ -37,5 +37,11 @@ describe('server/services', () => {
 
     expect(app.services).to.have.property('test')
     expect(app.services.test).to.be.a(TestService)
+  })
+
+  it('should not fail when application root has no services', async () => {
+    const app = createApp()
+    app.APPLICATION_ROOT = path.join(__dirname, '..', 'resources', 'server', 'path-not-found')
+    await serviceLoader(app)
   })
 })

@@ -8,15 +8,26 @@ module.exports = async (app) => {
   logger.setLevel(4)
 
   const packageRoot = path.join(__dirname, '..', 'services')
-  const applicationServicesRoot = path.join(app.APPLICATION_ROOT, 'services')
+
+  const loadApplicationServices = () => {
+    try {
+      const root = path.join(app.APPLICATION_ROOT, 'services')
+      if (packageRoot === root) {
+        return []
+      }
+
+      return listFilesSync(root, ['.js'])
+    } catch (err) {
+      logger.log('Non-fatal error: could not find application services', err.message)
+      logger.debug(err.stack)
+      return []
+    }
+  }
 
   // Read library services
   const systemServices = listFilesSync(packageRoot, ['.js'])
-  const applicationServices = packageRoot !== applicationServicesRoot
-    ? listFilesSync(applicationServicesRoot, ['.js'])
-    : []
 
-  const serviceFiles = [...systemServices, ...applicationServices]
+  const serviceFiles = [...systemServices, ...loadApplicationServices()]
   logger.log('Load service files', serviceFiles)
 
   // @TODO: read project services
