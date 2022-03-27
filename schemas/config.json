@@ -112,6 +112,11 @@
           "required": ["engine"]
         },
 
+        "events": {
+          "description": "Events service",
+          "type": "object"
+        },
+
         "l10n": {
           "description": "Localization service",
           "type": "object",
@@ -120,6 +125,118 @@
               "description": "Path to locales",
               "type": "string",
               "default": "locales"
+            }
+          }
+        },
+
+        "mailer": {
+          "description": "Mailer service",
+          "type": "object",
+          "properties": {
+            "engine": {
+              "description": "Mailer engine",
+              "type": "string",
+              "enum": ["smtp"]
+            },
+
+            "smtp": {
+              "description": "SMTP interface configuration",
+              "type": "object",
+              "properties": {
+                "server": {
+                  "description": "SMTP server configuration as defined in https://nodemailer.com/smtp/",
+                  "type": "object",
+                  "properties": {
+                    "host": {
+                      "description": "SMTP server host",
+                      "type": "string",
+                      "default": "localhost"
+                    },
+                    "port": {
+                      "description": "SMTP server port",
+                      "type": "number",
+                      "default": 587
+                    },
+                    "secure": {
+                      "description": "Use secure connection (true for 465, false for other ports)",
+                      "type": "boolean",
+                      "default": false,
+                      "enum": [false]
+                    },
+                    "auth": {
+                      "description": "SMTP authentication",
+                      "type": "object",
+                      "properties": {
+                        "user": {
+                          "description": "SMTP username",
+                          "type": "string"
+                        },
+                        "pass": {
+                          "description": "SMTP password",
+                          "type": "string"
+                        },
+                        "type": {
+                          "description": "SMTP authentication type",
+                          "type": "string",
+                          "enum": ["login", "oauth2"],
+                          "default": "login"
+                        }
+                      }
+                    },
+                    "authMethod": {
+                      "description": "Authentication method",
+                      "type": "string",
+                      "default": "PLAIN"
+                    },
+                    "tls": {
+                      "description": "TLS",
+                      "type": "object",
+                      "properties": {
+                        "rejectUnauthorized": {
+                          "description": "Reject unauthorized flag",
+                          "type": "boolean",
+                          "default": true
+                        },
+                        "minVersion": {
+                          "description": "Minimum TLS version",
+                          "type": "string",
+                          "pattern": "TLSv[0-9]+(\\.[0-9]+)?"
+                        },
+                        "servername": {
+                          "description": "must provide server name, otherwise TLS certificate check will fail",
+                          "type": "string"
+                        }
+                      }
+                    },
+                    "name": {
+                      "description": "Optional hostname of the client",
+                      "type": "string"
+                    },
+                    "localAddress": {
+                      "description": "Local interface to bind to for network connections",
+                      "type": "string"
+                    },
+                    "connectionTimeout": {
+                      "description": "Connection timeout in milliseconds",
+                      "type": "number",
+                      "default": 120000,
+                      "minValue": 1
+                    },
+                    "greetingTimeout": {
+                      "description": "Greeting timeout after connection is established in milliseconds",
+                      "type": "number",
+                      "default": 30000,
+                      "minValue": 1
+                    },
+                    "socketTimeout": {
+                      "description": "Socket timeout in milliseconds",
+                      "type": "number",
+                      "default": 6000000,
+                      "minValue": 1
+                    }
+                  }
+                }
+              }
             }
           }
         }
