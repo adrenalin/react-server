@@ -1,0 +1,77 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "/mailer/message",
+  "title": "Mail message",
+  "description": "Mail message",
+  "type": "object",
+  "properties": {
+    "from": {
+      "description": "Mail sender",
+      "$ref": "/mailer/message#/$defs/address"
+    },
+    "to": {
+      "description": "Mail recipient",
+      "$ref": "/mailer/message#/$defs/address"
+    },
+    "cc": {
+      "description": "Carbon copy addresses",
+      "$ref": "/mailer/message#/$defs/address"
+    },
+    "bcc": {
+      "description": "Blind carbon copy addresses",
+      "$ref": "/mailer/message#/$defs/address"
+    },
+    "reply-to": {
+      "description": "Reply-to addresses",
+      "type": ["null", "array", "string"],
+      "default": [],
+      "format": "email",
+      "items": {
+        "type": "string",
+        "format": "email"
+      }
+    },
+    "subject": {
+      "description": "Message subject",
+      "type": "string"
+    },
+    "text": {
+      "description": "Message body as plain text",
+      "type": ["null", "string"]
+    },
+    "html": {
+      "description": "Message body as HTML text",
+      "type": ["null", "text"]
+    }
+  },
+  "$defs": {
+    "address": {
+      "oneOf": [
+        {
+          "type": "string",
+          "format": "email"
+        },
+        {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "format": "email"
+          },
+          "minLength": 1
+        }
+      ]
+    }
+  },
+  "oneOf": [
+    {
+      "required": ["text"]
+    },
+    {
+      "required": ["html"]
+    }
+  ],
+  "required": [
+    "to",
+    "subject"
+  ]
+}
