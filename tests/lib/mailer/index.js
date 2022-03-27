@@ -4,6 +4,17 @@ const MailerInterface = require('../../../lib/mailer')
 const mailerErrors = require('../../../lib/mailer/errors')
 
 describe('lib/mailer', () => {
+  it('should throw a NotImplemented when trying to send with the interface class', async () => {
+    try {
+      const app = {}
+      const instance = new MailerInterface(app)
+      await instance._send()
+      throw new Error('Should have thrown a NotImplemented')
+    } catch (err) {
+      expect(err).to.be.a(errors.NotImplemented)
+    }
+  })
+
   it('should provide errors as a static attribute', (done) => {
     expect(MailerInterface).to.have.property('errors')
 
