@@ -28,6 +28,12 @@ services:
     enabled: true
     engine: 'memcache'
 
+  mailer:
+    smtp:
+      server:
+        host: 'mail.example.net'
+        port: 587
+
 session:
   enabled: true
   secret: 'session secret'

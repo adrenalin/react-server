@@ -16,3 +16,9 @@ react:
 services:
   l10n:
     enabled: true
+
+  mailer:
+    smtp:
+      server:
+        host: 'localhost'
+        port: 4001
