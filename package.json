@@ -1,6 +1,6 @@
 {
   "name": "@adrenalin/react-server",
-  "version": "0.5.7",
+  "version": "0.5.8",
   "description": "React server",
   "main": "index.js",
   "scripts": {

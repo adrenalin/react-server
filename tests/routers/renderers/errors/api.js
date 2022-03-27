@@ -1,4 +1,5 @@
 const expect = require('expect.js')
+const { Validator } = require('jsonschema')
 const errors = require('@adrenalin/errors')
 const init = require('../../../init')
 
@@ -69,5 +70,47 @@ describe('routers/renderers/api', () => {
     expect(response.body.code).to.eql(400)
     expect(response.body.errors).to.eql(e)
     expect(response.body.data).to.eql(d)
+  })
+
+  it('should add errors and data from ValidationError to the output', async () => {
+    const wrongType = 123
+    const patternMismatch = 'foo'
+
+    callback = (req, res, next) => {
+      const validator = new Validator()
+      const schema = {
+        type: 'object',
+        properties: {
+          required: {
+            type: 'string'
+          },
+          wrongType: {
+            type: 'string'
+          },
+          patternMismatch: {
+            type: 'string',
+            pattern: '^a$'
+          }
+        },
+        required: ['required']
+      }
+
+      const result = validator.validate({ wrongType, patternMismatch }, schema)
+      return next(new errors.ValidationError('validationFailed', result.errors))
+    }
+
+    const response = await app.tests.requests.basic
+      .get(testUrl)
+
+    expect(response.body.status).to.eql('error')
+    expect(response.body.code).to.eql(400)
+
+    expect(response.body.errors.required).to.contain('requires')
+    expect(response.body.errors.wrongType).to.contain('type')
+    expect(response.body.errors.patternMismatch).to.contain('pattern')
+
+    expect(response.body.data.required).to.eql(undefined)
+    expect(response.body.data.wrongType).to.eql(wrongType)
+    expect(response.body.data.patternMismatch).to.eql(patternMismatch)
   })
 })
