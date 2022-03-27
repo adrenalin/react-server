@@ -1,5 +1,5 @@
 const expect = require('expect.js')
-const Service = require('../../services')
+const Service = require('../../../services')
 
 class TestService extends Service {
   static get SERVICE_NAME () {
@@ -14,7 +14,7 @@ describe('services/index', () => {
   })
 
   it('should share the application configuration', async () => {
-    const app = await require('../../server/application')()
+    const app = await require('../../../server/application')()
 
     const service = new TestService(app)
     service.register()

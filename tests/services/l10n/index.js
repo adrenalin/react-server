@@ -1,10 +1,10 @@
 const path = require('path')
 const expect = require('expect.js')
 const { Localization } = require('@adrenalin/helpers.js')
-const init = require('../init')
+const init = require('../../init')
 
-const Service = require('../../services')
-const L10nService = require('../../services/l10n')
+const Service = require('../../../services')
+const L10nService = require('../../../services/l10n')
 
 describe('services/l10n', () => {
   let app, localesPath
@@ -27,7 +27,7 @@ describe('services/l10n', () => {
   })
 
   it('should automatically load the configured locales', async () => {
-    app.config.set('services.l10n.path', path.join(__dirname, '..', 'resources', 'services', 'l10n'))
+    app.config.set('services.l10n.path', path.join(__dirname, '..', '..', 'resources', 'services', 'l10n'))
     const l10n = new L10nService(app)
     await l10n.register()
 
@@ -138,7 +138,7 @@ describe('services/l10n', () => {
   })
 
   it('should load a locale file with suffix', async () => {
-    const testFile = path.join(__dirname, '..', 'resources', 'services', 'l10n', 'load-with-suffix.yml')
+    const testFile = path.join(__dirname, '..', '..', 'resources', 'services', 'l10n', 'load-with-suffix.yml')
     const l10n = new L10nService(app)
     await l10n.register()
     l10n.loadLocales(testFile)
@@ -148,7 +148,7 @@ describe('services/l10n', () => {
   it('should add .yml suffix when omitted', async () => {
     const testFile = 'load-without-suffix'
 
-    app.config.set('services.l10n.path', path.join(__dirname, '..', 'resources', 'services', 'l10n'))
+    app.config.set('services.l10n.path', path.join(__dirname, '..', '..', 'resources', 'services', 'l10n'))
     const l10n = new L10nService(app)
     await l10n.register()
     l10n.loadLocales(testFile)

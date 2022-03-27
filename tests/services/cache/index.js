@@ -1,13 +1,13 @@
 const expect = require('expect.js')
 const errors = require('@adrenalin/errors')
-const CacheService = require('../../services/cache')
+const CacheService = require('../../../services/cache')
 
 describe('services/cache', () => {
   it('should have interface methods get, set, del and expire', async () => {
     const testKey = 'tests-services-cache-test-interface'
     const testValue = 'It should have interface methods get, set, del and expire'
 
-    const app = await require('../../server/application')()
+    const app = await require('../../../server/application')()
     app.config.set('services.cache.engine', 'memcache')
 
     const service = new CacheService(app)
@@ -27,7 +27,7 @@ describe('services/cache', () => {
 
   it('should throw a NotImplemented for getClient for memcache', async () => {
     try {
-      const app = await require('../../server/application')()
+      const app = await require('../../../server/application')()
       app.config.set('services.cache.engine', 'memcache')
 
       const service = new CacheService(app)
@@ -40,7 +40,7 @@ describe('services/cache', () => {
   })
 
   it('should return Redis client for Redis cache storage engine', async () => {
-    const app = await require('../../server/application')()
+    const app = await require('../../../server/application')()
     app.config.set('services.cache.engine', 'redis')
 
     const service = new CacheService(app)
