@@ -28,42 +28,15 @@
 
     "react": {
       "description": "React configuration",
+      "$ref": "/config#/$defs/site"
+    },
+
+    "sites": {
+      "description": "Subsites configuration",
       "type": "object",
-      "properties": {
-        "application": {
-          "description": "Public application configuration",
-          "type": "object",
-          "properties": {
-            "defaultLanguage": {
-              "description": "Default language",
-              "$ref": "/config#/$defs/language"
-            },
-
-            "languages": {
-              "type": ["null", "array"],
-              "items": [
-                "/config#/$defs/language"
-              ]
-            },
-
-            "site": {
-              "description": "Site metadata definitions",
-              "type": "object",
-              "properties": {
-                "title": {
-                  "type": "string",
-                  "default": "Site title"
-                },
-                "logo": {
-                  "type": "string"
-                },
-                "provider": {
-                  "type": "string"
-                }
-              },
-              "required": ["title"]
-            }
-          }
+      "patternProperties": {
+        "": {
+          "$ref": "/config#/$defs/site"
         }
       }
     },
@@ -268,6 +241,12 @@
       "pattern": "^[a-z]{2}$"
     },
 
+    "locale": {
+      "description": "Locale",
+      "type": ["null", "string"],
+      "pattern": "^[a-z]{2}_[A-Z]{2}$"
+    },
+
     "renderer": {
       "description": "Renderer",
       "type": "object",
@@ -292,6 +271,116 @@
           "type": "booleam",
           "enum": [true, false],
           "default": false
+        }
+      }
+    },
+
+    "site": {
+      "description": "Site configuration",
+      "type": "object",
+      "properties": {
+        "enabled": {
+          "description": "Enabled flag",
+          "type": "boolean",
+          "default": true
+        },
+
+        "entry": {
+          "description": "Entry filename",
+          "type": "string"
+        },
+
+        "host": {
+          "description": "React host definitions",
+          "type": "object",
+          "properties": {
+            "name": {
+              "description": "Host name i.e. DNS",
+              "type": ["null", "string"],
+              "default": "localhost"
+            },
+            "port": {
+              "description": "Host port",
+              "type": ["null", "number"],
+              "default": 80
+            },
+            "ssl": {
+              "description": "SSL flag",
+              "type": ["null", "boolean"],
+              "default": false
+            }
+          }
+        },
+
+        "stylesheets": {
+          "description": "Included stylesheets",
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "default": []
+        },
+
+        "minified": {
+          "description": "Use minified versions of JS and CSS files flag",
+          "type": ["null", "boolean"],
+          "default": false
+        },
+
+        "fingerprint": {
+          "description": "Use current git commit as static file identifier flag",
+          "type": ["null", "boolean"],
+          "default": false
+        },
+
+        "defaultLocale": {
+          "description": "Default locale",
+          "$ref": "/config#/$defs/locale"
+        },
+        "locales": {
+          "description": "Site locales",
+          "type": ["null", "object"],
+          "patternProperties": {
+            "^[a-z]{2}": {
+              "$ref": "/config#/$defs/locale"
+            }
+          }
+        },
+
+        "application": {
+          "description": "Public application configuration",
+          "type": "object",
+          "properties": {
+            "defaultLanguage": {
+              "description": "Default language",
+              "$ref": "/config#/$defs/language"
+            },
+
+            "languages": {
+              "type": ["null", "array"],
+              "items": [
+                "/config#/$defs/language"
+              ]
+            },
+
+            "site": {
+              "description": "Site metadata definitions",
+              "type": "object",
+              "properties": {
+                "title": {
+                  "type": "string",
+                  "default": "Site title"
+                },
+                "logo": {
+                  "type": "string"
+                },
+                "provider": {
+                  "type": "string"
+                }
+              },
+              "required": ["title"]
+            }
+          }
         }
       }
     }
