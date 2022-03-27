@@ -28,4 +28,13 @@ module.exports = class MailerService extends Service {
   async send (message) {
     return await this.engine.send(message)
   }
+
+  /**
+   * Placeholder for setting a message to message queue
+   *
+   * @param { object } message        Object complying schema /messages/mail
+   */
+  async queue (message) {
+    return await this.engine.send(message)
+  }
 }

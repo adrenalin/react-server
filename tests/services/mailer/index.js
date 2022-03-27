@@ -50,10 +50,28 @@ describe('services/mailer', () => {
     const app = createApp()
     serviceLoader(app)
       .then(() => {
-        console.log('service loaded')
         app.services.mailer.send(message)
       })
   })
 
-  it('should queue a message')
+  it('should queue a message', (done) => {
+    const message = {
+      to: 'test-services-mailer-should-queue-a-message@example.net',
+      subject: 'Should queue a message',
+      text: 'services.mailer should queue a message'
+    }
+
+    const callback = (addr, id, email) => {
+      expect(email.body).to.eql(message.text)
+      server.unbind(message.to, callback)
+      done()
+    }
+    server.bind(message.to, callback)
+
+    const app = createApp()
+    serviceLoader(app)
+      .then(() => {
+        app.services.mailer.queue(message)
+      })
+  })
 })
