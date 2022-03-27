@@ -1,4 +1,5 @@
 const errors = require('@adrenalin/errors')
+const { castToArray } = require('@adrenalin/helpers.js')
 const Service = require('./')
 const Cache = require('../lib/cache')
 
@@ -36,10 +37,11 @@ class CacheService extends Service {
    * @param { string } key            Storage key
    * @param { mixed } value           Storage value
    * @param { number } expires        Number of seconds the value should be stored
-   * @return { Promise }              Resolves with self
+   * @return { CacheService }         Resolves with self
    */
   async set (key, value, expires) {
-    return await this.cache.set(key, value, expires)
+    await this.cache.set(key, value, expires)
+    return this
   }
 
   /**
@@ -49,6 +51,56 @@ class CacheService extends Service {
    */
   async del (key) {
     return await this.cache.del(key)
+  }
+
+  /**
+   * Set expiration to a key
+   *
+   * @param { string } key            Storage key
+   * @param { number } expires        Number of seconds the value should be stored
+   * @return { CacheService }         Resolves with self
+   */
+  async expire (key, expires) {
+    await this.cache.expire(key, expires)
+    return this
+  }
+
+  /**
+   * Add to a storage key
+   *
+   * @param { string } key            Storage key
+   * @param { mixed } values          Values to store
+   */
+  async add (key, ...values) {
+    const value = await this.cache.get(key)
+    const stored = castToArray(value)
+
+    values.forEach((v) => {
+      stored.push(v)
+    })
+
+    await this.cache.set(key, stored)
+    return this
+  }
+
+  /**
+   * Remove from to a storage key
+   *
+   * @param { string } key            Storage key
+   * @param { mixed } values          Values to store
+   */
+  async remove (key, ...values) {
+    const value = await this.cache.get(key)
+    const stored = castToArray(value)
+
+    values.forEach((v) => {
+      while (stored.includes(v)) {
+        stored.splice(stored.indexOf(v), 1)
+      }
+    })
+
+    await this.cache.set(key, stored)
+    return this
   }
 
   /**
