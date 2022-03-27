@@ -19,4 +19,7 @@ describe('services/mailer', () => {
     expect(app.services).to.have.property('mailer')
     expect(app.services.mailer).to.be.a(Mailer)
   })
+
+  it('should send a message')
+  it('should queue a message')
 })

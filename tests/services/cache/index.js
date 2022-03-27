@@ -3,9 +3,9 @@ const errors = require('@adrenalin/errors')
 const CacheService = require('../../../services/cache')
 
 describe('services/cache', () => {
-  it('should have interface methods get, set, del and expire', async () => {
+  it('should have interface methods "get", "set" and "del"', async () => {
     const testKey = 'tests-services-cache-test-interface'
-    const testValue = 'It should have interface methods get, set, del and expire'
+    const testValue = 'It should have interface methods "get", "set" and "del"'
 
     const app = await require('../../../server/application')()
     app.config.set('services.cache.engine', 'memcache')
@@ -24,6 +24,8 @@ describe('services/cache', () => {
     const afterDel = await service.get(testKey)
     expect(afterDel).to.eql(undefined)
   })
+
+  it('should have an interface method "expire"')
 
   it('should throw a NotImplemented for getClient for memcache', async () => {
     try {
@@ -47,4 +49,7 @@ describe('services/cache', () => {
     await service.register()
     service.getClient()
   })
+
+  it('should have interface method "add" to add into an array')
+  it('should have interface method "remove" to remove from an array')
 })
