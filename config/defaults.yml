@@ -28,6 +28,9 @@ services:
     enabled: true
     engine: 'memcache'
 
+  events:
+    enabled: true
+
   mailer:
     smtp:
       server:
