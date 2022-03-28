@@ -15,14 +15,14 @@
     },
 
     "bodyparsers": {
-      "description": "Body parsers",
+      "description": "Body parsers as defined for body-parser middleware",
+      "documentation": "http://expressjs.com/en/resources/middleware/body-parser.html",
       "type": "object",
       "additionalProperties": false,
       "properties": {
         "urlencoded": {
           "description": "Body parser for URL encoded payloads",
           "type": "object",
-          "additionalProperties": false,
           "properties": {
             "enabled": {
               "description": "Enabled flag",
@@ -44,7 +44,6 @@
         "json": {
           "description": "Body parser for JSON payloads",
           "type": "object",
-          "additionalProperties": false,
           "properties": {
             "enabled": {
               "description": "Enabled flag",
@@ -172,7 +171,8 @@
               "type": "object",
               "properties": {
                 "server": {
-                  "description": "SMTP server configuration as defined in https://nodemailer.com/smtp/",
+                  "description": "SMTP server configuration",
+                  "documentation": "https://nodemailer.com/smtp/",
                   "type": "object",
                   "properties": {
                     "host": {
