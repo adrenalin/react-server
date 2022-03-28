@@ -14,14 +14,55 @@
       }
     },
 
-    "bodyparser": {
+    "bodyparsers": {
       "description": "Body parsers",
       "type": "object",
+      "additionalProperties": false,
       "properties": {
-        "enabled": {
-          "description": "Enabled flag",
-          "type": "boolean",
-          "default": true
+        "urlencoded": {
+          "description": "Body parser for URL encoded payloads",
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "enabled": {
+              "description": "Enabled flag",
+              "default": true
+            },
+            "extended": {
+              "description": "Use extended URL encoded parsing flag",
+              "type": "boolean",
+              "default": true
+            },
+            "rawBody": {
+              "description": "Add raw request body to the request",
+              "type": "boolean",
+              "default": true
+            }
+          }
+        },
+
+        "json": {
+          "description": "Body parser for JSON payloads",
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "enabled": {
+              "description": "Enabled flag",
+              "default": true
+            },
+            "rawBody": {
+              "description": "Add raw request body to the request",
+              "type": "boolean",
+              "default": true
+            }
+          }
+        }
+      },
+      "patternProperties": {
+        "": {
+          "enabled": {
+            "type": "boolean"
+          }
         }
       }
     },
@@ -76,6 +117,10 @@
           "description": "Cache service",
           "type": "object",
           "properties": {
+            "enabled": {
+              "description": "Cache enabled flag",
+              "default": true
+            },
             "engine": {
               "type": "string",
               "enum": ["memcache", "redis"],
@@ -87,13 +132,23 @@
 
         "events": {
           "description": "Events service",
-          "type": "object"
+          "type": "object",
+          "properties": {
+            "enabled": {
+              "description": "Events enabled flag",
+              "default": true
+            }
+          }
         },
 
         "l10n": {
           "description": "Localization service",
           "type": "object",
           "properties": {
+            "enabled": {
+              "description": "Localization enabled flag",
+              "default": true
+            },
             "path": {
               "description": "Path to locales",
               "type": "string",

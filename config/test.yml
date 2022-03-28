@@ -14,6 +14,9 @@ react:
     - '/css/test.min.css'
 
 services:
+  events:
+    enabled: true
+
   l10n:
     enabled: true
 

@@ -20,8 +20,14 @@ react:
       logo: '/images/logo.svg'
       provider: 'Site Company, Ltd.'
 
-bodyparser:
-  enabled: true
+bodyparsers:
+  urlencoded:
+    extended: true
+    rawBody: true
+
+  json:
+    enabled: true
+    rawBody: true
 
 services:
   cache:
