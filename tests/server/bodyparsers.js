@@ -8,7 +8,18 @@ describe('server/bodyparsers', () => {
   const testUrl = '/tests/server/bodyparsers'
 
   before(async () => {
-    app = await init()
+    app = await init({
+      bodyparsers: {
+        urlencoded: {
+          rawBody: true
+        },
+        json: {
+          enabled: true,
+          rawBody: true
+        }
+      }
+    })
+
     app.post(testUrl, (req, res, next) => {
       res.json(req.body)
       next()
@@ -23,7 +34,7 @@ describe('server/bodyparsers', () => {
     callback = (req) => {}
   })
 
-  it('should apply body parsers for URL conded strings', (done) => {
+  it('should apply body parsers for URL enconded strings', (done) => {
     const contentType = 'application/x-www-form-urlencoded'
     const testKey = 'test-key'
     const testValue = 'test-value'
