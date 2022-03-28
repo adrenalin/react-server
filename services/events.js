@@ -2,7 +2,7 @@ const Service = require('./')
 const events = require('../lib/events')
 
 module.exports = class EventsService extends Service {
-  static SERVICE_NAME () {
+  static get SERVICE_NAME () {
     return 'events'
   }
 

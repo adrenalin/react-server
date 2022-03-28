@@ -11,6 +11,11 @@ describe('services/events', () => {
     return app
   }
 
+  it('should define the service name as a static property', (done) => {
+    expect(EventsService.SERVICE_NAME).to.eql('events')
+    done()
+  })
+
   it('should handle on event cycle', (done) => {
     let counter = 0
     const app = createApp()
