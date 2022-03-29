@@ -11,6 +11,7 @@ module.exports = async (app, overrides) => {
   const schema = require(path.join(__dirname, '..', 'schemas', 'config.json'))
 
   config
+    .loadFile(path.join(__dirname, '..', 'config', 'defaults.yml'))
     .loadFile(path.join(app.APPLICATION_ROOT, 'config', 'defaults.yml'))
     .loadFile(path.join(app.APPLICATION_ROOT, 'config', `${app.environment}.yml`), true)
     .loadFile(path.join(app.APPLICATION_ROOT, 'config', 'local.yml'), true)
