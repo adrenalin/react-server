@@ -2,14 +2,18 @@ const path = require('path')
 const Logger = require('@adrenalin/logger')
 
 module.exports = async (app) => {
-  const logger = new Logger('Renderers')
+  const logger = new Logger('server/middleware/renderers')
   logger.log('Initializing renderers')
 
   app.renderers = {}
-  const renderers = app.config.get('renderers') || {}
+  const renderers = app.config.get('middleware.renderers') || {}
 
   for (const engine in renderers) {
     const e = renderers[engine]
+
+    if (!e.enabled) {
+      continue
+    }
 
     const r = app.renderers[engine] = {
       engine,

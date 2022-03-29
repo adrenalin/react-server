@@ -1,19 +1,22 @@
 const path = require('path')
 const expect = require('expect.js')
-const server = require('../../server/application')
+const server = require('../../../server/application')
 
-describe('server/renderers', () => {
+describe('server/middleware/renderers', () => {
   it('should register the configured renderers', async () => {
     const testRendererType = 'html'
     const testRenderer = {
+      enabled: true,
       module: 'express-es6-template-engine',
       path: 'views',
       engine: 'html'
     }
 
     const app = await server({
-      renderers: {
-        [testRendererType]: testRenderer
+      middleware: {
+        renderers: {
+          [testRendererType]: testRenderer
+        }
       }
     })
 

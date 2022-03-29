@@ -70,14 +70,10 @@ module.exports = async (opts = {}) => {
   // logger.debug('Apply error handlers')
   // await require('./errors')(app, opts)
   // logger.dt('Applied error handlers')
-  //
-  logger.debug('Apply renderers')
-  await require('./renderers')(app, opts)
-  logger.dt('Applied renderers')
 
-  logger.debug('Apply body parsers')
-  await require('./bodyparsers')(app, opts)
-  logger.dt('Applied body parsers')
+  logger.debug('Apply middleware')
+  await require('./middleware')(app, opts)
+  logger.dt('Applied middleware')
 
   // logger.debug('Apply cache')
   // await require('./cache')(app, opts)

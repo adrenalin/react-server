@@ -16,18 +16,29 @@ react:
       - en
     defaultLanguage: 'en'
     site:
-      title: 'Site Title'
-      logo: '/images/logo.svg'
-      provider: 'Site Company, Ltd.'
+      title: ''
+      logo: ''
+      provider: ''
 
-bodyparsers:
-  urlencoded:
-    extended: true
-    rawBody: true
+middleware:
+  renderers:
+    html:
+      enabled: true
+      module: 'express-es6-template-engine'
+      path: 'views'
 
-  json:
+  cookieparser:
     enabled: true
-    rawBody: true
+
+  bodyparsers:
+    enabled: true
+    urlencoded:
+      extended: true
+      rawBody: true
+
+    json:
+      enabled: true
+      rawBody: true
 
 services:
   cache:

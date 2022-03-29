@@ -5,13 +5,13 @@ const application = require('../../server/application')
 describe('server/configuration', () => {
   it('should register the configuration schema', async () => {
     const app = await application()
-    app.config.set('renderers.foobar', {
+    app.config.set('middleware.renderers.foobar', {
       path: 'test-path',
       module: 'test-module'
     })
 
     try {
-      app.config.set('renderers.foobar.module', ['foobar'])
+      app.config.set('middleware.renderers.foobar.module', ['foobar'])
       throw new Error('Should have thrown a ValidationError')
     } catch (err) {
       expect(err).to.be.a(Config.errors.ValidationError)

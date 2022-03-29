@@ -1,21 +1,24 @@
 const axios = require('axios')
 const expect = require('expect.js')
 const { buildUrl } = require('@adrenalin/helpers.js')
-const init = require('../init')
+const init = require('../../init')
 
 describe('server/bodyparsers', () => {
   let app, callback
-  const testUrl = '/tests/server/bodyparsers'
+  const testUrl = '/tests/server/middleware/bodyparsers'
 
   before(async () => {
     app = await init({
-      bodyparsers: {
-        urlencoded: {
-          rawBody: true
-        },
-        json: {
+      middleware: {
+        bodyparsers: {
           enabled: true,
-          rawBody: true
+          urlencoded: {
+            rawBody: true
+          },
+          json: {
+            enabled: true,
+            rawBody: true
+          }
         }
       }
     })

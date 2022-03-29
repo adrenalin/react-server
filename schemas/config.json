@@ -14,53 +14,104 @@
       }
     },
 
-    "bodyparsers": {
-      "description": "Body parsers as defined for body-parser middleware",
-      "documentation": "http://expressjs.com/en/resources/middleware/body-parser.html",
+    "middleware": {
+      "description": "Express middleware",
       "type": "object",
       "additionalProperties": false,
       "properties": {
-        "urlencoded": {
-          "description": "Body parser for URL encoded payloads",
+        "renderers": {
+          "description": "Renderers",
           "type": "object",
           "properties": {
-            "enabled": {
-              "description": "Enabled flag",
-              "default": true
-            },
-            "extended": {
-              "description": "Use extended URL encoded parsing flag",
-              "type": "boolean",
-              "default": true
-            },
-            "rawBody": {
-              "description": "Add raw request body to the request",
-              "type": "boolean",
-              "default": true
+            "html": {
+              "description": "HTML renderer",
+              "type": "object",
+              "enabled": {
+                "description": "Enabled flag for HTML renderer",
+                "type": "boolean",
+                "default": true
+              }
+            }
+          },
+          "patternProperties": {
+            "": {
+              "$ref": "/config#/$defs/renderer"
             }
           }
         },
 
-        "json": {
-          "description": "Body parser for JSON payloads",
+        "bodyparsers": {
+          "description": "Body parser middleware as defined for body-parser",
+          "documentation": "http://expressjs.com/en/resources/middleware/body-parser.html",
           "type": "object",
+          "additionalProperties": false,
+
           "properties": {
-            "enabled": {
-              "description": "Enabled flag",
-              "default": true
+            "urlencoded": {
+              "description": "Body parser for URL encoded payloads",
+              "type": "object",
+              "properties": {
+                "enabled": {
+                  "description": "Enabled flag",
+                  "default": true
+                },
+                "extended": {
+                  "description": "Use extended URL encoded parsing flag",
+                  "type": "boolean",
+                  "default": true
+                },
+                "rawBody": {
+                  "description": "Add raw request body to the request",
+                  "type": "boolean",
+                  "default": true
+                }
+              }
             },
-            "rawBody": {
-              "description": "Add raw request body to the request",
-              "type": "boolean",
-              "default": true
+
+            "json": {
+              "description": "Body parser for JSON payloads",
+              "type": "object",
+              "properties": {
+                "enabled": {
+                  "description": "Enabled flag",
+                  "default": true
+                },
+                "rawBody": {
+                  "description": "Add raw request body to the request",
+                  "type": "boolean",
+                  "default": true
+                }
+              }
+            }
+          },
+          "patternProperties": {
+            "": {
+              "enabled": {
+                "type": "boolean"
+              }
             }
           }
-        }
-      },
-      "patternProperties": {
-        "": {
-          "enabled": {
-            "type": "boolean"
+        },
+
+        "cookieparser": {
+          "description": "Cookie parser middleware",
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "enabled": {
+              "description": "Enabled flag for cookie parser middleware",
+              "type": "boolean",
+              "default": true
+            },
+            "secret": {
+              "description": "Cookie secret",
+              "type": ["null", "string"]
+            },
+            "options": {
+              "description": "Cookie parser options",
+              "documentation": "https://github.com/expressjs/cookie-parser",
+              "type": "object"
+            }
           }
         }
       }
@@ -88,16 +139,6 @@
           "description": "Connection string URL",
           "type": ["null", "string"],
           "format": "uri"
-        }
-      }
-    },
-
-    "renderers": {
-      "description": "Renderers",
-      "type": "object",
-      "patternProperties": {
-        "": {
-          "$ref": "/config#/$defs/renderer"
         }
       }
     },
@@ -305,13 +346,23 @@
     "renderer": {
       "description": "Renderer",
       "type": "object",
+      "additionalProperties": false,
       "properties": {
+        "enabled": {
+          "description": "Enabled flag for the renderer",
+          "type": "boolean",
+          "default": true
+        },
         "module": {
           "description": "Node module name",
           "type": "string"
         },
         "path": {
           "description": "View path",
+          "type": "string"
+        },
+        "engine": {
+          "description": "View engine",
           "type": "string"
         }
       },
