@@ -1,0 +1,59 @@
+---
+server:
+  port: 3000
+
+routers:
+  enabled: true
+
+renderers:
+  html:
+    module: 'express-es6-template-engine'
+    path: 'views'
+
+react:
+  application:
+    languages:
+      - en
+    defaultLanguage: 'en'
+    site:
+      title: 'Site Title'
+      logo: '/images/logo.svg'
+      provider: 'Site Company, Ltd.'
+
+middleware:
+  renderers:
+    html:
+      enabled: true
+      module: 'express-es6-template-engine'
+      path: 'views'
+
+  cookieparser:
+    enabled: true
+
+  bodyparsers:
+    enabled: true
+    urlencoded:
+      extended: true
+      rawBody: true
+
+    json:
+      enabled: true
+      rawBody: true
+
+services:
+  cache:
+    enabled: true
+    engine: 'memcache'
+
+  events:
+    enabled: true
+
+  mailer:
+    smtp:
+      server:
+        host: 'mail.example.net'
+        port: 587
+
+session:
+  enabled: true
+  secret: 'session secret'
