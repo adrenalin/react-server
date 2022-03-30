@@ -8,7 +8,7 @@ const getValue = helpers.getValue
 module.exports = async (opts = {}) => {
   const options = opts || {}
 
-  const logger = new Logger('Application')
+  const logger = new Logger('@adrenalin/react-server/Application')
   logger.setLevel(5)
   logger.info('Start initializing application')
 
@@ -53,10 +53,10 @@ module.exports = async (opts = {}) => {
     return Promise.all(tasks)
   }
 
-  logger.debug('Get configuration')
+  logger.debug('Get config')
   logger.ts = Date.now()
-  await require('./configuration')(app, opts)
-  logger.dt('Configuration loaded')
+  await require('./config')(app, opts)
+  logger.dt('Config loaded')
   app.config.set(opts || {})
 
   // logger.debug('Apply constants')
