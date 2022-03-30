@@ -6,7 +6,7 @@ const path = require('path')
 const listFilesSync = require('../lib/helpers/listFilesSync')
 
 module.exports = async (app) => {
-  const logger = new Logger('Routes')
+  const logger = new Logger('@adrenalin/react-server/server/routers')
   logger.setLevel(4)
   logger.log('Load routes')
 

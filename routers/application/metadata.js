@@ -4,7 +4,7 @@ const { buildUrl } = require('@adrenalin/helpers.js')
 const Metadata = require('../../client/lib/metadata')
 
 module.exports = (app, options = {}) => {
-  const logger = new Logger('routers/application/metadata')
+  const logger = new Logger('@adrenalin/react-server/routers/application/metadata')
   logger.setLevel(3)
 
   const defaults = {}

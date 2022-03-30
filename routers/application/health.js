@@ -4,7 +4,7 @@ const { setValue } = require('@adrenalin/helpers.js')
 const Logger = require('@adrenalin/logger')
 
 module.exports = (app) => {
-  const logger = new Logger('/routers/application/health')
+  const logger = new Logger('@adrenalin/react-server/routers/application/health')
   logger.setLevel(3)
 
   const router = express.Router()

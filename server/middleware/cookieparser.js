@@ -1,7 +1,7 @@
 const Logger = require('@adrenalin/logger')
 
 module.exports = async (app) => {
-  const logger = new Logger('server/middleware/cookieparsers')
+  const logger = new Logger('@adrenalin/react-server/server/middleware/cookieparsers')
   logger.setLevel(0)
   logger.info('Initializing body parsers')
 

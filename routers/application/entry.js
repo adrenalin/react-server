@@ -5,7 +5,7 @@ const { merge } = require('@adrenalin/helpers.js')
 /* istanbul ignore next */
 module.exports = (app, options = {}) => {
   const router = express.Router()
-  const logger = new Logger('/routers/application/entry')
+  const logger = new Logger('@adrenalin/react-server/routers/application/entry')
   logger.setLevel(3)
 
   const defaults = {

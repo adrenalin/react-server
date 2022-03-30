@@ -1,7 +1,7 @@
 const Logger = require('@adrenalin/logger')
 
 module.exports = async (opts = {}) => {
-  const logger = new Logger('Server')
+  const logger = new Logger('@adrenalin/react-server/server/index')
   logger.setLevel(5)
   logger.info('Start initializing the server')
 

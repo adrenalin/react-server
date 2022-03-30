@@ -2,7 +2,7 @@ const express = require('express')
 const Logger = require('@adrenalin/logger')
 
 module.exports = (app, options = {}) => {
-  const logger = new Logger('routers/locales/list')
+  const logger = new Logger('@adrenalin/react-server/routers/locales/list')
 
   const defaults = {}
   const opts = {

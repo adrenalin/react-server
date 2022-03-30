@@ -4,7 +4,7 @@ const listFilesSync = require('../lib/helpers/listFilesSync')
 const Service = require('../services')
 
 module.exports = async (app) => {
-  const logger = new Logger('Services')
+  const logger = new Logger('@adrenalin/react-server/server/services')
   logger.setLevel(4)
 
   const packageRoot = path.join(__dirname, '..', 'services')

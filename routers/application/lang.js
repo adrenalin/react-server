@@ -3,7 +3,7 @@ const router = require('express')()
 const { getValue, Localization } = require('@adrenalin/helpers.js')
 
 module.exports = (app) => {
-  const logger = new Logger('/routers/application/lang')
+  const logger = new Logger('@adrenalin/react-server/routers/application/lang')
   logger.setLevel(3)
 
   const getLangMatches = (req) => {

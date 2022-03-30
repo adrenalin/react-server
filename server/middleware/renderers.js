@@ -2,7 +2,7 @@ const path = require('path')
 const Logger = require('@adrenalin/logger')
 
 module.exports = async (app) => {
-  const logger = new Logger('server/middleware/renderers')
+  const logger = new Logger('@adrenalin/react-server/server/middleware/renderers')
   logger.log('Initializing renderers')
 
   app.renderers = {}
