@@ -16,6 +16,7 @@ class CacheService extends Service {
   async register () {
     this.cache = Cache.getEngine(this.app, this.config.get('services.cache.engine', 'memcache'))
     this.cache.setStorageKey(this.config.get('storageKey') || 'cache')
+    this.cache.connect()
 
     return this
   }
