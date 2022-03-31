@@ -234,7 +234,7 @@
                     },
                     "auth": {
                       "description": "SMTP authentication",
-                      "type": "object",
+                      "type": ["null", "object"],
                       "properties": {
                         "user": {
                           "description": "SMTP username",
@@ -254,8 +254,8 @@
                     },
                     "authMethod": {
                       "description": "Authentication method",
-                      "type": "string",
-                      "default": "PLAIN"
+                      "type": ["null", "string"],
+                      "enum": [null, "PLAIN"]
                     },
                     "tls": {
                       "description": "TLS",
