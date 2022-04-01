@@ -1,6 +1,6 @@
 {
   "name": "@adrenalin/react-server",
-  "version": "0.7.4",
+  "version": "0.7.5",
   "description": "React server",
   "main": "index.js",
   "scripts": {
@@ -16,7 +16,7 @@
   "license": "ISC",
   "dependencies": {
     "@adrenalin/errors": "github:adrenalin/errors#v1.0.6",
-    "@adrenalin/helpers.js": "github:adrenalin/helpers.js#v0.28.0",
+    "@adrenalin/helpers.js": "github:adrenalin/helpers.js#v0.28.2",
     "@adrenalin/logger": "github:adrenalin/logger#v1.0.5",
     "@babel/core": "^7.17.8",
     "@babel/node": "^7.16.8",
