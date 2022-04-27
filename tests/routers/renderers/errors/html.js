@@ -1,6 +1,6 @@
 const expect = require('expect.js')
 const errors = require('@adrenalin/errors')
-const { Localization } = require('@adrenalin/helpers.js')
+const { setValue, Localization } = require('@adrenalin/helpers.js')
 const init = require('../../../init')
 
 const configRouter = require('../../../../routers/application/config')
@@ -42,5 +42,19 @@ describe('routers/renderers/html', () => {
     expect(response.headers['content-type']).to.contain('text/html')
     expect(response.text).to.contain('<html')
     expect(response.text).to.contain(locale.fi)
+  })
+
+  it('should pass rendeder request data to the view', async () => {
+    callback = (req, res, next) => {
+      setValue(res, 'locals.data.renderer.testUrl', testUrl)
+      next(new errors.NotImplemented('Renderer error'))
+    }
+
+    const response = await app.tests.requests.basic
+      .get(testUrl)
+      .expect(501)
+
+    // Renderer - when set - is serialized as JSON in the view "views/index.html"
+    expect(response.text).to.contain(`"testUrl":"${testUrl}"`)
   })
 })

@@ -1,6 +1,6 @@
 const Logger = require('@adrenalin/logger')
 const Metadata = require('../../../client/lib/metadata')
-const { castToArray, Localization } = require('@adrenalin/helpers.js')
+const { castToArray, getValue, Localization } = require('@adrenalin/helpers.js')
 
 const getOpenGraph = require('../../../lib/helpers/getOpenGraph')
 const getMetaTags = require('../../../lib/helpers/getMetaTags')
@@ -42,7 +42,8 @@ module.exports = (app) => {
       jsFiles: getJavaScriptFiles(req),
       // links: getLinkTags(req, res),
       // jsFiles: getJavaScriptFiles(req),
-      structured: ''
+      structured: '',
+      renderer: getValue(res, 'locals.data.renderer', {})
     }
 
     res.render('error.html', { locals }, (renderErr, html) => {
