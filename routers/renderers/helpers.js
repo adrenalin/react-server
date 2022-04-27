@@ -249,7 +249,8 @@ module.exports = (app) => {
           metatags: getMetaTags(metadata, req, res),
           links: getLinkTags(req, res),
           jsFiles: getJavaScriptFiles(req),
-          structured: getStructuredData(metadata)
+          structured: getStructuredData(metadata),
+          renderer: getValue(res, 'locals.data.renderer', {})
         }
       })
     } catch (err) {

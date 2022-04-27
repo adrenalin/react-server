@@ -1,4 +1,6 @@
 const expect = require('expect.js')
+const { setValue } = require('@adrenalin/helpers.js')
+
 const init = require('../../../init')
 
 const router = require('../../../../routers/renderers/react')
@@ -6,18 +8,27 @@ const configRouter = require('../../../../routers/application/config')
 const errorRouter = require('../../../../routers/renderers/errors/api')
 
 describe('routers/renderers/react:render', () => {
-  let app, siteTitle, siteLogo
+  let app, siteTitle, siteLogo, callback
   const testUrl = '/tests/lib/renderers/react/render'
 
   before(async () => {
     app = await init()
 
     app.use(testUrl, configRouter(app))
+    app.use(testUrl, (req, res, next) => {
+      callback(req, res, next)
+    })
     app.use(testUrl, router(app))
     app.use(testUrl, errorRouter(app))
 
     siteTitle = app.config.get('react.application.site.title')
     siteLogo = app.config.get('react.application.site.logo')
+  })
+
+  beforeEach(async () => {
+    callback = (req, res, next) => {
+      next()
+    }
   })
 
   afterEach(async () => {
@@ -51,5 +62,19 @@ describe('routers/renderers/react:render', () => {
     const body = String(response.text)
     expect(body).to.contain(testTitle)
     expect(body).to.contain(testLogo)
+  })
+
+  it('should pass rendeder request data to the view', async () => {
+    callback = (req, res, next) => {
+      setValue(res, 'locals.data.renderer.testUrl', testUrl)
+      next()
+    }
+
+    const response = await app.tests.requests.basic
+      .get(`${testUrl}/fi`)
+      .expect(200)
+
+    // Renderer - when set - is serialized as JSON in the view "views/index.html"
+    expect(response.text).to.contain(`"testUrl":"${testUrl}"`)
   })
 })
