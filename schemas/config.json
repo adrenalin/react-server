@@ -153,6 +153,50 @@
         }
       },
       "properties": {
+        "database": {
+          "description": "Database service",
+          "type": "object",
+          "properties": {
+            "enabled": {
+              "description": "Cache enabled flag",
+              "default": true
+            },
+            "engine": {
+              "description": "Database engine name",
+              "type": "string",
+              "enum": ["psql"],
+              "default": "psql"
+            },
+            "connection": {
+              "description": "Database connection",
+              "type": "object",
+              "properties": {
+                "database": {
+                  "description": "Database name",
+                  "type": "string"
+                },
+                "protocol": {
+                  "description": "Database protocol",
+                  "type": "string"
+                },
+                "port": {
+                  "description": "Database port",
+                  "type": "number"
+                },
+                "username": {
+                  "description": "Database username",
+                  "type": "string"
+                },
+                "password": {
+                  "description": "Database password",
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "required": ["engine"]
+        },
+
         "cache": {
           "description": "Cache service",
           "type": "object",
