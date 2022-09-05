@@ -8,7 +8,7 @@ const getValue = helpers.getValue
 module.exports = async (opts = {}) => {
   const options = opts || {}
 
-  const logger = new Logger('@adrenalin/react-server/Application')
+  const logger = new Logger('@adrenalin/react-server/server/application')
   logger.setLevel(5)
   logger.info('Start initializing application')
 
