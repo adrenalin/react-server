@@ -90,8 +90,23 @@ describe('lib/cache', () => {
   })
 
   it('should throw an error for an invalid cache engine name', (done) => {
-    expect(CacheBaseclass.getEngine).withArgs(app, 'foo bar').to.throwError()
-    done()
+    try {
+      CacheBaseclass.getEngine(app, 'foo bar')
+      throw new Error('Should have thrown an exception')
+    } catch (err) {
+      expect(err).to.be.a(errors.BadRequest)
+      done()
+    }
+  })
+
+  it('should throw an error for a not implemented for unknown cache engine', (done) => {
+    try {
+      CacheBaseclass.getEngine(app, 'foobar')
+      throw new Error('Should have thrown an exception')
+    } catch (err) {
+      expect(err).to.be.a(errors.NotImplemented)
+      done()
+    }
   })
 
   it('should throw a NotImplemented error for an inexistant cache engine name', (done) => {
