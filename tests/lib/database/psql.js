@@ -1,12 +1,16 @@
+const path = require('path')
 const expect = require('expect.js')
 const Database = require('../../../lib/database')
 const PsqlDatabase = require('../../../lib/database/psql')
-const { Config } = require('@adrenalin/helpers.js')
+const ServerConfig = require('@adrenalin/helpers.js/lib/ServerConfig')
 
 describe('lib/database/psql', () => {
   const app = {
-    config: new Config()
+    config: new ServerConfig()
   }
+
+  app.config.loadFile(path.join(__dirname, '..', '..', '..', 'config', 'test.yml'))
+  app.config.loadFile(path.join(__dirname, '..', '..', '..', 'config', 'test-local.yml'), true)
 
   const engine = 'psql'
 
@@ -14,5 +18,53 @@ describe('lib/database/psql', () => {
     const psql = Database.getEngine(app, engine)
     expect(psql).to.be.a(PsqlDatabase)
     done()
+  })
+
+  it('should be able to connect to psql server', async () => {
+    const psql = Database.getEngine(app, engine)
+    await psql.connect()
+    const result = await psql.query('SELECT NOW()')
+    const row = result.rows[0]
+
+    expect(row).to.have.property('now')
+  })
+
+  it('should be able to handle transactions', async () => {
+    const psql = Database.getEngine(app, engine)
+    await psql.connect()
+    const c1 = await psql.connect()
+    const c2 = await psql.connect()
+
+    try {
+      await c1.query('CREATE TABLE tests_transaction (id INT)')
+
+      await c1.query('BEGIN')
+      await c1.query('INSERT INTO tests_transaction (id) VALUES (1)')
+
+      // Test from outside the scope before the transaction has been committed
+      const r0 = await c2.query('SELECT id FROM tests_transaction')
+      expect(r0.rows.length).to.be(0)
+
+      // Test from inside the scope before the transaction has been committed
+      const r1 = await c1.query('SELECT id FROM tests_transaction')
+      expect(r1.rows.length).to.be(1)
+
+      await c1.query('COMMIT')
+
+      // Test from outside the scope after the transaction has been committed
+      const r2 = await c2.query('SELECT id FROM tests_transaction')
+      expect(r2.rows.length).to.be(1)
+
+      // Cleanup
+      await c1.query('DROP TABLE tests_transaction')
+    } catch (err) {
+      // Cleanup
+      await c1.query('ROLLBACK')
+      await c1.query('DROP TABLE tests_transaction')
+    } finally {
+      // Release the connections
+      c1.release()
+      c2.release()
+    }
   })
 })

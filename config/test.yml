@@ -25,3 +25,9 @@ services:
       server:
         host: 'localhost'
         port: 4001
+
+  database:
+    connection:
+      database: 'reactserver'
+      username: 'reactserver'
+      password: 'reactserver'

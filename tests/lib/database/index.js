@@ -3,37 +3,31 @@ const expect = require('expect.js')
 const DatabaseBaseclass = require('../../../lib/database')
 const { Config } = require('@adrenalin/helpers.js')
 
-describe('lib/cache', () => {
+describe('lib/database', () => {
   const app = {
     config: new Config()
   }
 
-  it('should have the abstract method "query"', (done) => {
-    const db = new DatabaseBaseclass(app)
-    expect(db.query).to.be.a('function')
-
-    db.query('foo')
-      .then(() => {
-        done(new Error('Should have thrown an exception'))
-      })
-      .catch((err) => {
-        expect(err).to.be.a(errors.NotImplemented)
-        done()
-      })
+  it('should have the abstract method "query"', async () => {
+    try {
+      const db = new DatabaseBaseclass(app)
+      expect(db.query).to.be.a('function')
+      await db.query('foo')
+      throw new Error('Should have thrown an exception')
+    } catch (err) {
+      expect(err).to.be.a(errors.NotImplemented)
+    }
   })
 
-  it('should have the abstract method "connect"', (done) => {
-    const db = new DatabaseBaseclass(app)
-    expect(db.connect).to.be.a('function')
-
-    db.connect('foo')
-      .then(() => {
-        done(new Error('Should have thrown an exception'))
-      })
-      .catch((err) => {
-        expect(err).to.be.a(errors.NotImplemented)
-        done()
-      })
+  it('should have the abstract method "connect"', async () => {
+    try {
+      const db = new DatabaseBaseclass(app)
+      expect(db.query).to.be.a('function')
+      await db.connect()
+      throw new Error('Should have thrown an exception')
+    } catch (err) {
+      expect(err).to.be.a(errors.NotImplemented)
+    }
   })
 
   it('should have a static method getEngine', (done) => {
@@ -43,7 +37,22 @@ describe('lib/cache', () => {
   })
 
   it('should throw an error for an invalid database engine name', (done) => {
-    expect(DatabaseBaseclass.getEngine).withArgs(app, 'foo bar').to.throwError()
-    done()
+    try {
+      DatabaseBaseclass.getEngine(app, 'foo bar')
+      throw new Error('Should have thrown an exception')
+    } catch (err) {
+      expect(err).to.be.a(errors.BadRequest)
+      done()
+    }
+  })
+
+  it('should throw an error for an unknown database engine', (done) => {
+    try {
+      DatabaseBaseclass.getEngine(app, 'foobar')
+      throw new Error('Should have thrown an exception')
+    } catch (err) {
+      expect(err).to.be.a(errors.NotImplemented)
+      done()
+    }
   })
 })
