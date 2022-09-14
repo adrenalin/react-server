@@ -3,6 +3,7 @@ const expect = require('expect.js')
 const { Config } = require('@adrenalin/helpers.js')
 const serviceLoader = require('../../server/services')
 
+const Service = require('../../services')
 const L10nService = require('../../services/l10n')
 const TestService = require('../resources/server/services/test')
 
@@ -43,5 +44,45 @@ describe('server/services', () => {
     const app = createApp()
     app.APPLICATION_ROOT = path.join(__dirname, '..', 'resources', 'server', 'path-not-found')
     await serviceLoader(app)
+  })
+
+  it('should register the service name with class name', async () => {
+    const serviceName = 'namefromclass'
+    const app = createApp()
+    app.config.set(`services.${serviceName}.enabled`, true)
+    app.APPLICATION_ROOT = path.join(__dirname, '..', 'resources', 'server')
+    await serviceLoader(app)
+    expect(app.services[serviceName]).to.be.a(Service)
+  })
+
+  it('should register the service name from SERVICE_NAME class property when available', async () => {
+    const serviceName = 'classproperty'
+    const app = createApp()
+    app.config.set(`services.${serviceName}.enabled`, true)
+    app.APPLICATION_ROOT = path.join(__dirname, '..', 'resources', 'server')
+    await serviceLoader(app)
+    expect(app.services[serviceName]).to.be.a(Service)
+  })
+
+  it('should register the service name with the configured alias when available', async () => {
+    const app = createApp()
+    app.APPLICATION_ROOT = path.join(__dirname, '..', 'resources', 'server')
+    app.config.set('services.test2.enabled', true)
+    app.config.set('services.test2.service', 'test')
+    await serviceLoader(app)
+
+    expect(app.services).to.have.property('test2')
+    expect(app.services.test2).to.be.a(TestService)
+  })
+
+  it('should register the service to an alias when available', async () => {
+    const app = createApp()
+    app.APPLICATION_ROOT = path.join(__dirname, '..', 'resources', 'server')
+    app.config.set('services.test.enabled', true)
+    app.config.set('services.test.alias', 'test2')
+    await serviceLoader(app)
+
+    expect(app.services).to.have.property('test2')
+    expect(app.services.test2).to.be.a(TestService)
   })
 })

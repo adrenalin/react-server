@@ -158,8 +158,13 @@
           "type": "object",
           "properties": {
             "enabled": {
-              "description": "Cache enabled flag",
+              "description": "Database enabled flag",
               "default": true
+            },
+            "alias": {
+              "description": "Service alias",
+              "type": "string",
+              "default": "db"
             },
             "engine": {
               "description": "Database engine name",
@@ -193,8 +198,7 @@
                 }
               }
             }
-          },
-          "required": ["engine"]
+          }
         },
 
         "cache": {

@@ -30,11 +30,11 @@ module.exports = async (app) => {
   const serviceFiles = [...systemServices, ...loadApplicationServices()]
   logger.log('Load service files', serviceFiles)
 
-  // @TODO: read project services
-
   app.services = app.services || {}
 
   logger.debug('Service files', serviceFiles)
+
+  const classes = {}
 
   for (let i = 0; i < serviceFiles.length; i++) {
     const filename = serviceFiles[i]
@@ -46,16 +46,29 @@ module.exports = async (app) => {
     }
 
     const name = ServiceClass.SERVICE_NAME || ServiceClass.name.toLowerCase().replace(/service$/, '')
+    classes[name] = ServiceClass
+  }
 
-    if (!app.config.get(`services.${name}.enabled`)) {
-      logger.log('Service', name, 'is not enabled, skipping')
+  for (const key in app.config.get('services')) {
+    const name = app.config.get(`services.${key}.service`, key)
+
+    if (!app.config.get(`services.${key}.enabled`)) {
       continue
     }
 
-    const service = new ServiceClass(app)
+    const service = new classes[name](app)
     await service.register()
 
-    app.services[name] = service
-    logger.log('Registered service', name)
+    const registerTo = [
+      key,
+      app.config.get(`services.${key}.alias`)
+    ]
+
+    registerTo
+      .filter(k => k)
+      .forEach((k) => {
+        app.services[k] = service
+        logger.log('Registered service', name, 'as', k)
+      })
   }
 }
