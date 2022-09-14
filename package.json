@@ -4,7 +4,7 @@
   "description": "React server",
   "main": "index.js",
   "scripts": {
-    "test": "nyc --exclude tests/ --exclude client/ mocha --exit --require @babel/register --timeout 10000 --exclude tests/resources/**/*.js --recursive tests/",
+    "test": "ENVIRONMENT=test nyc --exclude tests/ --exclude client/ mocha --exit --require @babel/register --timeout 10000 --exclude tests/resources/**/*.js --recursive tests/",
     "coverage": "nyc report --reporter=text-lcov | coveralls",
     "postinstall": "node install.js"
   },
