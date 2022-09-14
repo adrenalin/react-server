@@ -3,6 +3,16 @@ const expect = require('expect.js')
 const DatabaseService = require('../../../services/database')
 
 describe('services/database', () => {
+  it('should register the service', async () => {
+    const app = await require('../../../server/application')()
+    app.config.set('services.database.engine', 'psql')
+
+    const service = new DatabaseService(app)
+    const registered = await service.register()
+
+    expect(service).to.be(registered)
+  })
+
   it('should have interface methods "query", "connect" and "getClient"', async () => {
     const app = await require('../../../server/application')()
     app.config.set('services.database.engine', 'psql')
