@@ -1,5 +1,6 @@
 const path = require('path')
 const Logger = require('@adrenalin/logger')
+const { castToArray, getValue } = require('@adrenalin/helpers.js')
 const listFilesSync = require('../lib/helpers/listFilesSync')
 const Service = require('../services')
 
@@ -49,26 +50,34 @@ module.exports = async (app) => {
     classes[name] = ServiceClass
   }
 
-  for (const key in app.config.get('services')) {
-    const name = app.config.get(`services.${key}.service`, key)
+  const services = app.config.get('services') || {}
 
-    if (!app.config.get(`services.${key}.enabled`)) {
-      continue
+  for (const key in services) {
+    const configured = castToArray(getValue(services, key))
+
+    for (let i = 0; i < configured.length; i++) {
+      const config = configured[i] || {}
+
+      const name = getValue(config, 'service', key)
+
+      if (!config.enabled) {
+        continue
+      }
+
+      const service = new classes[name](app)
+      await service.register()
+
+      const registerTo = [
+        key,
+        getValue(config, 'alias')
+      ]
+
+      registerTo
+        .filter(k => k)
+        .forEach((k) => {
+          app.services[k] = service
+          logger.log('Registered service', name, 'as', k)
+        })
     }
-
-    const service = new classes[name](app)
-    await service.register()
-
-    const registerTo = [
-      key,
-      app.config.get(`services.${key}.alias`)
-    ]
-
-    registerTo
-      .filter(k => k)
-      .forEach((k) => {
-        app.services[k] = service
-        logger.log('Registered service', name, 'as', k)
-      })
   }
 }

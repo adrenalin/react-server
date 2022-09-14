@@ -85,4 +85,25 @@ describe('server/services', () => {
     expect(app.services).to.have.property('test2')
     expect(app.services.test2).to.be.a(TestService)
   })
+
+  it('should register an array of services', async () => {
+    const app = createApp()
+    app.APPLICATION_ROOT = path.join(__dirname, '..', 'resources', 'server')
+    app.config.set('services.test', [
+      {
+        enabled: true
+      },
+      {
+        enabled: true,
+        alias: 'test2'
+      }
+    ])
+    await serviceLoader(app)
+
+    expect(app.services).to.have.property('test')
+    expect(app.services.test).to.be.a(TestService)
+
+    expect(app.services).to.have.property('test2')
+    expect(app.services.test2).to.be.a(TestService)
+  })
 })
