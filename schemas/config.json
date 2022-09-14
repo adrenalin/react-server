@@ -155,50 +155,20 @@
       "properties": {
         "database": {
           "description": "Database service",
-          "type": "object",
-          "properties": {
-            "enabled": {
-              "description": "Database enabled flag",
-              "default": true
+          "oneOf": [
+            {
+              "type": "null"
             },
-            "alias": {
-              "description": "Service alias",
-              "type": "string",
-              "default": "db"
+            {
+              "$ref": "/config#/$defs/database"
             },
-            "engine": {
-              "description": "Database engine name",
-              "type": "string",
-              "enum": ["psql"],
-              "default": "psql"
-            },
-            "connection": {
-              "description": "Database connection",
-              "type": "object",
-              "properties": {
-                "database": {
-                  "description": "Database name",
-                  "type": "string"
-                },
-                "protocol": {
-                  "description": "Database protocol",
-                  "type": "string"
-                },
-                "port": {
-                  "description": "Database port",
-                  "type": "number"
-                },
-                "username": {
-                  "description": "Database username",
-                  "type": "string"
-                },
-                "password": {
-                  "description": "Database password",
-                  "type": "string"
-                }
+            {
+              "type": "array",
+              "items": {
+                "$ref": "/config#/$defs/database"
               }
             }
-          }
+          ]
         },
 
         "cache": {
@@ -425,6 +395,54 @@
           "type": "booleam",
           "enum": [true, false],
           "default": false
+        }
+      }
+    },
+
+    "database": {
+      "description": "Database",
+      "type": "object",
+      "properties": {
+        "enabled": {
+          "description": "Database enabled flag",
+          "default": true
+        },
+        "alias": {
+          "description": "Service alias",
+          "type": "string",
+          "default": "db"
+        },
+        "engine": {
+          "description": "Database engine name",
+          "type": "string",
+          "enum": ["psql"],
+          "default": "psql"
+        },
+        "connection": {
+          "description": "Database connection",
+          "type": "object",
+          "properties": {
+            "database": {
+              "description": "Database name",
+              "type": "string"
+            },
+            "protocol": {
+              "description": "Database protocol",
+              "type": "string"
+            },
+            "port": {
+              "description": "Database port",
+              "type": "number"
+            },
+            "username": {
+              "description": "Database username",
+              "type": "string"
+            },
+            "password": {
+              "description": "Database password",
+              "type": "string"
+            }
+          }
         }
       }
     },
