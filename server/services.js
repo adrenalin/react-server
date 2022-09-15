@@ -67,7 +67,7 @@ module.exports = async (app) => {
       }
 
       const service = new classes[name](app)
-      await service.register()
+      await service.register(config)
 
       const serviceId = getValue(config, 'alias', key)
 

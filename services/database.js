@@ -20,8 +20,9 @@ class DatabaseService extends Service {
    *
    * @return { DatabaseService }      This instance
    */
-  async register () {
-    await this.connect()
+  async register (config) {
+    this.options = config || {}
+    await this.connect(config)
 
     return this
   }
@@ -42,9 +43,10 @@ class DatabaseService extends Service {
    * @param { mixed } args            Query arguments
    * @return { mixed }                Pass through the database engine response
    */
-  async connect (...args) {
-    this.db = this.db || Database.getEngine(this.app, this.config.get('services.database.engine', 'psql'))
-    return this.db.connect(...args)
+  async connect () {
+    const engine = this.helpers.getValue(this.options || {}, 'engine') || this.config.get('services.database.engine')
+    this.db = this.db || Database.getEngine(this.app, engine, this.options || {})
+    return this.db.connect()
   }
 }
 
