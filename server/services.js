@@ -1,4 +1,5 @@
 const path = require('path')
+const errors = require('@adrenalin/errors')
 const Logger = require('@adrenalin/logger')
 const { castToArray, getValue } = require('@adrenalin/helpers.js')
 const listFilesSync = require('../lib/helpers/listFilesSync')
@@ -57,6 +58,7 @@ module.exports = async (app) => {
 
     for (let i = 0; i < configured.length; i++) {
       const config = configured[i] || {}
+      logger.log('Registering service', config)
 
       const name = getValue(config, 'service', key)
 
@@ -67,17 +69,17 @@ module.exports = async (app) => {
       const service = new classes[name](app)
       await service.register()
 
-      const registerTo = [
-        key,
-        getValue(config, 'alias')
-      ]
+      const serviceId = getValue(config, 'alias', key)
 
-      registerTo
-        .filter(k => k)
-        .forEach((k) => {
-          app.services[k] = service
-          logger.log('Registered service', name, 'as', k)
-        })
+      if (app.services[serviceId]) {
+        logger.error('Cannot register a service with identifier', serviceId, 'since it is already in use')
+        logger.error('Configured services', services)
+
+        throw new errors.Conflict(`Service identifier "${serviceId}" has already been registered`)
+      }
+
+      app.services[serviceId] = service
+      logger.log('Registered service', name, 'as', serviceId)
     }
   }
 }

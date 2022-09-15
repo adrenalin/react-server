@@ -1,5 +1,6 @@
 const path = require('path')
 const expect = require('expect.js')
+const errors = require('@adrenalin/errors')
 const { Config } = require('@adrenalin/helpers.js')
 const serviceLoader = require('../../server/services')
 
@@ -105,5 +106,24 @@ describe('server/services', () => {
 
     expect(app.services).to.have.property('test2')
     expect(app.services.test2).to.be.a(TestService)
+  })
+
+  it('should throw an error when a conflicting service is being registered', async () => {
+    try {
+      const app = createApp()
+      app.APPLICATION_ROOT = path.join(__dirname, '..', 'resources', 'server')
+      app.config.set('services.test', [
+        {
+          enabled: true
+        },
+        {
+          enabled: true
+        }
+      ])
+      await serviceLoader(app)
+      throw new Error('Should have thrown a Conflict')
+    } catch (err) {
+      expect(err).to.be.a(errors.Conflict)
+    }
   })
 })
