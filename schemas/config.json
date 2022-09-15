@@ -405,7 +405,7 @@
       "properties": {
         "enabled": {
           "description": "Database enabled flag",
-          "default": true
+          "default": false
         },
         "alias": {
           "description": "Service alias",
