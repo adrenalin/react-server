@@ -29,6 +29,34 @@ describe('lib/database/psql', () => {
     expect(row).to.have.property('now')
   })
 
+  it('should accept explicit definitions for the connection', async () => {
+    const testOptions = {
+      connection: {
+        host: '127.0.0.1',
+        port: 1234,
+        database: 'test-getengine-options-passing-database',
+        username: 'test-getengine-options-passing-username',
+        password: 'test-getengine-options-passing-password'
+      }
+    }
+    const db = PsqlDatabase.getEngine(app, 'psql', testOptions)
+    const uri = db.getConnectionString(testOptions)
+
+    expect(uri).to.eql(`postgresql://${testOptions.connection.username}:${testOptions.connection.password}@${testOptions.connection.host}:${testOptions.connection.port}/${testOptions.connection.database}`)
+  })
+
+  it('should accept uri wrapped in a "connection" object', async () => {
+    const testOptions = {
+      connection: {
+        uri: 'postgresql://username:password@localhost:5432/db?query_string=foobar'
+      }
+    }
+    const db = PsqlDatabase.getEngine(app, 'psql', testOptions)
+    const uri = db.getConnectionString(testOptions)
+
+    expect(uri).to.eql(testOptions.connection.uri)
+  })
+
   it('should be able to handle transactions', async () => {
     const psql = Database.getEngine(app, engine)
     await psql.connect()

@@ -422,11 +422,11 @@
           "description": "Database connection",
           "type": "object",
           "properties": {
-            "database": {
-              "description": "Database name",
+            "protocol": {
+              "description": "Database connection protocol",
               "type": "string"
             },
-            "protocol": {
+            "host": {
               "description": "Database protocol",
               "type": "string"
             },
@@ -440,6 +440,14 @@
             },
             "password": {
               "description": "Database password",
+              "type": "string"
+            },
+            "database": {
+              "description": "Database name",
+              "type": "string"
+            },
+            "query": {
+              "description": "Database connection query string",
               "type": "string"
             }
           }

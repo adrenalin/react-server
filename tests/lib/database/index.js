@@ -36,24 +36,6 @@ describe('lib/database', () => {
     done()
   })
 
-  it('should pass the options from the getEngine factory method', async () => {
-    const testOptions = {
-      connection: {
-        host: '127.0.0.1',
-        port: 1234,
-        database: 'test-getengine-options-passing-database',
-        username: 'test-getengine-options-passing-username',
-        password: 'test-getengine-options-passing-password'
-      }
-    }
-    const db = DatabaseBaseclass.getEngine(app, 'psql', testOptions)
-    expect(db.options.host).to.eql(testOptions.connection.host)
-    expect(db.options.port).to.eql(testOptions.connection.port)
-    expect(db.options.database).to.eql(testOptions.connection.database)
-    expect(db.options.user).to.eql(testOptions.connection.username)
-    expect(db.options.password).to.eql(testOptions.connection.password)
-  })
-
   it('should throw an error for an invalid database engine name', (done) => {
     try {
       DatabaseBaseclass.getEngine(app, 'foo bar')
