@@ -363,7 +363,7 @@ module.exports = class Component extends React.Component {
   /**
    * Get page title
    *
-   * @return { string|array }         String or array of strings
+   * @return { string|array }         String or array of strings describing context title
    */
   getPageTitle () {
     return null
