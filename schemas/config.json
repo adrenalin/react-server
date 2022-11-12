@@ -552,10 +552,16 @@
                   "default": "Site title"
                 },
                 "logo": {
+                  "description": "Path to the logo",
                   "type": "string"
                 },
                 "provider": {
+                  "description": "Site provider i.e. the company running the website",
                   "type": "string"
+                },
+                "isFree": {
+                  "description": "Flag to define if the site is free of charge",
+                  "type": "boolean"
                 }
               },
               "required": ["title"]

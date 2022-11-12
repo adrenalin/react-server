@@ -36,17 +36,78 @@ if (!PropTypes.child) {
 }
 
 module.exports = class Component extends React.Component {
-  static LOG_LEVEL = 3
+  /**
+   * Log level for the logger
+   *
+   * @return { number }               Log level
+   */
+  static get LOG_LEVEL () {
+    return Logger.INFO
+  }
 
-  static request = request
+  /**
+   * Get request instance
+   *
+   * @return { object }               Axios
+   */
+  static get request () {
+    return request
+  }
 
-  static PropTypes = PropTypes
+  /**
+   * Convenience shorthand for prop-types
+   *
+   * @return { object }               Prop types object
+   */
+  static get PropTypes () {
+    return PropTypes
+  }
 
-  static propTypes = {}
+  /**
+   * Class proptypes definitions
+   *
+   * @return { object }
+   */
+  static get propTypes () {
+    return {}
+  }
 
-  static REQUIRED_STATE_KEYS = []
+  /**
+   * Required state keys that should be populated before isLoaded will return
+   * true
+   *
+   * @return { array }                Array of strings
+   */
+  static get REQUIRED_STATE_KEYS () {
+    return []
+  }
 
-  static USER_PREFERENCE_LOCALSTORAGE_PATH = 'user.preferences'
+  /**
+   * Page type as defined for JSON-LD (https://json-ld.org/)
+   *
+   * @return { string }               Page type definition
+   */
+  static get METADATA_PAGE_TYPE () {
+    return 'WebPage'
+  }
+
+  /**
+   * Is the current page free
+   *
+   * @return { boolean }              True for freely accessible content
+   */
+  static get METADATA_PAGE_IS_FREE () {
+    return true
+  }
+
+  /**
+   * Paywall mask path
+   *
+   * @return { null|string }          CSS path for paywalled content
+   */
+  static get METADATA_PAYWALL_MASK () {
+    return null
+  }
 
   /**
    * Get derived state from props
@@ -99,7 +160,6 @@ module.exports = class Component extends React.Component {
 
     this.events = events
     this.request = request
-    this.metadata = metadata
     this.logger.setLevel(this.constructor.LOG_LEVEL)
 
     // Deprecation warning
@@ -107,8 +167,65 @@ module.exports = class Component extends React.Component {
       this.logger.warn('Using static attribute "stores" is deprecated')
     }
 
+    this.onInitialize()
+  }
+
+  /**
+   * Get initial state for the component
+   *
+   * @return { object }               Initial component state
+   */
+  getInitialState () {
+    return {}
+  }
+
+  /**
+   * Set initial state for the component
+   */
+  setInitialState (state = {}) {
+    const constructorState = this.state || {}
+    this.state = { // eslint-disable-line react/no-direct-mutation-state
+      ...constructorState,
+      ...state
+    }
+  }
+
+  /**
+   * Initialize the component
+   */
+  onInitialize () {
+    this.initializeMetadata()
+    this.initializeStores()
+    this.setInitialState(this.getInitialState())
+    this.setClassToBody()
+    this.setPageUrl()
+    this.setPageTitle()
+    this.setPageDescription()
+    this.setBreadcrumbPath()
+  }
+
+  /**
+   * Initialize metadata
+   */
+  initializeMetadata () {
+    this.metadata = metadata
+    this.metadata.set('page', 'type', this.constructor.METADATA_PAGE_TYPE)
+    this.metadata.set('page', 'isFree', !!this.constructor.METADATA_PAGE_IS_FREE)
+    this.metadata.set('page', 'paywallMask', this.constructor.METADATA_PAYWALL_MASK)
+
+    const site = this.config.get('site', {})
+
+    for (const key in site) {
+      this.metadata.set('site', key, site[key])
+    }
+  }
+
+  /**
+   * Initialize stores
+   */
+  initializeStores () {
     // Stores to be listened
-    const stores = this.constructor.STORES || []
+    const stores = this.helpers.castToArray(this.constructor.STORES)
     this.listeners = []
 
     // Create a listener for each of the registered store
@@ -151,40 +268,6 @@ module.exports = class Component extends React.Component {
 
       this.listeners[store.displayName].bind(this)
     })
-
-    this.onInitialize()
-  }
-
-  /**
-   * Get initial state for the component
-   *
-   * @return { object }               Initial component state
-   */
-  getInitialState () {
-    return {}
-  }
-
-  /**
-   * Set initial state for the component
-   */
-  setInitialState (state = {}) {
-    const constructorState = this.state || {}
-    this.state = { // eslint-disable-line react/no-direct-mutation-state
-      ...constructorState,
-      ...state
-    }
-  }
-
-  /**
-   * Initialize the component
-   */
-  onInitialize () {
-    this.setInitialState(this.getInitialState())
-    this.setClassToBody()
-    this.setPageUrl()
-    this.setPageTitle()
-    this.setPageDescription()
-    this.setBreadcrumbPath()
   }
 
   /**
