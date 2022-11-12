@@ -15,7 +15,7 @@ if (reactstrap.includes('node_modules') && fs.existsSync(reactstrap) && !fs.exis
 }
 
 // Build client that uses ES6 + JSX
-if (__dirname.includes('node_modules')) {
+if (__dirname.includes('node_modules') || process.env.REACT_SERVER_FORCE_BUILD === 'true') {
   gulp
     .src([
       path.join(__dirname, 'client', '*.js'),
