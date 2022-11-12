@@ -75,10 +75,11 @@ module.exports = class Metadata {
    *
    * @param { string } domain         Name of the metadata domain
    * @param { string } key            Metadata key
+   * @param { mixed } defaultValue    Default value
    * @return { mixed }                Stored metadata value or null
    */
-  get (domain, key) {
-    return getValue(this.values, `${domain}.${key}`)
+  get (domain, key, defaultValue) {
+    return getValue(this.values, `${domain}.${key}`, defaultValue)
   }
 
   /**
