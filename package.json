@@ -1,6 +1,6 @@
 {
   "name": "@adrenalin/react-server",
-  "version": "0.7.11",
+  "version": "0.7.12",
   "description": "React server",
   "main": "index.js",
   "scripts": {
@@ -14,6 +14,7 @@
   },
   "author": "Arttu Manninen <arttu@kaktus.cc>",
   "license": "ISC",
+  "type": "commonjs",
   "dependencies": {
     "@adrenalin/errors": "github:adrenalin/errors#v1.0.6",
     "@adrenalin/helpers.js": "github:adrenalin/helpers.js#v0.29.1",
