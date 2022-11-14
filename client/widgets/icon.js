@@ -2,16 +2,20 @@ import React from 'react'
 import Widget from './'
 
 module.exports = class Icon extends Widget {
-  static propTypes = {
-    ...Widget.propTypes,
-    brand: Widget.PropTypes.string,
-    icon: Widget.PropTypes.string,
-    set: Widget.PropTypes.string,
-    weight: Widget.PropTypes.string
+  static get propTypes () {
+    return {
+      ...Widget.propTypes,
+      brand: Widget.PropTypes.string,
+      icon: Widget.PropTypes.string,
+      set: Widget.PropTypes.string,
+      weight: Widget.PropTypes.string
+    }
   }
 
-  static defaultProps = {
-    set: 's'
+  static get defaultProps () {
+    return {
+      set: 's'
+    }
   }
 
   getWidgetClassName () {

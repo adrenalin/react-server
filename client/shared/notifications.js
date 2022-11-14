@@ -13,11 +13,11 @@ import Link from '../widgets/link'
 import NotificationListStore from '../data/notificationlist/store'
 
 module.exports = class Notifications extends Widget {
-  static LOG_LEVEL = 3
-
-  static STORES = [
-    NotificationListStore
-  ]
+  static get STORES () {
+    return [
+      NotificationListStore
+    ]
+  }
 
   /**
    * Get initial state for the component

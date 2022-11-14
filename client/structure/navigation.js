@@ -8,9 +8,11 @@ import Link from '../widgets/link'
 import UserStore from '../data/user/store'
 
 class Navigation extends Widget {
-  static propTypes = Widget.extendProps({
-    items: Widget.PropTypes.array.isRequired
-  })
+  static get propTypes () {
+    return Widget.extendProps({
+      items: Widget.PropTypes.array.isRequired
+    })
+  }
 
   getInitialState () {
     const user = UserStore.getState().user

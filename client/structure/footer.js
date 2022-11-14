@@ -8,10 +8,6 @@ import Widget from '../widgets'
 import ApplicationStore from '../data/application/store'
 
 module.exports = class Footer extends Widget {
-  state = {
-    site: ApplicationStore.getState().site
-  }
-
   render () {
     const d = new Date()
     const currentYear = d.getFullYear()

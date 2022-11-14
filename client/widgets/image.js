@@ -2,17 +2,21 @@ import React from 'react'
 import Widget from './'
 
 module.exports = class ImageWidget extends Widget {
-  static propTypes = {
-    src: Widget.PropTypes.string.isRequired,
-    alt: Widget.PropTypes.string,
-    width: Widget.PropTypes.number,
-    height: Widget.PropTypes.number,
-    className: Widget.PropTypes.string
+  static get propTypes () {
+    return {
+      src: Widget.PropTypes.string.isRequired,
+      alt: Widget.PropTypes.string,
+      width: Widget.PropTypes.number,
+      height: Widget.PropTypes.number,
+      className: Widget.PropTypes.string
+    }
   }
 
-  static defaultProps = {
-    alt: '',
-    className: null
+  static get defaultProps () {
+    return {
+      alt: '',
+      className: null
+    }
   }
 
   /**

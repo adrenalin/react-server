@@ -3,15 +3,19 @@ import Component from '../lib/component'
 import { getClassName } from '@adrenalin/helpers.js'
 
 module.exports = class Widget extends Component {
-  static propTypes = {
-    id: Widget.PropTypes.string,
-    className: Widget.PropTypes.string,
-    children: Widget.PropTypes.child,
-    onClick: Widget.PropTypes.func
+  static get propTypes () {
+    return {
+      id: Widget.PropTypes.string,
+      className: Widget.PropTypes.string,
+      children: Widget.PropTypes.child,
+      onClick: Widget.PropTypes.func
+    }
   }
 
   // Default class name
-  static DEFAULT_CLASSNAME = null
+  static get DEFAULT_CLASSNAME () {
+    return null
+  }
 
   /**
    * Extend properties

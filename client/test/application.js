@@ -29,15 +29,15 @@ import ApplicationStore from '../data/application/store'
 import LocalesStore from '../data/locales/store'
 
 module.exports = class Application extends Widget {
-  static propTypes = {
-    children: Widget.PropTypes.child,
-    context: Widget.PropTypes.object,
-    router: Widget.PropTypes.func,
-    routerProps: Widget.PropTypes.object,
-    metadata: Widget.PropTypes.object
+  static get propTypes () {
+    return {
+      children: Widget.PropTypes.child,
+      context: Widget.PropTypes.object,
+      router: Widget.PropTypes.func,
+      routerProps: Widget.PropTypes.object,
+      metadata: Widget.PropTypes.object
+    }
   }
-
-  static LOG_LEVEL = 3
 
   constructor (props) {
     super(props)

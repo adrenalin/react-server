@@ -3,8 +3,6 @@ const Logger = require('@adrenalin/logger')
 const events = {}
 
 module.exports = class EventHandler {
-  static LOG_LEVEL = 3
-
   constructor () {
     this.logger = new Logger('Events')
     this.logger.setLevel(this.constructor.LOG_LEVEL)

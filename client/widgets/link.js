@@ -3,15 +3,17 @@ import { Link } from 'react-router-dom'
 import Widget from './'
 
 module.exports = class LinkWidget extends Widget {
-  static propTypes = {
-    active: Widget.PropTypes.bool,
-    selected: Widget.PropTypes.bool,
-    lang: Widget.PropTypes.string,
-    href: Widget.PropTypes.oneOfType([
-      Widget.PropTypes.string,
-      Widget.PropTypes.func
-    ]),
-    to: Widget.PropTypes.string
+  static get propTypes () {
+    return {
+      active: Widget.PropTypes.bool,
+      selected: Widget.PropTypes.bool,
+      lang: Widget.PropTypes.string,
+      href: Widget.PropTypes.oneOfType([
+        Widget.PropTypes.string,
+        Widget.PropTypes.func
+      ]),
+      to: Widget.PropTypes.string
+    }
   }
 
   /**
