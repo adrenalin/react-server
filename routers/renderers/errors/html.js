@@ -12,7 +12,7 @@ module.exports = (app) => {
 
     const { getLinkTags, getJavaScriptFiles } = require('../helpers')(app)
 
-    const metadata = req.metadata || new Metadata()
+    const metadata = res.metadata || new Metadata()
     res.status(err.statusCode || 500)
 
     const l10n = new Localization()
