@@ -1,16 +1,15 @@
-import alt from '../../lib/alt'
-const _debugger = require('debug')
+const alt = require('../../lib/alt')
 
 module.exports = {
   generate: function generate (storeName, structure = {}) {
-    const debug = _debugger(storeName)
-
     if (!structure.actions) {
       throw new Error(`no actions defined for ModelStore ${storeName}`)
     }
+
     if (!structure.source) {
       throw new Error(`no source defined for ModelStore ${storeName}`)
     }
+
     const responseKey = structure.key || 'items'
 
     const listeners = {
@@ -32,10 +31,7 @@ module.exports = {
 
     const store = class CommonModelStore {
       constructor () {
-        this.debug = debug
-
         this.on('bootstrap', () => {
-          // debug('bootstrapping')
         })
 
         if (structure.listeners) {
@@ -64,7 +60,6 @@ module.exports = {
       }
 
       handleCreateItem (model) {
-        // debug('handleCreateItem', model)
         this.error = null
         this[responseKey] = null
         this.created = null
@@ -77,14 +72,12 @@ module.exports = {
       }
 
       handleCreateSuccess (model) {
-        // debug('handleCreateSuccess', model)
         this.error = null
         this[responseKey] = model
         this.created = true
       }
 
       handleUpdateItem (model) {
-        // debug('handleUpdateItem', model)
         this.error = null
         this.creating = false
         if (!this.getInstance().isLoading()) {
@@ -95,7 +88,6 @@ module.exports = {
       }
 
       handleUpdateSuccess (model) {
-        // debug('handleUpdateSuccess', model)
         this.error = null
         this[responseKey] = model
 
@@ -107,7 +99,6 @@ module.exports = {
       }
 
       handleFetchItem (model) {
-        // debug('handleUpdateItem', model)
         this.error = null
         this.creating = false
         if (!this.getInstance().isLoading()) {
@@ -118,14 +109,12 @@ module.exports = {
       }
 
       handleFetchSuccess (model) {
-        // debug('handleUpdateSuccess', model)
         this.error = null
         this[responseKey] = model
         this.created = false
       }
 
       handleRequestFailed (error) {
-        debug('handleRequestFailed', error)
         this.error = error
         this.created = false
       }

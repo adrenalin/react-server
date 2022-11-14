@@ -1,10 +1,7 @@
 import alt from '../../lib/alt'
-const _debugger = require('debug')
 
 module.exports = {
   generate: function generate (storeName, structure = {}) {
-    const debug = _debugger(storeName)
-
     if (!structure.actions) {
       throw new Error(`no actions defined for ListStore ${storeName}`)
     }
@@ -30,10 +27,7 @@ module.exports = {
 
     const store = class CommonListStore {
       constructor () {
-        this.debug = debug
-
         this.on('bootstrap', () => {
-          // debug('bootstrapping')
         })
 
         if (structure.listeners) {
@@ -66,7 +60,6 @@ module.exports = {
       }
 
       getItem (id) {
-        debug('getItem', id)
         const items = this.getState()[responseKey]
         for (const item of items) {
           if (item.id === id) {
@@ -77,21 +70,18 @@ module.exports = {
       }
 
       handleFetchItems () {
-        // debug('handleFetchItems')
         this[responseKey] = []
         this.error = null
         this.removed = false
       }
 
       handleUpdateItems (items) {
-        // debug('handleUpdateItems', items)
         this[responseKey] = items
         this.error = null
         this.removed = false
       }
 
       handleRemoveItem (id) {
-        // debug('handleRemoveItem', id)
         this.error = null
         if (!this.getInstance().isLoading()) {
           setTimeout(() => {
@@ -101,14 +91,12 @@ module.exports = {
       }
 
       handleRemoveSuccess (id) {
-        // debug('handleRemoveSuccess', id)
         this.removed = true
         this.error = null
         this.emitChange()
       }
 
       handleRequestFailed (error) {
-        debug('handleRequestFailed', error)
         this.error = error
         this.removed = false
       }
