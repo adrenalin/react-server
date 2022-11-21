@@ -2,7 +2,7 @@ const path = require('path')
 const Logger = require('@adrenalin/logger')
 const ServerConfig = require('@adrenalin/helpers.js/lib/ServerConfig')
 
-module.exports = async (app, overrides) => {
+module.exports = (app, overrides) => {
   const logger = new Logger('@adrenalin/react-server/server/config')
   logger.setLevel(3)
   logger.debug('Load configuration')
