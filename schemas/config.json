@@ -1,6 +1,6 @@
 {
   "description": "React server configuration schema",
-  "$id": "/config",
+  "$id": "@adrenalin/react-server/config",
   "type": "object",
   "properties": {
     "server": {
