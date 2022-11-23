@@ -25,18 +25,56 @@ module.exports = class Application extends Widget {
     }
   }
 
+  /**
+   * Main application constructor
+   *
+   * @param { object } props          Application props
+   */
   constructor (props) {
     super(props)
 
     // Register project configuration
+    this.onInitialize()
+  }
+
+  /**
+   * Initialize application
+   */
+  onInitialize () {
+    this.initConfig()
+    this.initLocales()
+    this.initMetadata()
+    this.initRequest()
+  }
+
+  /**
+   * Initialize application configuration
+   */
+  initConfig () {
     this.config.set(ApplicationStore.getState().config || {})
+  }
+
+  /**
+   * Initialize application localization
+   */
+  initLocales () {
     Localization.registerLocales(LocalesStore.getState().locales || {})
+    this.l10n.setLang(this.config.get('defaultLanguage'))
+  }
 
+  /**
+   * Initialize application metadata
+   */
+  initMetadata () {
     this.metadata.bindTo(props.metadata || {})
-
     this.metadata.set('http', 'location', this.config.get('currentUrl'))
     this.metadata.set('site', 'title', this.config.get('site.title'))
+  }
 
+  /**
+   * Initialize application request interceptors
+   */
+  initRequest () {
     // Add language headers to Axios requests
     Widget.request.interceptors.request.use((config) => {
       config.headers = config.headers || {}
