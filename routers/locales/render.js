@@ -3,7 +3,7 @@ const Logger = require('@adrenalin/logger')
 const { setValue } = require('@adrenalin/helpers.js')
 
 module.exports = (app) => {
-  const logger = new Logger('@adrenalin/react-server/routers/locales/list')
+  const logger = new Logger('@adrenalin/react-server/routers/locales/render')
   logger.log('Registering router')
 
   const router = express.Router()
