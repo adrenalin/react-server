@@ -212,6 +212,13 @@
           "description": "Binary that will be used to execute nodemon",
           "type": "string",
           "default": "babel-node"
+        },
+        "watch": {
+          "description": "Files to watch",
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
         }
       }
     }

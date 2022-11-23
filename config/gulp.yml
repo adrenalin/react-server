@@ -1,3 +1,13 @@
 # Default environment, refs ./clients/gui
 target:
   client: 'dist'
+
+nodemon:
+  watch:
+    - 'client/*.js'
+    - 'client/**/*.js'
+    - 'config/*.yml'
+    - 'routers/*.js'
+    - 'routers/**/*.js'
+    - 'services/*.js'
+    - 'services/**/*.js'

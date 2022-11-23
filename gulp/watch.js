@@ -96,29 +96,10 @@ function nodemonWatcher () {
     return Promise.resolve()
   }
 
-  return gulpWatch([
-    path.join(config.get('root'), config.get('clients.root'), '*.js'),
-    path.join(config.get('root'), config.get('clients.root'), '**', '*.js'),
-
-    // Config changes
-    path.join(config.get('root'), 'config', '*.yml'),
-
-    // Lib file changes
-    path.join(config.get('root'), 'lib', '*.js'),
-    path.join(config.get('root'), 'lib', '**', '*.js'),
-
-    // Router changes
-    path.join(config.get('root'), 'routers', '*.js'),
-    path.join(config.get('root'), 'routers', '**', '*.js'),
-
-    // Server file changes
-    path.join(config.get('root'), 'server', '*.js'),
-    path.join(config.get('root'), 'server', '**', '*.js'),
-
-    // Service changes
-    path.join(config.get('root'), 'services', '*.js'),
-    path.join(config.get('root'), 'services', '**', '*.js')
-  ], gulp.series([nodemon]))
+  return gulpWatch(
+    config.get('nodemon.watch', []).map((s) => path.join(config.get('root'), s)),
+    gulp.series([nodemon])
+  )
 }
 
 const watchTasks = [
