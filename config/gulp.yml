@@ -1,0 +1,3 @@
+# Default environment, refs ./clients/gui
+target:
+  client: 'dist'

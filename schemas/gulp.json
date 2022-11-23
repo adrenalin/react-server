@@ -1,0 +1,219 @@
+{
+  "description": "Gulp configuration",
+  "$id": "@adrenalin/react-server/config/gulp",
+  "type": "object",
+  "properties": {
+    "root": {
+      "description": "Project root",
+      "type": "string"
+    },
+    "name": {
+      "description": "Project name",
+      "type": "string",
+      "default": "gulp"
+    },
+    "main": {
+      "description": "Project main script",
+      "type": "string",
+      "default": "index.js"
+    },
+    "environment": {
+      "description": "Environment",
+      "type": "string"
+    },
+    "development": {
+      "description": "Development mode flag",
+      "type": "boolean",
+      "default": true
+    },
+    "minify": {
+      "description": "Minify code flag",
+      "type": "boolean",
+      "default": false
+    },
+    "notifier": {
+      "description": "Use node-notifier flag",
+      "type": "boolean",
+      "default": true
+    },
+    "bundler": {
+      "description": "Javascript bundler",
+      "type": "string",
+      "enum": ["fusebox", "webpack"],
+      "default": "fusebox"
+    },
+    "clients": {
+      "description": "Javascript clients, i.e. GUI code",
+      "type": "object",
+      "properties": {
+        "root": {
+          "description": "Client root path, relative to 'root' configuration key",
+          "type": "string",
+          "default": "client"
+        }
+      },
+      "additionalProperties": {
+        "": {
+          "type": "object",
+          "properties": {
+            "path": {
+              "description": "Client root path, relative to 'clients.root' configuration key",
+              "type": "string"
+            },
+            "build": {
+              "description": "Build flag",
+              "type": "boolean",
+              "default": true
+            },
+            "entry": {
+              "description": "Entry file for the bundler",
+              "type": "string"
+            },
+            "sourceMaps": {
+              "description": "Build sourcemaps",
+              "type": "boolean",
+              "default": true
+            }
+          },
+          "required": ["path", "entry"]
+        }
+      }
+    },
+    "assets": {
+      "description": "Public assets",
+      "type": "object",
+      "properties": {
+        "css": {
+          "description": "CSS path, relative to 'root' configuration key",
+          "type": "string",
+          "default": "assets/css"
+        },
+        "files": {
+          "description": "Static file path, relative to 'root' configuration key",
+          "type": "string",
+          "default": "assets/files"
+        },
+        "fonts": {
+          "description": "Static fonts path, relative to 'root' configuration key",
+          "type": "string",
+          "default": "assets/fonts"
+        },
+        "images": {
+          "description": "Static images path, relative to 'root' configuration key",
+          "type": "string",
+          "default": "assets/images"
+        },
+        "js": {
+          "description": "Static Javascript file path, relative to 'root' configuration key",
+          "type": "string",
+          "default": "assets/js"
+        }
+      }
+    },
+    "apidoc": {
+      "description": "API documentation with apidoc",
+      "type": "object",
+      "properties": {
+        "enabled": {
+          "description": "Enabled flag",
+          "type": "boolean",
+          "default": false
+        },
+        "source": {
+          "description": "Routers path, relative to 'root' configuration key",
+          "type": "string",
+          "default": "routers"
+        },
+        "target": {
+          "description": "apidoc target, relative to 'root' configuration key",
+          "type": "string",
+          "default": "build/static/apidoc"
+        }
+      }
+    },
+    "target": {
+      "description": "Build target",
+      "type": "object",
+      "properties": {
+        "client": {
+          "description": "Client JS build target, relative to 'root' configuration key",
+          "type": "string",
+          "default": "build/client"
+        },
+        "css": {
+          "description": "Built CSS files target, relative to 'root' configuration key",
+          "type": "string",
+          "default": "build/static/css"
+        },
+        "files": {
+          "description": "Static files target, relative to 'root' configuration key",
+          "type": "string",
+          "default": "build/static/files"
+        },
+        "fonts": {
+          "description": "Static fonts target, relative to 'root' configuration key",
+          "type": "string",
+          "default": "build/static/fonts"
+        },
+        "images": {
+          "description": "Static images target, relative to 'root' configuration key",
+          "type": "string",
+          "default": "build/static/images"
+        },
+        "js": {
+          "description": "Static JS files target, relative to 'root' configuration key",
+          "type": "string",
+          "default": "build/static/js"
+        }
+      }
+    },
+    "vendors": {
+      "description": "3rd party plugins that will not be merged to the bundled JS",
+      "type": "object",
+      "additionalProperties": {
+        "": {
+          "description": "Module name",
+          "type": "object",
+          "properties": {
+            "exports": {
+              "description": "Export module as",
+              "type": "string"
+            },
+            "source": {
+              "description": "Source filename inside 'node_modules/PACKAGE_NAME'",
+              "type": "string"
+            }
+          },
+          "required": ["exports", "source"]
+        }
+      }
+    },
+    "eslint": {
+      "description": "eslint configuration",
+      "type": "object",
+      "properties": {
+        "configFile": {
+          "description": "eslint configuration path, relative to 'root' configuration key",
+          "type": "string",
+          "default": ".eslintrc.json"
+        }
+      }
+    },
+    "nodemon": {
+      "description": "Nodemon configuration",
+      "type": "object",
+      "properties": {
+        "enabled": {
+          "description": "Nodemon enabled flag",
+          "type": "boolean",
+          "default": true
+        },
+        "binary": {
+          "description": "Binary that will be used to execute nodemon",
+          "type": "string",
+          "default": "babel-node"
+        }
+      }
+    }
+  }
+}
