@@ -26,6 +26,4 @@ if (config.get('apidoc.build')) {
   tasks.push(buildAPIdoc)
 }
 
-module.exports = function build () {
-  return gulp.parallel(tasks)
-}
+module.exports = gulp.parallel(tasks)
