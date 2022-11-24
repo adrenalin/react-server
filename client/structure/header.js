@@ -1,6 +1,6 @@
 import React from 'react'
 
-import Widget from '../widgets'
+import Widget from '../lib/widget'
 import Img from '../widgets/image'
 
 module.exports = class Header extends Widget {

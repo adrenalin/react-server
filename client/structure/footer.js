@@ -4,7 +4,7 @@ import {
   Row,
   Col
 } from 'reactstrap'
-import Widget from '../widgets'
+import Widget from '../lib/widget'
 import ApplicationStore from '../data/application/store'
 
 module.exports = class Footer extends Widget {

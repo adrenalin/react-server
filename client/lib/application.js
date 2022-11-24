@@ -3,7 +3,7 @@ import {
   Switch,
   Route
 } from 'react-router-dom'
-import Widget from '../widgets'
+import Widget from '../lib/widget'
 
 import { Localization } from '@adrenalin/helpers.js'
 

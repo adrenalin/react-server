@@ -1,7 +1,7 @@
 import React from 'react'
 import { withRouter } from 'react-router'
 
-import Widget from '../widgets'
+import Widget from '../lib/widget'
 import Icon from '../widgets/icon'
 import Link from '../widgets/link'
 
