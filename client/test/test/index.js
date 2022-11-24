@@ -1,7 +1,7 @@
 import React from 'react'
 import Page from '../../lib/page'
 
-module.exports = class Test extends Page {
+module.exports = class TestPage extends Page {
   /**
    * Get page title
    *
@@ -23,8 +23,7 @@ module.exports = class Test extends Page {
   /**
    * Initialize the component
    */
-  onInitialize () {
-    super.onInitialize()
+  onInitialized () {
     const image = this.config.get('tests.lib.react.metadata.image')
 
     if (image) {
