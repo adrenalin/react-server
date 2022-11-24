@@ -4,6 +4,7 @@ const { castToArray } = require('@adrenalin/helpers.js')
 const init = require('../../../init')
 
 const router = require('../../../../routers/renderers/react')
+const metadataRouter = require('../../../../routers/application/metadata')
 const langRouter = require('../../../../routers/application/lang')
 const configRouter = require('../../../../routers/application/config')
 const errorRouter = require('../../../../routers/renderers/errors/api')
@@ -33,6 +34,7 @@ describe('routers/renderers/react:metadata', () => {
     defaultLocales = app.config.get('react.locales')
 
     app.use(testUrl, configRouter(app))
+    app.use(testUrl, metadataRouter(app))
     app.use(testUrl, langRouter(app))
     app.use(testUrl, router(app))
     app.use(testUrl, errorRouter(app))
