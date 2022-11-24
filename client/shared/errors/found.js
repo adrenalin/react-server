@@ -8,15 +8,18 @@ import {
 import DefaultError from './defaulterror'
 
 module.exports = class Found extends DefaultError {
-  static propTypes = {
-    location: DefaultError.PropTypes.string.isRequired
+  static get propTypes () {
+    return {
+      location: DefaultError.PropTypes.string.isRequired
+    }
   }
 
-  static STATUS_CODE = 302
+  static get STATUS_CODE () {
+    return 302
+  }
 
   constructor (props) {
     super(props)
-    this.metadata.setStatusCode(this.constructor.STATUS_CODE)
     this.metadata.setLocation(props.location)
   }
 

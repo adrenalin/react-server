@@ -1,5 +1,7 @@
 import DefaultError from './defaulterror'
 
 module.exports = class InvalidRequest extends DefaultError {
-  static STATUS_CODE = 400
+  static get STATUS_CODE () {
+    return 400
+  }
 }

@@ -1,5 +1,7 @@
 import DefaultError from './defaulterror'
 
 module.exports = class NotFound extends DefaultError {
-  static STATUS_CODE = 404
+  static get STATUS_CODE () {
+    return 404
+  }
 }

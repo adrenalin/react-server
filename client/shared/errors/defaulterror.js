@@ -4,26 +4,25 @@ import {
   Row,
   Col
 } from 'reactstrap'
-import Component from '../../lib/component'
+import Page from '../../lib/page'
 
-module.exports = class DefaultError extends Component {
-  static STATUS_CODE = 500
-
-  static propTypes = {
-    args: Component.PropTypes.array,
-    error: Component.PropTypes.string,
-    errors: Component.PropTypes.object,
-    location: Component.PropTypes.oneOfType([
-      Component.PropTypes.object,
-      Component.PropTypes.string
-    ]),
-    title: Component.PropTypes.string,
-    message: Component.PropTypes.string
+module.exports = class DefaultError extends Page {
+  static get STATUS_CODE () {
+    return 500
   }
 
-  constructor (props) {
-    super(props)
-    this.metadata.setStatusCode(this.constructor.STATUS_CODE)
+  static get propTypes () {
+    return {
+      args: Page.PropTypes.array,
+      error: Page.PropTypes.string,
+      errors: Page.PropTypes.object,
+      location: Page.PropTypes.oneOfType([
+        Page.PropTypes.object,
+        Page.PropTypes.string
+      ]),
+      title: Page.PropTypes.string,
+      message: Page.PropTypes.string
+    }
   }
 
   /**

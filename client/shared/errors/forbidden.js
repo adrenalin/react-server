@@ -7,10 +7,14 @@ import {
 import DefaultError from './defaulterror'
 
 module.exports = class Forbidden extends DefaultError {
-  static STATUS_CODE = 403
+  static get STATUS_CODE () {
+    return 403
+  }
 
-  static propTypes = {
-    roles: DefaultError.PropTypes.array
+  static get propTypes () {
+    return {
+      roles: DefaultError.PropTypes.array
+    }
   }
 
   /**
