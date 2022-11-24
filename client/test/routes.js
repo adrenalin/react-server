@@ -1,6 +1,7 @@
 import Test from './test'
 import TestUndefined from './test/undefined'
 import TestFormValidation from './test/formvalidation'
+import NotFound from '../shared/errors/notfound'
 
 module.exports = {
   '/:lang': {
@@ -14,5 +15,8 @@ module.exports = {
   '/:lang/formvalidation': {
     component: TestFormValidation,
     exact: true
+  },
+  '*': {
+    component: NotFound
   }
 }
