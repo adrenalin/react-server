@@ -13,10 +13,7 @@ const fuseboxConfig = {
   homeDir: path.join(config.get('root'), config.get('clients.root')),
   target: 'browser@es6',
   output: path.join(config.get('root'), config.get('target.js'), entry),
-  sourceMaps: {
-    project: true,
-    vendor: false
-  },
+  sourceMaps: true,
   plugins: [
     JSONPlugin(),
     Babel7Plugin({
