@@ -3,7 +3,7 @@ import {
   Switch,
   Route
 } from 'react-router-dom'
-import Widget from '../lib/widget'
+import Component from '../lib/component'
 
 import { Localization } from '@adrenalin/helpers.js'
 
@@ -14,18 +14,18 @@ import NotFound from '../shared/errors/notfound'
 import ApplicationStore from '../data/application/store'
 import LocalesStore from '../data/locales/store'
 
-module.exports = class Application extends Widget {
+module.exports = class Application extends Component {
   static get DEFAULT_LANG () {
     return 'en'
   }
 
   static get propTypes () {
     return {
-      children: Widget.PropTypes.child,
-      context: Widget.PropTypes.object,
-      router: Widget.PropTypes.func,
-      routerProps: Widget.PropTypes.object,
-      metadata: Widget.PropTypes.object
+      children: Component.PropTypes.child,
+      context: Component.PropTypes.object,
+      router: Component.PropTypes.func,
+      routerProps: Component.PropTypes.object,
+      metadata: Component.PropTypes.object
     }
   }
 
@@ -33,6 +33,8 @@ module.exports = class Application extends Widget {
    * Pre initialization hook
    */
   onInitializing () {
+    this.metadata.bindTo(this.props.metadata)
+
     this.initConfig()
     this.registerLocales()
     this.initRequest()
@@ -41,10 +43,7 @@ module.exports = class Application extends Widget {
   /**
    * Initialize metadata
    */
-  onInitializeMetadata () {
-    this.metadata.bindTo(props.metadata || {})
-
-    super.initializeMetadata()
+  initializeMetadata () {
     this.metadata.set('http', 'location', this.config.get('currentUrl'))
 
     const site = this.config.get('site', {})
@@ -77,7 +76,7 @@ module.exports = class Application extends Widget {
    */
   initRequest () {
     // Add language headers to Axios requests
-    Widget.request.interceptors.request.use((config) => {
+    Component.request.interceptors.request.use((config) => {
       config.headers = config.headers || {}
       config.headers['X-Language'] = this.lang
       return config
@@ -119,8 +118,15 @@ module.exports = class Application extends Widget {
       const route = routes[path]
       this.helpers.castToArray(route.paths || route.path || path)
         .forEach((p) => {
+          const props = {
+            ...route
+          }
+
+          delete props.path
+          delete props.paths
+
           routers.push((
-            <Route path={p} {...route} key={`route-${i}`} />
+            <Route {...props} path={p} key={`route-${i}`} />
           ))
         })
     })
@@ -128,7 +134,6 @@ module.exports = class Application extends Widget {
     return (
       <Switch>
         {routers}
-        <Route component={NotFound} />
       </Switch>
     )
   }
