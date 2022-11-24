@@ -56,7 +56,7 @@ module.exports = class LinkWidget extends Widget {
     const props = this.helpers.copyObject(this.props)
 
     if (this.lang && props.to) {
-      props.to = `/${this.lang}${props.to}`.replace(/^\/\//, '/')
+      props.to = `/${this.lang}${props.to === '/' ? '' : props.to}`.replace(/^\/\//, '/')
     }
 
     nopass.forEach((key) => {
