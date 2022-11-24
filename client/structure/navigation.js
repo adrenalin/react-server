@@ -1,5 +1,5 @@
 import React from 'react'
-import { withRouter } from 'react-router'
+import { withRouter } from 'react-router-dom'
 
 import Widget from '../lib/widget'
 import Icon from '../widgets/icon'
