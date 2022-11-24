@@ -28,7 +28,7 @@ import NotFound from '../shared/errors/notfound'
 import ApplicationStore from '../data/application/store'
 import LocalesStore from '../data/locales/store'
 
-module.exports = class Test extends Application {
+module.exports = class TestApplication extends Application {
   /**
    * Get derived state from props
    *
@@ -51,25 +51,8 @@ module.exports = class Test extends Application {
     return this.metadata
   }
 
-  /**
-   * Render routers
-   *
-   * @return { ReactChild }           React child for rendering
-   */
-  renderRouter () {
-    return (
-      <Switch>
-        {Object.keys(routes).map((path, i) => {
-          const route = routes[path]
-          path = route.path || path
-
-          return (
-            <Route path={path} {...route} key={`route-${i}`} />
-          )
-        })}
-        <Route component={NotFound} />
-      </Switch>
-    )
+  getPageNotFoundRouter () {
+    return null
   }
 
   /**
@@ -97,7 +80,7 @@ module.exports = class Test extends Application {
         </Container>
         <ErrorBoundary>
           <Container id='content' fluid className='py-3 px-1 py-md-3 px-md-3 p-md-0'>
-            {this.renderRouter()}
+            {this.renderRouter(routes)}
           </Container>
         </ErrorBoundary>
         <Footer />
