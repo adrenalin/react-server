@@ -37,6 +37,11 @@ module.exports = class ImageWidget extends Widget {
     return this.props.src
   }
 
+  /**
+   * Render the component
+   *
+   * @return { ReactChild }           React child for rendering
+   */
   render () {
     const props = {
       src: this.getSrc(this.props.src),
