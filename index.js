@@ -16,7 +16,9 @@ module.exports = {
   // Main component
   Application: require('./dist/lib/application'),
   Component: require('./dist/lib/component'),
+  Page: require('./dist/lib/page'),
   Widget: require('./dist/lib/widget'),
+
   Image: require('./dist/widgets/image'),
   Link: require('./dist/widgets/link'),
   Notifications: require('./dist/shared/notifications'),
