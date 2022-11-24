@@ -14,7 +14,7 @@ const fuseboxConfig = {
   target: 'browser@es6',
   output: path.join(config.get('root'), config.get('target.js'), entry),
   sourceMaps: {
-    project: config.get(`clients.${env}.source`),
+    project: true,
     vendor: false
   },
   plugins: [
