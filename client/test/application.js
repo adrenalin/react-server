@@ -9,7 +9,7 @@ import {
   Route
 } from 'react-router-dom'
 import routes from './routes'
-import Component from '../lib/component'
+import Application from '../lib/application'
 import Logo from '../widgets/logo'
 import navigation from './config/navigation'
 
@@ -28,39 +28,7 @@ import NotFound from '../shared/errors/notfound'
 import ApplicationStore from '../data/application/store'
 import LocalesStore from '../data/locales/store'
 
-module.exports = class Application extends Component {
-  static get propTypes () {
-    return {
-      children: Component.PropTypes.child,
-      context: Component.PropTypes.object,
-      router: Component.PropTypes.func,
-      routerProps: Component.PropTypes.object,
-      metadata: Component.PropTypes.object
-    }
-  }
-
-  constructor (props) {
-    super(props)
-
-    // Register project configuration
-    this.config.set(ApplicationStore.getState().config || {})
-    Localization.registerLocales(LocalesStore.getState().locales || {})
-
-    this.metadata.bindTo(props.metadata || {})
-
-    this.metadata.set('http', 'location', this.config.get('currentUrl'))
-    this.metadata.set('site', 'title', this.config.get('site.title'))
-
-    // Add language headers to Axios requests
-    Component.request.interceptors.request.use((config) => {
-      config.headers = config.headers || {}
-      config.headers['X-Language'] = this.lang
-      return config
-    }, (err) => {
-      return Promise.reject(err)
-    })
-  }
-
+module.exports = class Test extends Application {
   /**
    * Get derived state from props
    *
