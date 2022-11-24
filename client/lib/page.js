@@ -33,7 +33,7 @@ module.exports = class Page extends Component {
   /**
    * Initialize the component
    */
-  onInitialized () {
+  onInitializing () {
     this.setClassToBody()
     this.setPageUrl()
     this.setPageTitle()
@@ -44,10 +44,23 @@ module.exports = class Page extends Component {
   /**
    * Initialize hook for metadata
    */
-  onInitializeMetadata () {
+  initializeMetadata () {
     this.metadata.set('page', 'type', this.constructor.METADATA_PAGE_TYPE)
     this.metadata.set('page', 'isFree', !!this.constructor.METADATA_PAGE_IS_FREE)
     this.metadata.set('page', 'paywallMask', this.constructor.METADATA_PAYWALL_MASK)
+
+    const status = this.getStatusCode()
+
+    if (status) {
+      this.metadata.setStatusCode(status)
+    }
+  }
+
+  /**
+   * Get page status code
+   */
+  getStatusCode () {
+    return this.constructor.STATUS_CODE || null
   }
 
   /**
@@ -98,11 +111,15 @@ module.exports = class Page extends Component {
 
   /**
    * Set page description
+   *
+   * @param { string} [description]   Page description
    */
   setPageDescription (description) {
-    description = description || this.getPageDescription()
+    if (description == null) {
+      description = this.getPageDescription()
+    }
 
-    if (description != null) {
+    if (description) {
       this.metadata.set('page', 'description', description.replace(/[\n\r]+/g, ' '))
     }
   }
@@ -122,7 +139,7 @@ module.exports = class Page extends Component {
    * @return { string|array }         String or array of strings describing context title
    */
   getPageTitle () {
-    return null
+    return this.constructor.name
   }
 
   /**

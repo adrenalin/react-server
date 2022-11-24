@@ -186,13 +186,6 @@ module.exports = class Component extends React.Component {
   }
 
   /**
-   * Initialize locales
-   */
-  initializeLocales () {
-    this.l10n = localization
-  }
-
-  /**
    * Pre initialization hook
    */
   onInitializing () {}
@@ -201,6 +194,13 @@ module.exports = class Component extends React.Component {
    * Post initialization hook
    */
   onInitialized () {}
+
+  /**
+   * Initialize locales
+   */
+  initializeLocales () {
+    this.l10n = localization
+  }
 
   /**
    * Initialize metadata
