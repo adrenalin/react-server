@@ -1,6 +1,6 @@
 import React from 'react'
 import { withRouter } from 'react-router'
-import Widget from './'
+import Widget from '../lib/widget'
 import Img from './image'
 import Link from './link'
 

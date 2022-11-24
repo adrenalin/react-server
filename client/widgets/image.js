@@ -1,5 +1,5 @@
 import React from 'react'
-import Widget from './'
+import Widget from '../lib/widget'
 
 module.exports = class ImageWidget extends Widget {
   static get propTypes () {

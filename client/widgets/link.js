@@ -1,6 +1,6 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
-import Widget from './'
+import Widget from '../lib/widget'
 
 module.exports = class LinkWidget extends Widget {
   static get propTypes () {
