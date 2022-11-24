@@ -16,14 +16,12 @@ import Logger from '@adrenalin/logger'
 import ApplicationStore from '../data/application/store'
 import UserStore from '../data/user/store'
 
-const validate = require('../lib/helpers/validate')
-
-const localization = new helpers.Localization()
-let currentLanguage = 'fi'
-
+// Singleton instances
 const events = new EventHandler()
 const metadata = new Metadata()
 const config = new helpers.Config()
+const localization = new helpers.Localization()
+const validate = require('../lib/helpers/validate')
 
 if (!PropTypes.child) {
   PropTypes.child = PropTypes.oneOfType([
@@ -118,15 +116,7 @@ module.exports = class Component extends React.Component {
 
     this.config = config
     this.helpers = helpers
-
-    // Localization
-    if (ApplicationStore.getState().lang) {
-      currentLanguage = ApplicationStore.getState().lang
-    }
-
-    // Localization context
-    this.lang = ApplicationStore.getState().lang || currentLanguage
-    this.l10n = localization.setLang(this.lang)
+    this.metadata = metadata
 
     // User
     this.user = UserStore.getState().user
@@ -168,10 +158,18 @@ module.exports = class Component extends React.Component {
    */
   onInitialize () {
     this.onInitializing()
+    this.initializeLocales()
     this.initializeMetadata()
     this.initializeStores()
     this.setInitialState(this.getInitialState())
     this.onInitialized()
+  }
+
+  /**
+   * Initialize locales
+   */
+  initializeLocales () {
+    this.l10n = localization
   }
 
   /**
@@ -187,9 +185,7 @@ module.exports = class Component extends React.Component {
   /**
    * Initialize metadata
    */
-  initializeMetadata () {
-    this.metadata = metadata
-  }
+  initializeMetadata () {}
 
   /**
    * Initialize stores

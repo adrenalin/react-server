@@ -15,6 +15,10 @@ import ApplicationStore from '../data/application/store'
 import LocalesStore from '../data/locales/store'
 
 module.exports = class Application extends Widget {
+  static get DEFAULT_LANG () {
+    return 'en'
+  }
+
   static get propTypes () {
     return {
       children: Widget.PropTypes.child,
@@ -26,25 +30,28 @@ module.exports = class Application extends Widget {
   }
 
   /**
-   * Main application constructor
-   *
-   * @param { object } props          Application props
+   * Pre initialization hook
    */
-  constructor (props) {
-    super(props)
-
-    // Register project configuration
-    this.onInitialize()
+  onInitializing () {
+    this.initConfig()
+    this.registerLocales()
+    this.initRequest()
   }
 
   /**
-   * Initialize application
+   * Initialize metadata
    */
-  onInitialize () {
-    this.initConfig()
-    this.initLocales()
-    this.initMetadata()
-    this.initRequest()
+  onInitializeMetadata () {
+    this.metadata.bindTo(props.metadata || {})
+
+    super.initializeMetadata()
+    this.metadata.set('http', 'location', this.config.get('currentUrl'))
+
+    const site = this.config.get('site', {})
+
+    for (const key in site) {
+      this.metadata.set('site', key, site[key])
+    }
   }
 
   /**
@@ -57,18 +64,17 @@ module.exports = class Application extends Widget {
   /**
    * Initialize application localization
    */
-  initLocales () {
-    Localization.registerLocales(LocalesStore.getState().locales || {})
-    this.l10n.setLang(this.config.get('defaultLanguage'))
-  }
+  registerLocales () {
+    // Localization
+    if (ApplicationStore.getState().lang) {
+      currentLanguage = ApplicationStore.getState().lang
+    }
 
-  /**
-   * Initialize application metadata
-   */
-  initMetadata () {
-    this.metadata.bindTo(props.metadata || {})
-    this.metadata.set('http', 'location', this.config.get('currentUrl'))
-    this.metadata.set('site', 'title', this.config.get('site.title'))
+    // Localization context
+    this.lang = ApplicationStore.getState().lang || currentLanguage
+    this.l10n.setLang(this.lang)
+
+    Localization.registerLocales(LocalesStore.getState().locales || {})
   }
 
   /**

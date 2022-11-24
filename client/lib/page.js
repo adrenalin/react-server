@@ -33,8 +33,7 @@ module.exports = class Page extends Component {
   /**
    * Initialize the component
    */
-  onInitialize () {
-    super.onInitialize()
+  onInitialized () {
     this.setClassToBody()
     this.setPageUrl()
     this.setPageTitle()
@@ -42,9 +41,10 @@ module.exports = class Page extends Component {
     this.setBreadcrumbPath()
   }
 
-  initializeMetadata () {
-    super.initializeMetadata()
-
+  /**
+   * Initialize hook for metadata
+   */
+  onInitializeMetadata () {
     this.metadata.set('page', 'type', this.constructor.METADATA_PAGE_TYPE)
     this.metadata.set('page', 'isFree', !!this.constructor.METADATA_PAGE_IS_FREE)
     this.metadata.set('page', 'paywallMask', this.constructor.METADATA_PAYWALL_MASK)
