@@ -4,6 +4,17 @@ const nodemon = require('nodemon')
 const config = require('../config')
 const notify = require('../lib/notify')
 
+const nodemonConfig = {
+  execMap: {
+    js: config.get('nodemon.binary', 'node')
+  },
+  script: path.join(config.get('root'), config.get('main', 'index.js')),
+  env: {
+    NODE_ENV: config.get('node.env', 'dev')
+  },
+  ignore: ['*']
+}
+
 let timeout
 
 const restartNodemon = () => {
@@ -23,16 +34,7 @@ const nodemonInstance = () => {
   }
 
   // Start nodemon
-  this.nodemonInstance = nodemon({
-    execMap: {
-      js: config.get('nodemon.binary', 'node')
-    },
-    script: path.join(config.get('root'), config.get('main', 'index.js')),
-    env: {
-      NODE_ENV: config.get('node.env', 'dev')
-    },
-    ignore: ['*']
-  })
+  this.nodemonInstance = nodemon(nodemonConfig)
     .on('start', () => {
       notify({
         title: config.get('name', 'Nodemon'),
