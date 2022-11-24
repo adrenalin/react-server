@@ -9,7 +9,7 @@ import {
   Route
 } from 'react-router-dom'
 import routes from './routes'
-import Widget from '../widgets'
+import Component from '../lib/component'
 import Logo from '../widgets/logo'
 import navigation from './config/navigation'
 
@@ -28,14 +28,14 @@ import NotFound from '../shared/errors/notfound'
 import ApplicationStore from '../data/application/store'
 import LocalesStore from '../data/locales/store'
 
-module.exports = class Application extends Widget {
+module.exports = class Application extends Component {
   static get propTypes () {
     return {
-      children: Widget.PropTypes.child,
-      context: Widget.PropTypes.object,
-      router: Widget.PropTypes.func,
-      routerProps: Widget.PropTypes.object,
-      metadata: Widget.PropTypes.object
+      children: Component.PropTypes.child,
+      context: Component.PropTypes.object,
+      router: Component.PropTypes.func,
+      routerProps: Component.PropTypes.object,
+      metadata: Component.PropTypes.object
     }
   }
 
@@ -52,7 +52,7 @@ module.exports = class Application extends Widget {
     this.metadata.set('site', 'title', this.config.get('site.title'))
 
     // Add language headers to Axios requests
-    Widget.request.interceptors.request.use((config) => {
+    Component.request.interceptors.request.use((config) => {
       config.headers = config.headers || {}
       config.headers['X-Language'] = this.lang
       return config

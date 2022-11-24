@@ -1,7 +1,7 @@
 import React from 'react'
-import Component from '../../lib/component'
+import Page from '../../lib/page'
 
-module.exports = class Test extends Component {
+module.exports = class Test extends Page {
   /**
    * Get page title
    *

@@ -1,7 +1,7 @@
 import React from 'react'
-import Component from '../../lib/component'
+import Page from '../../lib/page'
 
-module.exports = class TestUndefined extends Component {
+module.exports = class TestUndefined extends Page {
   render () {
     return (
       <p>

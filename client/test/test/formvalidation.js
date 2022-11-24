@@ -1,8 +1,8 @@
 import React from 'react'
-import Component from '../../lib/component'
+import Page from '../../lib/page'
 import ErrorStore from '../../data/error/store'
 
-module.exports = class TestFormValidation extends Component {
+module.exports = class TestFormValidation extends Page {
   /**
    * Get initial state for the component
    *
