@@ -23,6 +23,8 @@ const config = new helpers.Config()
 const localization = new helpers.Localization()
 const validate = require('../lib/helpers/validate')
 
+let currentLang = null
+
 if (!PropTypes.child) {
   PropTypes.child = PropTypes.oneOfType([
     PropTypes.array,
@@ -106,6 +108,22 @@ module.exports = class Component extends React.Component {
   }
 
   /**
+   * Get current language
+   *
+   * @return { string }               Language code
+   */
+  get lang () {
+    return currentLang
+  }
+
+  /**
+   * Set current language
+   */
+  set lang (value) {
+    currentLang = value
+  }
+
+  /**
    * Constructor to initialize the component
    *
    * @param { object } props          Component props
@@ -114,9 +132,11 @@ module.exports = class Component extends React.Component {
     super(props)
     this.logger = new Logger(this)
 
+    // Bind singletons
     this.config = config
     this.helpers = helpers
     this.metadata = metadata
+    this.l10n = localization
 
     // User
     this.user = UserStore.getState().user

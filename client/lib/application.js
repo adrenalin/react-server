@@ -65,13 +65,8 @@ module.exports = class Application extends Widget {
    * Initialize application localization
    */
   registerLocales () {
-    // Localization
-    if (ApplicationStore.getState().lang) {
-      currentLanguage = ApplicationStore.getState().lang
-    }
-
     // Localization context
-    this.lang = ApplicationStore.getState().lang || currentLanguage
+    this.lang = ApplicationStore.getState().lang || this.constructor.DEFAULT_LANG
     this.l10n.setLang(this.lang)
 
     Localization.registerLocales(LocalesStore.getState().locales || {})
