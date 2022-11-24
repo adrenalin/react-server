@@ -175,7 +175,8 @@ module.exports = (app) => {
       const entry = path.join(app.APPLICATION_ROOT, 'client', req.config.get('entry'), 'application.js')
 
       if (err) {
-        metadata.set('http', 'status', err.statusCode || 500)
+        const status = err.statusCode || 500
+        metadata.setStatusCode(status)
         setValue(res, 'locals.data.ErrorStore.error', err.message)
 
         if (err.errors) {
