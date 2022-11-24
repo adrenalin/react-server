@@ -263,10 +263,7 @@ module.exports = class Component extends React.Component {
    */
   componentDidMount () {
     // super.componentDidMount()
-    this.setClassToBody()
     this.bindEvents()
-    this.setPageTitle()
-    this.setBreadcrumbPath()
 
     const stores = this.constructor.STORES || []
     stores.forEach((store) => {
@@ -304,9 +301,6 @@ module.exports = class Component extends React.Component {
    */
   componentDidUpdate (prevProps, prevState, snapshot) {
     // super.componentDidUpdate(prevProps, prevState, snapshot)
-    this.setClassToBody()
-    this.setPageTitle()
-    this.setBreadcrumbPath()
   }
 
   /**
@@ -316,10 +310,6 @@ module.exports = class Component extends React.Component {
   componentWillUnmount () {
     // super.componentWillUnmount()
     this.unbindEvents()
-
-    if (this.getPageClass()) {
-      this.metadata.setPageClass('')
-    }
 
     const stores = this.constructor.STORES || []
     stores.forEach((store) => {

@@ -174,4 +174,49 @@ module.exports = class Page extends Component {
     this.logger.debug('Got breadcrumb parts', parts)
     this.metadata.setBreadcrumbPath(parts)
   }
+
+  /**
+   * React component lifecycle event that will be triggered after the component
+   * has been mounted to DOM
+   */
+  componentDidMount () {
+    super.componentDidMount()
+    this.setClassToBody()
+    this.setPageTitle()
+    this.setBreadcrumbPath()
+  }
+
+  /**
+   * React component lifecycle event that will be triggered after the props
+   * have changed
+   *
+   * @param { object } prevProps      Previous properties
+   * @param { object } prevState      Previous state
+   * @param { object } snapshot       Snapshot of the component
+   */
+  componentDidUpdate (prevProps, prevState, snapshot) {
+    super.componentDidUpdate(prevProps, prevState, snapshot)
+    this.setClassToBody()
+    this.setPageTitle()
+    this.setBreadcrumbPath()
+  }
+
+  /**
+   * React component lifecycle event that will be triggered before the component
+   * will be unmounted to DOM
+   */
+  componentWillUnmount () {
+    super.componentWillUnmount()
+    this.unbindEvents()
+
+    if (this.getPageClass()) {
+      this.metadata.setPageClass('')
+    }
+
+    const stores = this.constructor.STORES || []
+    stores.forEach((store) => {
+      this.logger.debug('Will unlisten', store.displayName)
+      store.unlisten(this.listeners[store.displayName])
+    })
+  }
 }
