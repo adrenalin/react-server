@@ -64,7 +64,7 @@ ${structured}
   <body class="${metadata.get('page', 'className')}" data-site="${metadata.get('site', 'title')}" data-site-id="${metadata.get('site', 'id') || 'public'}">
     ${html}
     <script src="/js/vendors.js"></script>
-    <script src="/js/jquery.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.1.slim.min.js"></script>
 ${
   castToArray(jsFiles)
     .filter(jsfile => jsfile)
