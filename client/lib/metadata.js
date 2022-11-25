@@ -1,8 +1,31 @@
-// const debug = require('debug')('Metadata')
 const Logger = require('@adrenalin/logger')
-const { castToArray, getValue, setValue } = require('@adrenalin/helpers.js')
+const { InvalidArgument } = require('@adrenalin/errors')
+const { castToArray, getValue, isObject, setValue } = require('@adrenalin/helpers.js')
 
 module.exports = class Metadata {
+  /**
+   * Helper function to trim strings
+   *
+   * @param { mixed } value           Value to trim
+   * @return { mixed }                Trimmed value if string given, otherwise the original value
+   */
+  static trim (value) {
+    if (typeof value !== 'string') {
+      return value
+    }
+
+    return value.replace(/(^\s*|\s*$)/g, '')
+  }
+
+  /**
+   * Alias to the static method
+   *
+   * @return { function }             Metadata.trim method
+   */
+  get trim () {
+    return this.constructor.trim
+  }
+
   constructor () {
     this.logger = new Logger(this)
     this.logger.setLevel(5)
@@ -13,9 +36,19 @@ module.exports = class Metadata {
 
   /**
    * Bind to metadata object given e.g. in server side renderer
+   *
+   * @param { object } obj            Object to bind the metadata
    */
   bindTo (obj) {
+    if (!isObject(obj)) {
+      throw new InvalidArgument('Metadata bindTo accepts only an object as an argument')
+    }
+
+    const prevValues = this.values
     this.values = obj || {}
+
+    // Bind the previously stored values to the bound object
+    this.set(prevValues)
   }
 
   /**
@@ -26,9 +59,8 @@ module.exports = class Metadata {
   flush () {
     const values = JSON.parse(JSON.stringify(this.values))
 
-    for (const k in this.values) {
-      delete this.values[k]
-    }
+    // Reset the stored metadata values
+    this.values = {}
 
     return values
   }
@@ -55,17 +87,55 @@ module.exports = class Metadata {
    ' Set a value to metadata domain
    *
    * @param { string } domain         Name of the metadata domain
-   * @param { string } key            Metadata key
-   * @param { mixed } value           Metadata value
+   * @param { string|object } key     Metadata key or an object with key-value pairs
+   * @param { mixed } [value]         Metadata value
    * @return { Metadata }             This instance
    */
   set (domain, key, value) {
-    const p = `${domain}.${key}`
+    const originalArgs = [domain, key, value].filter(k => k != null)
 
-    if (getValue(this.values, p) !== value) {
-      setValue(this.values, p, value)
-      this.trigger(domain, key, value)
+    /**
+     * Internal helper to parse the given arguments
+     */
+    const set = (...args) => {
+      const [_d, _k, _v] = args
+
+      if (isObject(_d)) {
+        for (const k in _d) {
+          set(k, _d[k])
+        }
+
+        return
+      }
+
+      if (isObject(_k)) {
+        for (const k in _k) {
+          set(_d, k, _k[k])
+        }
+
+        return
+      }
+
+      if (_d == null || typeof _d !== 'string') {
+        this.logger.error('Could not resolve the metadata domain')
+        this.logger.error('Arguments used', ...originalArgs)
+        throw new InvalidArgument('Could not resolve the metadata domain')
+      }
+
+      if (_k == null || typeof _k !== 'string') {
+        this.logger.error('Could not resolve the metadata key')
+        this.logger.error('Arguments used', ...originalArgs)
+        throw new InvalidArgument('Could not resolve the metadata key')
+      }
+
+      if (this.get(_d, _k) !== _v) {
+        const p = `${_d}.${_k}`
+        setValue(this.values, p, _v)
+        this.trigger(_d, _k, _v)
+      }
     }
+
+    set(domain, key, value)
 
     return this
   }
@@ -90,10 +160,8 @@ module.exports = class Metadata {
    * @param { string } value          Metadata value
    */
   append (domain, key, value) {
-    const p = `${domain}.${key}`
-
     // Ensure that the storage is an array
-    const values = castToArray(getValue(this.values, p))
+    const values = castToArray(this.get(domain, key))
 
     // Ensure unique values
     if (values.includes(value)) {
@@ -102,23 +170,9 @@ module.exports = class Metadata {
 
     values.push(value)
 
-    setValue(this.values, p, values)
+    this.set(domain, key, values)
 
     return this
-  }
-
-  /**
-   * Trim a string
-   *
-   * @param { mixed } value           Value to trim
-   * @return { mixed }                Trimmed string or the original value
-   */
-  trim (value) {
-    if (typeof value !== 'string') {
-      return value
-    }
-
-    return value.replace(/(^\s*|\s*$)/g, '')
   }
 
   /**
@@ -135,20 +189,48 @@ module.exports = class Metadata {
   /**
    ' Shorthand to set an OpenGraph metadata key
    *
-   * @param { string } key            Opengraph key
-   * @param { mixed } value           Opengraph value
+   * @param { string|object } key     Opengraph key or an object with key-value pairs
+   * @param { mixed } [value]         Opengraph value
    * @return { Metadata }             This instance
    */
   opengraph (key, value) {
-    if (!key.match(/^[a-z]+:/)) {
-      key = `og:${key}`
+    /**
+     * Internal helper to parse the given arguments
+     *
+     * @param { string|object } _k    Opengraph key or an object with key-value pairs
+     * @param { mixed } [_v]          Opengraph value
+     */
+    const set = (_k, _v) => {
+      if (isObject(_k)) {
+        for (const k in _k) {
+          set(k, _k[k])
+        }
+
+        return
+      }
+
+      if (typeof _k !== 'string') {
+        const originalArgs = [key, value].filter(k => k != null)
+
+        this.logger.error('Metadata.opengraph accepts either key and value or an object with key-value pairs')
+        this.logger.error('Arguments', ...originalArgs)
+
+        throw new InvalidArgument('Metadata.opengraph accepts either key and value or an object with key-value pairs')
+      }
+
+      if (!_k.match(/^[a-z]+:/)) {
+        _k = `og:${_k}`
+      }
+
+      if (_k === 'og:image') {
+        this.append('opengraph', _k, _v)
+        return
+      }
+
+      this.set('opengraph', _k, _v)
     }
 
-    if (key === 'og:image') {
-      this.append('opengraph', key, value)
-    } else {
-      this.set('opengraph', key, value)
-    }
+    set(key, value)
 
     return this
   }
@@ -160,6 +242,16 @@ module.exports = class Metadata {
    * @return { Metadata }             This instance
    */
   setStatusCode (code) {
+    if (typeof code !== 'number' || !Number.isInteger(code)) {
+      this.logger.error('Got an invalid status code', code)
+      throw new InvalidArgument(`Got a non-numeric status code`)
+    }
+
+    if (code < 100 || code >= 600) {
+      this.logger.error('Got a status code out of range', code)
+      throw new InvalidArgument('Status code out of range')
+    }
+
     this.set('http', 'status', code)
     return this
   }
@@ -183,21 +275,34 @@ module.exports = class Metadata {
    */
   setTitle (title) {
     const parts = castToArray(title)
+      .filter(p => p)
 
     this.set('page', 'title', parts.join(' | '))
     this.opengraph('title', parts.join(' | '))
 
     if (typeof document !== 'undefined') {
-      const siteTitle = this.get('site', 'title')
-
-      if (siteTitle) {
-        parts.push(siteTitle)
-      }
-
-      document.title = parts.join(' | ')
+      /* istanbul ignore next browser-only */
+      document.title = this.getDocumentTitle()
     }
 
     return this
+  }
+
+  /**
+   * Get page title
+   */
+  getDocumentTitle () {
+    const title = [this.get('page', 'title')]
+    const siteTitle = this.get('site', 'title')
+
+    if (siteTitle) {
+      title.push(siteTitle)
+    }
+
+    return title
+      .filter(p => p)
+      .map(p => typeof p === 'string' ? p : JSON.stringify(p))
+      .join(' | ')
   }
 
   /**
@@ -207,14 +312,35 @@ module.exports = class Metadata {
    * @return { Metadata }             This instance
    */
   setBreadcrumbPath (path) {
-    path = path || []
+    path = castToArray(path)
 
-    if (!Array.isArray(path)) {
-      throw new Error('setBreadcrumbPath requires path as an array')
-    }
+    // Check that each part is an object with either href or to and label
+    path.forEach((p) => {
+      if (!isObject(p)) {
+        this.logger.error('Breadcrumb path has to consist of objects')
+        this.logger.error('Got', p)
+
+        throw new InvalidArgument('Breadcrumb path has to consist of objects')
+      }
+
+      if (p.to && p.href) {
+        this.logger.error('Breadcrumb path has to consist of objects with either href or to, not both')
+        this.logger.error('Got', p)
+
+        throw new InvalidArgument('Breadcrumb path has to consist of objects with either href or to, not both')
+      }
+
+      const url = p.to || p.href
+
+      if (!url || !p.label) {
+        this.logger.error('Breadcrumb path has to consist of objects with either href or to and label')
+        this.logger.error('Got', p)
+
+        throw new InvalidArgument('Breadcrumb path has to consist of objects with either href or to and label')
+      }
+    })
 
     this.set('navigation', 'breadcrumb', path)
-    this.trigger('navigation', 'breadcrumb')
     return this
   }
 
@@ -252,44 +378,38 @@ module.exports = class Metadata {
    * @return { Metadata }             This instance
    */
   unlisten (domain, key, callback) {
-    this.listeners[domain] = this.listeners[domain] || {}
-    this.listeners[domain][key] = this.listeners[domain][key] || []
+    const listeners = getValue(this.listeners, `${domain}.${key}`, [])
 
     if (!callback) {
-      this.listeners[domain][key].splice(0, this.listeners[domain][key])
+      listeners.splice(0, listeners.length)
       return this
     }
 
     // Check if there is a matching listener
-    const index = this.listeners[domain][key].indexOf(callback)
-
-    // If a listener was found, unpluck it
-    if (index > -1) {
-      this.listeners[domain][key].splice(index, 1)
+    while (listeners.includes(callback)) {
+      listeners.splice(listeners.indexOf(callback), 1)
     }
 
     return this
   }
 
   /**
-   * Remove a metadata listener
+   * Trigger metadata listeners
    *
    * @param { string } domain         Metadata domain
    * @param { key } domain            Metadata key
    * @param { function } [callback]   Callback to be removed
    * @return { Metadata }             This instance
    */
-  trigger (domain, key, value) {
-    const listeners = this.listeners[domain] && this.listeners[domain][key]
-      ? this.listeners[domain][key]
-      : []
+  async trigger (domain, key, value) {
+    const listeners = getValue(this.listeners, `${domain}.${key}`, [])
 
     listeners.forEach((callback) => {
       try {
         callback(value)
       } catch (err) {
         this.logger.error('Failed to trigger metadata listener for domain', domain, 'with key', key)
-        this.logger.error('Error', err)
+        this.logger.error(err)
       }
     })
 
@@ -299,13 +419,19 @@ module.exports = class Metadata {
   /**
    * Set page class
    *
-   * @param { string } className      Page class name
+   * @param { array|string } className  Page class name
    */
   setPageClass (className) {
+    const classes = castToArray(className)
+      .filter(c => c)
+      .map(c => this.trim(c))
+
+    /* istanbul ignore next jQuery is not loaded */
     if (typeof $ !== 'undefined') {
-      $('body').attr('class', className)
+      $('body').attr('class', classes.join(' '))
     }
-    this.set('page', 'className', this.trim(className))
+
+    this.set('page', 'className', classes.join(' '))
     return this
   }
 
@@ -326,10 +452,12 @@ module.exports = class Metadata {
    * @return { Metadata }             This instance
    */
   addPageClass (className) {
-    let current = this.get('page', 'className') || ''
+    const current = castToArray(this.get('page', 'className', '')
+      .split(' '))
+      .filter(c => c)
 
-    if (current.indexOf(className) === -1) {
-      current += ` ${className}`
+    if (!current.includes(className)) {
+      current.push(className)
     }
 
     this.setPageClass(current)
@@ -343,27 +471,12 @@ module.exports = class Metadata {
    * @return { Metadata }             This instance
    */
   removePageClass (className) {
-    let current = this.get('page', 'className') || ''
-
-    if (current.indexOf(className) !== -1) {
-      const escaped = className.replace(/-/g, '\\-')
-      current = current.replace(new RegExp(`(^| )${escaped}($| )`, 'g'), ' ').replace(/ {2}/, ' ')
-    }
+    const current = castToArray(this.get('page', 'className', '')
+      .split(' '))
+      .filter(c => c)
+      .filter(c => c !== className)
 
     this.setPageClass(current)
     return this
-  }
-
-  /**
-   * Get current URL
-   *
-   * @return { string }               Current URL
-   */
-  getCurrentUrl () {
-    if (typeof window !== 'undefined') {
-      return window.location.href
-    }
-
-    return this.url
   }
 }
