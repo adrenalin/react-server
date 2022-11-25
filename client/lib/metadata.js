@@ -44,11 +44,7 @@ module.exports = class Metadata {
       throw new InvalidArgument('Metadata bindTo accepts only an object as an argument')
     }
 
-    const prevValues = this.values
-    this.values = obj || {}
-
-    // Bind the previously stored values to the bound object
-    this.set(prevValues)
+    this.values = obj
   }
 
   /**

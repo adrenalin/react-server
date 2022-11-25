@@ -106,33 +106,17 @@ describe('client/lib/metadata', () => {
     }
   })
 
-  it('should transfer the previously stored values to the bound value', (done) => {
-    const metadata = new Metadata()
-    const testDomain = 'test-domain'
-    const testKey = 'test-key'
-    const testValue = 'test-value'
-
-    metadata.set(testDomain, testKey, testValue)
-
-    const values = {}
-
-    metadata.bindTo(values)
-    expect(metadata.values).to.be(values)
-    expect(metadata.get(testDomain, testKey)).to.eql(testValue)
-    done()
-  })
-
   it('should flush the stored values', (done) => {
     const metadata = new Metadata()
     const testDomain = 'test-domain'
     const testKey = 'test-key'
     const testValue = 'test-value'
 
-    metadata.set(testDomain, testKey, testValue)
 
     const values = {}
 
     metadata.bindTo(values)
+    metadata.set(testDomain, testKey, testValue)
     expect(metadata.values).to.be(values)
     expect(metadata.get(testDomain, testKey)).to.eql(testValue)
 
