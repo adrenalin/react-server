@@ -1,5 +1,4 @@
 const config = require('../config')
-const gulp = require('gulp')
 const path = require('path')
 
 process.env.PROJECT_ROOT = process.env.PROJECT_ROOT || config.get('root')

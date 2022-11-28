@@ -1,9 +1,8 @@
 const gulp = require('gulp')
-const { getValue } = require('@adrenalin/helpers.js')
 const config = require('./config')
 
 // Load tasks
-const { compileStyles, concatVendors, copyVendors, copyFiles, copyFonts, copyImages, copyJS, bundler, lintSCSS } = require('./tasks')
+const { compileStyles, concatVendors, copyFiles, copyFonts, copyImages, copyJS, bundler, lintSCSS } = require('./tasks')
 
 const tasks = [
   concatVendors,

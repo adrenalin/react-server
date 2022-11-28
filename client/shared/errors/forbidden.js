@@ -31,7 +31,7 @@ module.exports = class Forbidden extends DefaultError {
       )
     }
 
-    const message = [
+    const messages = [
       (
         <p key='main'>
           {this.l10n.get('accountNotAuthorized')}
@@ -40,13 +40,13 @@ module.exports = class Forbidden extends DefaultError {
     ]
 
     if (this.props.roles.length === 1) {
-      message.push((
+      messages.push((
         <p className='mb-0' key='role'>
           {this.l10n.get('requiredRoleS', `${this.props.roles[0]}RoleLabel`)}
         </p>
       ))
 
-      return message
+      return messages
     }
 
     messages.push((

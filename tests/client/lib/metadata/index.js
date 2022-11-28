@@ -1,6 +1,6 @@
 const expect = require('expect.js')
 const { InvalidArgument } = require('@adrenalin/errors')
-const { castToArray, getValue } = require('@adrenalin/helpers.js')
+const { castToArray } = require('@adrenalin/helpers.js')
 const Metadata = require('../../../../client/lib/metadata')
 
 describe('client/lib/metadata', () => {
@@ -77,7 +77,7 @@ describe('client/lib/metadata', () => {
     try {
       const metadata = new Metadata()
       metadata.bindTo('foo')
-      throw new Errro('Should have thrown an InvalidArgument')
+      throw new Error('Should have thrown an InvalidArgument')
     } catch (err) {
       expect(err).to.be.a(InvalidArgument)
       done()
@@ -88,7 +88,7 @@ describe('client/lib/metadata', () => {
     try {
       const metadata = new Metadata()
       metadata.bindTo(1)
-      throw new Errro('Should have thrown an InvalidArgument')
+      throw new Error('Should have thrown an InvalidArgument')
     } catch (err) {
       expect(err).to.be.a(InvalidArgument)
       done()
@@ -99,7 +99,7 @@ describe('client/lib/metadata', () => {
     try {
       const metadata = new Metadata()
       metadata.bindTo([])
-      throw new Errro('Should have thrown an InvalidArgument')
+      throw new Error('Should have thrown an InvalidArgument')
     } catch (err) {
       expect(err).to.be.a(InvalidArgument)
       done()
@@ -111,7 +111,6 @@ describe('client/lib/metadata', () => {
     const testDomain = 'test-domain'
     const testKey = 'test-key'
     const testValue = 'test-value'
-
 
     const values = {}
 

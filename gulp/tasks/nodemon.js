@@ -1,5 +1,4 @@
 const path = require('path')
-const gulp = require('gulp')
 const nodemon = require('nodemon')
 const config = require('../config')
 const notify = require('../lib/notify')

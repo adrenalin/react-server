@@ -1,5 +1,4 @@
 const path = require('path')
-const gulp = require('gulp')
 const config = require('../config')
 
 // Build client that uses ES6 + JSX

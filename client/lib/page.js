@@ -1,4 +1,3 @@
-import React from 'react'
 import Component from './component'
 
 module.exports = class Page extends Component {
@@ -28,7 +27,6 @@ module.exports = class Page extends Component {
   static get METADATA_PAYWALL_MASK () {
     return null
   }
-
 
   /**
    * Initialize the component

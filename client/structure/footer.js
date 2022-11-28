@@ -5,7 +5,6 @@ import {
   Col
 } from 'reactstrap'
 import Widget from '../lib/widget'
-import ApplicationStore from '../data/application/store'
 
 module.exports = class Footer extends Widget {
   render () {

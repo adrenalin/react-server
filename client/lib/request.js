@@ -14,7 +14,7 @@ request.interceptors.response.use((response) => {
     title: `errorMessage${statusCode}`,
     request: err.request,
     response: err.response,
-    statusCode: statusCode,
+    statusCode,
     id: `statusCode${statusCode}`,
     message: [
       getValue(err, 'response.data.message', `errorMessage${statusCode}`),

@@ -1,5 +1,3 @@
-const { typecastString } = require('@adrenalin/helpers.js')
-
 exports.merge = function merge (...argv) {
   const target = Object.assign({}, argv.shift())
 

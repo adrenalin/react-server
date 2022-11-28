@@ -240,7 +240,7 @@ module.exports = class Metadata {
   setStatusCode (code) {
     if (typeof code !== 'number' || !Number.isInteger(code)) {
       this.logger.error('Got an invalid status code', code)
-      throw new InvalidArgument(`Got a non-numeric status code`)
+      throw new InvalidArgument('Got a non-numeric status code')
     }
 
     if (code < 100 || code >= 600) {

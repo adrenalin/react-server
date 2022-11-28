@@ -4,16 +4,10 @@ import {
   Row,
   Col
 } from 'reactstrap'
-import {
-  Switch,
-  Route
-} from 'react-router-dom'
 import routes from './routes'
 import Application from '../lib/application'
 import Logo from '../widgets/logo'
 import navigation from './config/navigation'
-
-import { Localization } from '@adrenalin/helpers.js'
 
 // import AuthWrapper from '../shared/auth/authwrapper'
 import Footer from '../structure/footer'
@@ -23,10 +17,8 @@ import Notifications from '../shared/notifications'
 
 // Error pages
 import ErrorBoundary from '../shared/errors/errorboundary'
-import NotFound from '../shared/errors/notfound'
 
 import ApplicationStore from '../data/application/store'
-import LocalesStore from '../data/locales/store'
 
 module.exports = class TestApplication extends Application {
   /**

@@ -9,7 +9,6 @@ import { Localization } from '@adrenalin/helpers.js'
 
 // Error pages
 import ErrorBoundary from '../shared/errors/errorboundary'
-import NotFound from '../shared/errors/notfound'
 
 import ApplicationStore from '../data/application/store'
 import LocalesStore from '../data/locales/store'
@@ -152,10 +151,11 @@ module.exports = class Application extends Component {
 
     return (
       <RouterType {...routerProps}>
+        {/* header here */}
         <ErrorBoundary>
           {this.renderRouter()}
         </ErrorBoundary>
-        <Footer />
+        {/* footer here */}
       </RouterType>
     )
   }

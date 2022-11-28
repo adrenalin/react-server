@@ -7,7 +7,7 @@ config.set('exitOnError', false)
 // Register scripts needed for building
 
 const build = require('./build')
-const { buildApiDoc, bundler, compileStyles, concatVendors, copyFiles, copyFonts, copyImages, copyJS, lintSCSS, minifyJS, minifyStyles, nodemon } = require('./tasks')
+const { buildApiDoc, compileStyles, buildClient, copyFiles, copyFonts, copyImages, copyJS, lintSCSS, minifyJS, minifyStyles, nodemon } = require('./tasks')
 
 function buildClientWatcher () {
   if (!config.get('build.client', false)) {
