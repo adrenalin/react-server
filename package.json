@@ -43,8 +43,8 @@
     "reactstrap": "^9.1.5"
   },
   "devDependencies": {
+    "@babel/eslint-parser": "^7.19.1",
     "@ronilaukkarinen/gulp-stylelint": "^14.0.8",
-    "babel-eslint": "^10.1.0",
     "cheerio": "^1.0.0-rc.12",
     "expect.js": "^0.3.1",
     "fuse-box": "^3.7.1",
@@ -83,7 +83,7 @@
     "redis": "^4.0.4"
   },
   "standard": {
-    "parser": "babel-eslint",
+    "parser": "@babel/eslint-parser",
     "globals": [
       "$",
       "alert",
