@@ -2,6 +2,7 @@ const path = require('path')
 const gulp = require('gulp')
 const gulpWatch = require('gulp-watch')
 const config = require('./config')
+config.set('exitOnError', false)
 
 // Register scripts needed for building
 

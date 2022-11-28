@@ -26,6 +26,11 @@ module.exports = function compileStyles () {
         title: 'Client styles'
       })
     )
+    .on('error', (err) => {
+      if (config.get('exitOnError')) {
+        stream.emit('error', err)
+      }
+    })
 
   return stream
 }

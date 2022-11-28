@@ -36,6 +36,11 @@
       "type": "boolean",
       "default": true
     },
+    "exitOnError": {
+      "description": "Exit on first encountered error, set to false when watching",
+      "type": "boolean",
+      "default": true
+    },
     "bundler": {
       "description": "Javascript bundler",
       "type": "string",
