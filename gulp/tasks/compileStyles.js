@@ -4,7 +4,7 @@ const size = require('gulp-size')
 const sourcemaps = require('gulp-sourcemaps')
 const notify = require('../lib/notify')
 const config = require('../config')
-const sass = require('gulp-sass')(require(config.get('sass.module')))
+const sass = require('gulp-sass')(require(config.get('sass.module', 'sass')))
 
 const target = path.join(config.get('root'), config.get('target.css'))
 
