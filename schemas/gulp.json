@@ -221,6 +221,17 @@
           }
         }
       }
+    },
+    "sass": {
+      "description": "SASS configuration",
+      "type": "object",
+      "properties": {
+        "module": {
+          "description": "Package to use for SASS (e.g. 'sass' or 'node-sass')",
+          "type": "string",
+          "default": "sass"
+        }
+      }
     }
   }
 }

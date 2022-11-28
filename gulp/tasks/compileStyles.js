@@ -4,7 +4,7 @@ const size = require('gulp-size')
 const sourcemaps = require('gulp-sourcemaps')
 const notify = require('../lib/notify')
 const config = require('../config')
-const sass = require('gulp-sass')(require('node-sass'))
+const sass = require('gulp-sass')(require(config.get('sass.module')))
 
 const target = path.join(config.get('root'), config.get('target.css'))
 
@@ -17,7 +17,7 @@ module.exports = function compileStyles () {
         title: `${err.relativePath}: ${err.line}:${err.column}`,
         message: `${err.messageOriginal}`
       })
-      stream.emit('error')
+      stream.emit('error', err)
     })
     .pipe(sourcemaps.write())
     .pipe(gulp.dest(target))

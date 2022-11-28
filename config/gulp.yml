@@ -11,3 +11,6 @@ nodemon:
     - 'routers/**/*.js'
     - 'services/*.js'
     - 'services/**/*.js'
+
+sass:
+  module: 'sass'
