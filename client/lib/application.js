@@ -33,7 +33,9 @@ module.exports = class Application extends Component {
    * Pre initialization hook
    */
   onInitializing () {
-    this.metadata.bindTo(this.props.metadata)
+    if (this.props.metadata) {
+      this.metadata.bindTo(this.props.metadata)
+    }
 
     this.initConfig()
     this.registerLocales()
