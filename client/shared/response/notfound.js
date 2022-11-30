@@ -1,4 +1,4 @@
-import DefaultError from '../defaulterror'
+import DefaultError from '../errors/defaulterror'
 
 /**
  * HTTP/1.1 404 Not Found page

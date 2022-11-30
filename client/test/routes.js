@@ -1,7 +1,7 @@
 import Test from './test'
 import TestUndefined from './test/undefined'
 import TestFormValidation from './test/formvalidation'
-import NotFound from '../shared/errors/notfound'
+import NotFound from '../shared/response/notfound'
 
 module.exports = {
   '/:lang': {

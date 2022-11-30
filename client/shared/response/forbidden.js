@@ -4,7 +4,7 @@ import {
   Container,
   Row
 } from 'reactstrap'
-import DefaultError from '../defaulterror'
+import DefaultError from '../errors/defaulterror'
 
 /**
  * HTTP/1.1 403 Forbidden page
