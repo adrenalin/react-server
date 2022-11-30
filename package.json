@@ -47,7 +47,7 @@
     "@ronilaukkarinen/gulp-stylelint": ">=14.0.8",
     "cheerio": ">=1.0.0-rc.12",
     "expect.js": ">=0.3.1",
-    "fuse-box": "^3.7.1",
+    "fuse-box": ">=3.7.1 < 4.0.0",
     "gulp": ">=4.0.2",
     "gulp-babel": ">=8.0.0",
     "gulp-size": ">=4.0.1",
