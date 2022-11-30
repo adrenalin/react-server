@@ -115,27 +115,6 @@
         }
       }
     },
-    "apidoc": {
-      "description": "API documentation with apidoc",
-      "type": "object",
-      "properties": {
-        "enabled": {
-          "description": "Enabled flag",
-          "type": "boolean",
-          "default": false
-        },
-        "source": {
-          "description": "Routers path, relative to 'root' configuration key",
-          "type": "string",
-          "default": "routers"
-        },
-        "target": {
-          "description": "apidoc target, relative to 'root' configuration key",
-          "type": "string",
-          "default": "build/static/apidoc"
-        }
-      }
-    },
     "target": {
       "description": "Build target",
       "type": "object",
@@ -198,6 +177,7 @@
         }
       }
     },
+    
     "eslint": {
       "description": "eslint configuration",
       "type": "object",
@@ -209,6 +189,7 @@
         }
       }
     },
+
     "nodemon": {
       "description": "Nodemon configuration",
       "type": "object",
@@ -232,6 +213,29 @@
         }
       }
     },
+
+    "apidoc": {
+      "description": "API documentation with apidoc",
+      "type": "object",
+      "properties": {
+        "enabled": {
+          "description": "Enabled flag",
+          "type": "boolean",
+          "default": false
+        },
+        "source": {
+          "description": "Routers path, relative to 'root' configuration key",
+          "type": "string",
+          "default": "routers"
+        },
+        "target": {
+          "description": "apidoc target, relative to 'root' configuration key",
+          "type": "string",
+          "default": "build/static/apidoc"
+        }
+      }
+    },
+
     "sass": {
       "description": "SASS configuration",
       "type": "object",
@@ -243,6 +247,7 @@
         }
       }
     },
+
     "jsdoc": {
       "description": "JSDoc 3 configuration",
       "type": "object",
