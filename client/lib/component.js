@@ -35,11 +35,38 @@ if (!PropTypes.child) {
   ])
 }
 
+/**
+ * Baseclass for React components
+ *
+ * @class Component
+ * @example
+ *
+ * ```
+ * @import Component from '@adrenalin/react-server'
+ * export default class MyComponent extends Component {
+ *   static get propTypes {
+ *     return {
+ *       id: Component.PropTypes.string.isRequired
+ *     }
+ *   }
+ *
+ *   render () {
+ *     return (
+ *       <p id={this.props.id}>
+ *         My component
+ *       </p>
+ *     )
+ *   }
+ * }
+ * ```
+ *
+ * @param { object } props          Component props
+ */
 module.exports = class Component extends React.Component {
   /**
    * Log level for the logger
    *
-   * @return { number }               Log level
+   * @const { number } Component.LOG_LEVEL
    */
   static get LOG_LEVEL () {
     return Logger.INFO
@@ -48,7 +75,7 @@ module.exports = class Component extends React.Component {
   /**
    * Get request instance
    *
-   * @return { object }               Axios
+   * @const { Axios } Component.request
    */
   static get request () {
     return request
@@ -57,7 +84,7 @@ module.exports = class Component extends React.Component {
   /**
    * Convenience shorthand for prop-types
    *
-   * @return { object }               Prop types object
+   * @const { PropTypes } Component.PropTypes
    */
   static get PropTypes () {
     return PropTypes
@@ -66,7 +93,7 @@ module.exports = class Component extends React.Component {
   /**
    * Class proptypes definitions
    *
-   * @return { object }
+   * @const { object } Component.propTypes
    */
   static get propTypes () {
     return {}
@@ -76,7 +103,7 @@ module.exports = class Component extends React.Component {
    * Required state keys that should be populated before isLoaded will return
    * true
    *
-   * @return { array }                Array of strings
+   * @const { string[] } Component.REQUIRED_STATE_KEYS
    */
   static get REQUIRED_STATE_KEYS () {
     return []
@@ -124,6 +151,24 @@ module.exports = class Component extends React.Component {
   }
 
   /**
+   * Shared helper functions, https://github.com/adrenalin/helpers.js
+   *
+   * @const { object } Component#helpers
+   */
+  get helpers () {
+    return helpers
+  }
+
+  /**
+   * Shared helper functions, https://github.com/adrenalin/helpers.js
+   *
+   * @const { object } Component.helpers
+   */
+  static get helpers () {
+    return helpers
+  }
+
+  /**
    * Constructor to initialize the component
    *
    * @param { object } props          Component props
@@ -134,7 +179,6 @@ module.exports = class Component extends React.Component {
 
     // Bind singletons
     this.config = config
-    this.helpers = helpers
     this.metadata = metadata
     this.l10n = localization
 
@@ -260,6 +304,8 @@ module.exports = class Component extends React.Component {
   /**
    * React component lifecycle event that will be triggered after the component
    * has been mounted to DOM
+   *
+   * @method Component#componentDidMount
    */
   componentDidMount () {
     // super.componentDidMount()
@@ -286,6 +332,8 @@ module.exports = class Component extends React.Component {
 
   /**
    * Load data
+   *
+   * @method Component#loadData
    */
   loadData () {
 
@@ -295,6 +343,7 @@ module.exports = class Component extends React.Component {
    * React component lifecycle event that will be triggered after the props
    * have changed
    *
+   * @method Component#componentDidUpdate
    * @param { object } prevProps      Previous properties
    * @param { object } prevState      Previous state
    * @param { object } snapshot       Snapshot of the component
@@ -306,6 +355,8 @@ module.exports = class Component extends React.Component {
   /**
    * React component lifecycle event that will be triggered before the component
    * will be unmounted to DOM
+   *
+   * @method Component#componentWillUnmount
    */
   componentWillUnmount () {
     // super.componentWillUnmount()
@@ -321,6 +372,7 @@ module.exports = class Component extends React.Component {
   /**
    * Get current url
    *
+   * @method Component#getCurrentUrl
    * @return { string }               Current URL
    */
   getCurrentUrl () {
