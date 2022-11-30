@@ -4,9 +4,20 @@ import {
   Container,
   Row
 } from 'reactstrap'
-import DefaultError from './defaulterror'
+import DefaultError from '../defaulterror'
 
+/**
+ * HTTP/1.1 403 Forbidden page
+ *
+ * @class Forbidden
+ * @param { object } props            Component props
+ */
 module.exports = class Forbidden extends DefaultError {
+  /**
+   * Status code
+   *
+   * @const { number } Forbidden.STATUS_CODE
+   */
   static get STATUS_CODE () {
     return 403
   }

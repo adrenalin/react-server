@@ -5,13 +5,16 @@ module.exports = {
   metadata: require('./dist/lib/metadata'),
   request: require('./dist/lib/request'),
 
-  // Errors
+  // Error pages
   DefaultError: require('./dist/shared/errors/defaulterror'),
   ErrorBoundary: require('./dist/shared/errors/errorboundary'),
-  Forbidden: require('./dist/shared/errors/forbidden'),
-  Found: require('./dist/shared/errors/found'),
-  InvalidRequest: require('./dist/shared/errors/invalidrequest'),
-  NotFound: require('./dist/shared/errors/notfound'),
+
+  // HTTP/1.1 compatible response pages
+  Forbidden: require('./dist/shared/response/forbidden'),
+  Found: require('./dist/shared/response/found'),
+  MovedPermanently: require('./dist/shared/response/movedpermanently'),
+  InvalidRequest: require('./dist/shared/response/invalidrequest'),
+  NotFound: require('./dist/shared/response/notfound'),
 
   // Main component
   Application: require('./dist/lib/application'),

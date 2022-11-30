@@ -5,21 +5,26 @@ import {
   Row
 } from 'reactstrap'
 
-import DefaultError from './defaulterror'
+import DefaultError from '../defaulterror'
 
 /**
- * Redirection module with HTTP/1.1 301 Moved Permanently headers
+ * HTTP/1.1 302 Found
  *
- * @class MovedPermanently
+ * @class Found
  * @param { object } props            Component props
  */
-module.exports = class MovedPermanently extends DefaultError {
+module.exports = class Found extends DefaultError {
   static get propTypes () {
     return {
       location: DefaultError.PropTypes.string.isRequired
     }
   }
 
+  /**
+   * Status code
+   *
+   * @const { number } Found.STATUS_CODE
+   */
   static get STATUS_CODE () {
     return 302
   }
@@ -29,14 +34,7 @@ module.exports = class MovedPermanently extends DefaultError {
     this.metadata.setLocation(props.location)
   }
 
-  /**
-   * React component lifecycle event that will be triggered after the component
-   * has been mounted to DOM
-   *
-   * @method Component#componentDidMount
-   */
   componentDidMount () {
-    super.componentDidMount()
     this.metadata.setStatusCode(this.statusCode)
     this.metadata.setLocation(this.props.location)
     setTimeout(() => {
@@ -44,12 +42,6 @@ module.exports = class MovedPermanently extends DefaultError {
     })
   }
 
-  /**
-   * Render the component
-   *
-   * @method MovedPermanently#render
-   * @return { ReactChild }           React child for rendering
-   */
   render () {
     const link = `<a href=${this.props.location}>${this.props.location}</a>`
 
