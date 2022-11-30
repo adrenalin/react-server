@@ -115,10 +115,12 @@ const watchTasks = [
 ]
 
 if (config.get('build.client')) {
+  watchTasks.push(buildClient)
   watchTasks.push(buildClientWatcher)
 }
 
 if (config.get('apidoc.enabled', false)) {
+  watchTasks.push(buildApiDoc)
   watchTasks.push(buildApiDocWatcher)
 }
 
@@ -128,6 +130,7 @@ if (config.get('nodemon.enabled')) {
 }
 
 if (config.get('jsdoc.enabled')) {
+  watchTasks.push(jsdoc)
   watchTasks.push(jsdocWatcher)
 }
 
