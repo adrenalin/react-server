@@ -169,6 +169,20 @@ module.exports = class Component extends React.Component {
   }
 
   /**
+   * Extend properties
+   *
+   * @method Component.extendProps
+   * @param { object } props          Extra props to the context
+   * @return { object }               Extended props
+   */
+  static extendProps (props) {
+    return {
+      ...Component.propTypes,
+      ...props
+    }
+  }
+
+  /**
    * Constructor to initialize the component
    *
    * @param { object } props          Component props

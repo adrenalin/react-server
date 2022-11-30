@@ -17,19 +17,6 @@ module.exports = class Widget extends Component {
   }
 
   /**
-   * Extend properties
-   *
-   * @param { object } props          Extra props to the context
-   * @return { object }               Extended props
-   */
-  static extendProps (props) {
-    return {
-      ...Widget.propTypes,
-      ...props
-    }
-  }
-
-  /**
    * Get widget class name
    *
    * @return { string }               Class name
