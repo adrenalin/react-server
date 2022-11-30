@@ -764,6 +764,7 @@ module.exports = class Component extends React.Component {
   /**
    * Render the component
    *
+   * @method Component#render
    * @return { ReactChild }           React child for rendering
    */
   render () {
