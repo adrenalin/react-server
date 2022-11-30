@@ -1,6 +1,6 @@
 {
   "name": "@adrenalin/react-server",
-  "version": "0.8.7",
+  "version": "0.8.8",
   "description": "React server",
   "main": "index.js",
   "scripts": {
@@ -61,6 +61,7 @@
     "gulp-sourcemaps": "^3.0.0",
     "gulp-terser": "^2.1.0",
     "gulp-watch": "^5.0.1",
+    "jsdoc": "^4.0.0",
     "mocha": "^10.1.0",
     "node-notifier": "^10.0.1",
     "nodemon": "^2.0.20",
