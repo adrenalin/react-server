@@ -237,8 +237,15 @@ module.exports = (app) => {
       // @TODO: bind with Iso + Alt
       const html = bindIso(res, reactHTML)
 
-      if (metadata.get('http', 'status')) {
-        res.status(metadata.get('http', 'status'))
+      const statusCode = metadata.get('http', 'status')
+      const location = metadata.get('http', 'location')
+
+      if (statusCode) {
+        res.status(statusCode)
+      }
+
+      if (location) {
+        res.set('location', location)
       }
 
       res.render('index.html', {
