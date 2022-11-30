@@ -1,9 +1,9 @@
 const path = require('path')
 const gulp = require('gulp')
 const config = require('../config')
-const size = require('gulp-size')
 
 module.exports = function copyJS () {
+  const size = require('gulp-size')
   const stream = gulp.src([
     path.join(config.get('root'), config.get('assets.js'), '*.*'),
     path.join(config.get('root'), config.get('assets.js'), '**/*.*')

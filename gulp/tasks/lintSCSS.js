@@ -1,10 +1,11 @@
 const path = require('path')
 const gulp = require('gulp')
-const linter = require('@ronilaukkarinen/gulp-stylelint')
 const notify = require('../lib/notify')
 const config = require('../config')
 
 module.exports = function lintSCSS () {
+  const linter = require('@ronilaukkarinen/gulp-stylelint')
+
   return gulp
     .src([
       path.join(config.get('assets.css'), '*.scss'),

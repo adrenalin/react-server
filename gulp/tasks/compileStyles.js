@@ -1,14 +1,15 @@
 const path = require('path')
 const gulp = require('gulp')
-const size = require('gulp-size')
-const sourcemaps = require('gulp-sourcemaps')
 const notify = require('../lib/notify')
 const config = require('../config')
-const sass = require('gulp-sass')(require(config.get('sass.module', 'sass')))
 
 const target = path.join(config.get('root'), config.get('target.css'))
 
 module.exports = function compileStyles () {
+  const size = require('gulp-size')
+  const sourcemaps = require('gulp-sourcemaps')
+  const sass = require('gulp-sass')(require(config.get('sass.module', 'sass')))
+
   const stream = gulp.src(path.join(config.get('root'), config.get('assets.css'), '*.scss'))
     .pipe(sourcemaps.init())
     .pipe(sass())

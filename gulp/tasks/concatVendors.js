@@ -1,6 +1,5 @@
 const config = require('../config')
 const gulp = require('gulp')
-const concat = require('gulp-concat')
 const path = require('path')
 
 const files = []
@@ -17,6 +16,8 @@ module.exports = function concatVendors () {
     console.warn('No vendors specified, nothing to do in tasks/concatVendors')
     return Promise.resolve()
   }
+
+  const concat = require('gulp-concat')
 
   return gulp.src(files)
     .pipe(concat('vendors.js'))

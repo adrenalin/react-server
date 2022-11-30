@@ -1,5 +1,4 @@
 const path = require('path')
-const nodemon = require('nodemon')
 const config = require('../config')
 const notify = require('../lib/notify')
 
@@ -32,6 +31,7 @@ const nodemonInstance = () => {
     return this.nodemonInstance
   }
 
+  const nodemon = require('nodemon')
   // Start nodemon
   this.nodemonInstance = nodemon(nodemonConfig)
     .on('start', () => {

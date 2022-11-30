@@ -1,8 +1,6 @@
 const fs = require('fs')
 const path = require('path')
 const gulp = require('gulp')
-const babel = require('gulp-babel')
-const size = require('gulp-size')
 const notify = require('../lib/notify')
 const config = require('../config')
 
@@ -11,6 +9,9 @@ const babelrc = JSON.parse(babelrcRaw)
 
 // Build client that uses ES6 + JSX
 module.exports = function buildClient () {
+  const babel = require('gulp-babel')
+  const size = require('gulp-size')
+
   return new Promise((resolve, reject) => {
     const stream = gulp
       .src([

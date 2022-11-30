@@ -1,10 +1,11 @@
 const path = require('path')
 const gulp = require('gulp')
-const terser = require('gulp-terser')
-const rename = require('gulp-rename')
 const config = require('../config')
 
 module.exports = () => {
+  const terser = require('gulp-terser')
+  const rename = require('gulp-rename')
+
   const targetPaths = [
     path.join(config.get('root'), config.get('target.js'), '*.js'),
     '!' + path.join(config.get('root'), config.get('target.js'), 'vendors.js'),

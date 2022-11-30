@@ -1,8 +1,9 @@
 const gulp = require('gulp')
-const jsDoc = require('gulp-jsdoc3')
 const config = require('../config')
 
 module.exports = function jsdoc () {
+  const jsDoc = require('gulp-jsdoc3')
+
   const options = {
     ...config.get('jsdoc.options', {})
   }
