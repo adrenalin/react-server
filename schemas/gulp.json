@@ -169,6 +169,11 @@
           "description": "Static JS files target, relative to 'root' configuration key",
           "type": "string",
           "default": "build/static/js"
+        },
+        "jsdoc": {
+          "description": "JSDoc documentation",
+          "type": "string",
+          "default": "build/static/jsdoc"
         }
       }
     },
@@ -235,6 +240,28 @@
           "description": "Package to use for SASS (e.g. 'sass' or 'node-sass')",
           "type": "string",
           "default": "sass"
+        }
+      }
+    },
+    "jsdoc": {
+      "description": "JSDoc 3 configuration",
+      "type": "object",
+      "properties": {
+        "enabled": {
+          "description": "Enabled flag",
+          "type": "boolean",
+          "default": false
+        },
+        "paths": {
+          "description": "Paths from which to generate the documentation",
+          "type": "array",
+          "contains": {
+            "type": "string"
+          }
+        },
+        "options": {
+          "description": "JSDoc3 configuration options",
+          "type": "object"
         }
       }
     }
