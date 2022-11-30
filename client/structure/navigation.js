@@ -27,6 +27,7 @@ class Navigation extends Widget {
   /**
    * Should display a navigation item
    *
+   * @method Navigation#shouldDisplay
    * @param { object } item           Navigation item
    * @return { boolean }              Navigation item display status
    */
