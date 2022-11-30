@@ -1,19 +1,23 @@
 const path = require('path')
 const gulp = require('gulp')
 const gulpWatch = require('gulp-watch')
+const { castToArray } = require('@adrenalin/helpers.js')
 const config = require('./config')
 config.set('exitOnError', false)
 
 // Register scripts needed for building
 
 const build = require('./build')
-const { buildApiDoc, compileStyles, buildClient, copyFiles, copyFonts, copyImages, copyJS, lintSCSS, minifyJS, minifyStyles, nodemon } = require('./tasks')
+const { buildApiDoc, compileStyles, buildClient, copyFiles, copyFonts, copyImages, copyJS, lintSCSS, jsdoc, minifyJS, minifyStyles, nodemon } = require('./tasks')
+
+function buildApiDocWatcher () {
+  return gulpWatch([
+    path.join(config.get('root'), config.get('apidoc.source'), '*.js'),
+    path.join(config.get('root'), config.get('apidoc.source'), '**', '*.js')
+  ], gulp.series(buildApiDoc))
+}
 
 function buildClientWatcher () {
-  if (!config.get('build.client', false)) {
-    return
-  }
-
   return gulpWatch([
     path.join(config.get('root'), config.get('clients.root'), '*.js'),
     path.join(config.get('root'), config.get('clients.root'), '**', '*.js')
@@ -67,17 +71,6 @@ function copyJSWatcher () {
   ], gulp.series(tasks))
 }
 
-function buildApiDocWatcher () {
-  if (!config.get('build.apidoc', false)) {
-    return Promise.resolve()
-  }
-
-  return gulpWatch([
-    path.join(config.get('root'), config.get('apidoc.source'), '*.js'),
-    path.join(config.get('root'), config.get('apidoc.source'), '**', '*.js')
-  ], gulp.series(buildApiDoc))
-}
-
 function clientWatcher () {
   // Watch JS changes
   const tasks = [build]
@@ -92,11 +85,19 @@ function clientWatcher () {
   ], gulp.series(tasks))
 }
 
-function nodemonWatcher () {
-  if (!config.get('nodemon.enabled')) {
-    return Promise.resolve()
-  }
+function jsdocWatcher () {
+  const paths = []
 
+  castToArray(config.get('jsdoc.paths'))
+    .forEach((p) => {
+      paths.push(path.join(config.get('root'), p, '*.js'))
+      paths.push(path.join(config.get('root'), p, '**', '*.js'))
+    })
+
+  return gulpWatch(paths, gulp.series(jsdoc))
+}
+
+function nodemonWatcher () {
   return gulpWatch(
     config.get('nodemon.watch', []).map((s) => path.join(config.get('root'), s)),
     gulp.series([nodemon])
@@ -105,19 +106,29 @@ function nodemonWatcher () {
 
 const watchTasks = [
   build,
-  buildApiDocWatcher,
-  buildClientWatcher,
   clientWatcher,
   compileStylesWatcher,
   copyFilesWatcher,
   copyFontsWatcher,
   copyImagesWatcher,
-  copyJSWatcher,
-  nodemonWatcher
+  copyJSWatcher
 ]
+
+if (config.get('build.client')) {
+  watchTasks.push(buildClientWatcher)
+}
+
+if (config.get('apidoc.enabled', false)) {
+  watchTasks.push(buildApiDocWatcher)
+}
 
 if (config.get('nodemon.enabled')) {
   watchTasks.push(nodemon)
+  watchTasks.push(nodemonWatcher)
+}
+
+if (config.get('jsdoc.enabled')) {
+  watchTasks.push(jsdocWatcher)
 }
 
 module.exports = gulp.parallel(watchTasks)
