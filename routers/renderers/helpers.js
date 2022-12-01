@@ -34,6 +34,11 @@ module.exports = (app) => {
     .then((f) => {
       fingerprint = f
     })
+    .catch((err) => {
+      console.log(err)
+      const d = new Date()
+      fingerprint = d.toISOString().substr(12)
+    })
 
   /**
    * Get suffix for the static files
