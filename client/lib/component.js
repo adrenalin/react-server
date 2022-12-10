@@ -15,11 +15,11 @@ import helpers from '@adrenalin/helpers.js'
 import Logger from '@adrenalin/logger'
 import ApplicationStore from '../data/application/store'
 import UserStore from '../data/user/store'
+import config from './config'
 
 // Singleton instances
 const events = new EventHandler()
 const metadata = new Metadata()
-const config = new helpers.Config()
 const localization = new helpers.Localization()
 const validate = require('../lib/helpers/validate')
 
