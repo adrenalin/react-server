@@ -103,4 +103,56 @@ describe('services/cache', () => {
     const stored = await service.get(testKey)
     expect(stored).to.eql([1, 3])
   })
+
+  it('should get hydrated value if it exists', async () => {
+    const testKey = 'tests-services-cache-hydrate-exists-key'
+    const testValue = 'tests-services-cache-hydrate-exists-value'
+    const app = await require('../../../server/application')()
+    app.config.set('services.cache.engine', 'memcache')
+
+    const service = new CacheService(app)
+    await service.register()
+
+    await service.set(testKey, testValue, 2)
+    const stored = await service.hydrate(testKey, () => null)
+
+    expect(stored).to.equal(testValue)
+  })
+
+  it('should use callback to hydrate the key that does not exist', async () => {
+    const testKey = 'tests-services-cache-hydrate-callback-key'
+    const testValue = 'tests-services-cache-hydrate-callback-value'
+    const app = await require('../../../server/application')()
+    app.config.set('services.cache.engine', 'memcache')
+
+    const service = new CacheService(app)
+    await service.register()
+
+    const stored = await service.hydrate(testKey, () => testValue)
+    const cached = await service.get(testKey)
+
+    expect(stored).to.equal(testValue)
+    expect(cached).to.equal(testValue)
+  })
+
+  it('should wait for hydration callback to finish when running parallel hydrations', async () => {
+    let i = 0
+    const testKey = 'tests-services-cache-hydrate-callback-key'
+    const testCallback = async () => {
+      await sleep(50)
+      i++
+      return i
+    }
+
+    const app = await require('../../../server/application')()
+    app.config.set('services.cache.engine', 'memcache')
+
+    const service = new CacheService(app)
+    await service.register()
+
+    service.hydrate(testKey, testCallback)
+    const value = await service.hydrate(testKey, testCallback)
+
+    expect(value).to.be(1)
+  })
 })

@@ -3,6 +3,12 @@ const { castToArray } = require('@adrenalin/helpers.js')
 const Service = require('./')
 const Cache = require('../lib/cache')
 
+/**
+ * Cache service, this will act as an interface between the cache engine and
+ * application
+ *
+ * @class CacheService
+ */
 class CacheService extends Service {
   static get SERVICE_NAME () {
     return 'cache'
@@ -17,6 +23,8 @@ class CacheService extends Service {
     this.cache = Cache.getEngine(this.app, this.config.get('services.cache.engine', 'memcache'))
     this.cache.setStorageKey(this.config.get('storageKey') || 'cache')
     this.cache.connect()
+
+    this.watchers = {}
 
     return this
   }
@@ -115,6 +123,53 @@ class CacheService extends Service {
     }
 
     return this.cache.getClient()
+  }
+
+  /**
+   * Hydrate cache value
+   *
+   * @method CacheService#hydrate
+   * @param { string } key            Cache storage key
+   * @param { function } callback     Hydrate callback when there is a cache miss
+   * @param { number } [expires]      Number of seconds the value should be stored
+   * @return { mixed }                Whatever the callback returns
+   */
+  async hydrate (key, callback, expires = null) {
+    const cached = await this.get(key)
+
+    if (cached) {
+      return cached
+    }
+
+    if (this.watchers[key]) {
+      return new Promise((resolve, reject) => {
+        this.watchers[key].push({ resolve, reject })
+      })
+    }
+
+    const watchers = this.watchers[key] = []
+
+    try {
+      const hydrated = await callback()
+      this.set(key, hydrated, expires)
+
+      // Resolve each promise with the value
+      watchers.forEach((watcher) => {
+        watcher.resolve(hydrated)
+      })
+
+      return hydrated
+    } catch (err) {
+      // Throw error to each watcher
+      watchers.forEach((watcher) => {
+        watcher.reject(err)
+      })
+
+      throw err
+    } finally {
+      // Clean watchers
+      delete this.watchers[key]
+    }
   }
 }
 
