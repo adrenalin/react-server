@@ -1,4 +1,6 @@
 require('@babel/register')
+const fs = require('fs')
+const path = require('path')
 const Moment = require('moment-timezone')
 const PersistentConnection = require('./PersistentConnection')
 const initServer = require('../server')
@@ -24,6 +26,10 @@ const opts = {
   logger: {
     level: 0
   }
+}
+
+if (fs.existsSync(path.join(__dirname, '..', 'dist'))) {
+  throw new Error('Cannot run tests, "./dist" exists in the project root')
 }
 
 let app
