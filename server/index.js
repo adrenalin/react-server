@@ -1,4 +1,5 @@
 const Logger = require('@adrenalin/logger')
+const { castToArray } = require('@adrenalin/helpers.js')
 
 module.exports = async (opts = {}) => {
   const logger = new Logger('@adrenalin/react-server/server/index')
@@ -7,10 +8,14 @@ module.exports = async (opts = {}) => {
 
   const app = await require('./application')(opts)
   logger.debug('Start listener on port', app.config.get('server.port'))
-  const server = app.listen(app.config.get('server.port'))
-  app.servers = app.servers || []
-  app.servers.push(server)
-  logger.info('Listening to port', app.config.get('server.port'))
+
+  castToArray(app.config.get('server.port'))
+    .forEach((port) => {
+      const server = app.listen(port)
+      app.servers = app.servers || []
+      app.servers.push(server)
+      logger.info('Listening to port', port)
+    })
 
   return app
 }

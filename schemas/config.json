@@ -9,7 +9,10 @@
       "properties": {
         "port": {
           "description": "Server port",
-          "type": "integer"
+          "type": ["null", "integer", "array"],
+          "items": {
+            "type": "integer"
+          }
         }
       }
     },
