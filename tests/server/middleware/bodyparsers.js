@@ -3,7 +3,7 @@ const expect = require('expect.js')
 const { buildUrl } = require('@adrenalin/helpers.js')
 const init = require('../../init')
 
-describe('server/bodyparsers', () => {
+describe('server/middleware/bodyparsers', () => {
   let app, callback
   const testUrl = '/tests/server/middleware/bodyparsers'
 
