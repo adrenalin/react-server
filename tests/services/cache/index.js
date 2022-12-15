@@ -114,7 +114,7 @@ describe('services/cache', () => {
     await service.register()
 
     await service.set(testKey, testValue, 2)
-    const stored = await service.hydrate(testKey, () => null)
+    const stored = await service.hydrate(testKey, () => null, 10)
 
     expect(stored).to.equal(testValue)
   })
@@ -128,7 +128,7 @@ describe('services/cache', () => {
     const service = new CacheService(app)
     await service.register()
 
-    const stored = await service.hydrate(testKey, () => testValue)
+    const stored = await service.hydrate(testKey, () => testValue, 10)
     const cached = await service.get(testKey)
 
     expect(stored).to.equal(testValue)
@@ -151,7 +151,7 @@ describe('services/cache', () => {
     await service.register()
 
     service.hydrate(testKey, testCallback)
-    const value = await service.hydrate(testKey, testCallback)
+    const value = await service.hydrate(testKey, testCallback, 10)
 
     expect(value).to.be(1)
   })
