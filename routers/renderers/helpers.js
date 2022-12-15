@@ -30,7 +30,7 @@ module.exports = (app) => {
   const logger = new Logger('@adrenalin/react-server/routers/renderers/helpers')
   let fingerprint
 
-  getFingerPrint()
+  getFingerPrint(app)
     .then((f) => {
       fingerprint = f
     })
