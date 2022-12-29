@@ -12,6 +12,8 @@ module.exports = (app, overrides) => {
   }
 
   app = app || defaults
+  overrides = overrides || {}
+
   const appRoot = overrides.APPLICATION_ROOT || app.APPLICATION_ROOT || defaults.APPLICATION_ROOT
 
   const config = app.config = new ServerConfig()
