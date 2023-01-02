@@ -39,7 +39,7 @@ module.exports = {
 
         this.bindListeners(listeners)
 
-        this[responseKey] = []
+        this[responseKey] = null
         this.error = null
         this.removed = false
 
@@ -70,7 +70,7 @@ module.exports = {
       }
 
       handleFetchItems () {
-        this[responseKey] = []
+        this[responseKey] = null
         this.error = null
         this.removed = false
       }
