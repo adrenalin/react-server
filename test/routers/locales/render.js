@@ -9,7 +9,7 @@ const langRouter = require('../../../routers/application/lang')
 
 describe('routers/locales/render', () => {
   let app
-  const testUrl = '/tests/lib/locales/render'
+  const testUrl = '/test/lib/locales/render'
 
   const testLocales = {
     [testUrl]: {

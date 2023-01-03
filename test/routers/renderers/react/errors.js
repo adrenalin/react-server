@@ -10,7 +10,7 @@ const errorRouter = require('../../../../routers/renderers/errors/react')
 
 describe('routers/renderers/react:errors', () => {
   let app, callback, siteTitle, siteLogo
-  const testUrl = '/tests/lib/renderers/react/errors'
+  const testUrl = '/test/lib/renderers/react/errors'
 
   before(async () => {
     app = await init()

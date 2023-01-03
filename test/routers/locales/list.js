@@ -7,7 +7,7 @@ const errorRouter = require('../../../routers/renderers/errors/api')
 
 describe('routers/locales/list', () => {
   let app
-  const testUrl = '/tests/routers/locales/list'
+  const testUrl = '/test/routers/locales/list'
 
   const testLocales = {
     [testUrl]: {

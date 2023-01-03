@@ -7,7 +7,7 @@ const errorRouter = require('../../../routers/renderers/errors/api')
 
 describe('routers/application/favicon', () => {
   let app, favicon
-  const testUrl = '/tests/routers/application/favicon'
+  const testUrl = '/test/routers/application/favicon'
 
   before(async () => {
     app = await init()

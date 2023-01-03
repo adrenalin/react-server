@@ -13,7 +13,7 @@ describe('routers/renderers/react:iso', () => {
   const react = {}
   const common = {}
 
-  const testUrl = '/tests/lib/renderers/react/iso'
+  const testUrl = '/test/lib/renderers/react/iso'
 
   before(async () => {
     app = await init()

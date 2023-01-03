@@ -5,7 +5,7 @@ const init = require('../../init')
 
 describe('server/middleware/bodyparsers', () => {
   let app, callback
-  const testUrl = '/tests/server/middleware/bodyparsers'
+  const testUrl = '/test/server/middleware/bodyparsers'
 
   before(async () => {
     app = await init({

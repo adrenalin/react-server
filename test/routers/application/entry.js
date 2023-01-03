@@ -7,7 +7,7 @@ const errorRouter = require('../../../routers/renderers/errors/api')
 
 describe('routers/application/entry', () => {
   let app, configuredLang, configuredLanguages
-  const testUrl = '/tests/routers/application/entry'
+  const testUrl = '/test/routers/application/entry'
 
   const languages = ['fi', 'en']
   const defaultLang = languages[0]

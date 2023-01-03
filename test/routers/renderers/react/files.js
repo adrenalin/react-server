@@ -7,7 +7,7 @@ const errorRouter = require('../../../../routers/renderers/errors/api')
 
 describe('routers/renderers/react:files', () => {
   let app, minified, fingerprint
-  const testUrl = '/tests/lib/renderers/react/files'
+  const testUrl = '/test/lib/renderers/react/files'
 
   before(async () => {
     app = await init()

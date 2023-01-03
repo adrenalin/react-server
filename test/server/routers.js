@@ -31,7 +31,7 @@ describe('server/routers', () => {
   })
 
   it('should always populate res.locals.data', async () => {
-    const testUrl = '/tests/server/routers/res/locals/data'
+    const testUrl = '/test/server/routers/res/locals/data'
     const app = createApp()
     await routerLoader(app)
 
@@ -44,7 +44,7 @@ describe('server/routers', () => {
   })
 
   it('should load the routers from public when environment is not defined', async () => {
-    const testUrl = '/tests/server/routers/public/router'
+    const testUrl = '/test/server/routers/public/router'
     const app = createApp()
     app.APPLICATION_ROOT = path.join(__dirname, '..', 'resources', 'server')
     await routerLoader(app)
@@ -53,7 +53,7 @@ describe('server/routers', () => {
   })
 
   it('should load the routers from the configured path', async () => {
-    const testUrl = '/tests/server/routers/config/router'
+    const testUrl = '/test/server/routers/config/router'
     const app = createApp()
     app.APPLICATION_ROOT = path.join(__dirname)
     app.config.set('routers.path', path.join(__dirname, '..', 'resources', 'server', 'routers', 'config'))
@@ -63,7 +63,7 @@ describe('server/routers', () => {
   })
 
   it('should load the routers from the configured paths', async () => {
-    const testUrl = '/tests/server/routers/config/router'
+    const testUrl = '/test/server/routers/config/router'
     const app = createApp()
     app.APPLICATION_ROOT = path.join(__dirname)
     app.config.set('routers.paths', [path.join(__dirname, '..', 'resources', 'server', 'routers', 'config')])
@@ -73,7 +73,7 @@ describe('server/routers', () => {
   })
 
   it('should load the routers from the environment when it is defined', async () => {
-    const testUrl = '/tests/server/routers/environment/router'
+    const testUrl = '/test/server/routers/environment/router'
     const app = createApp()
     app.APPLICATION_ROOT = path.join(__dirname, '..', 'resources', 'server')
     app.environment = 'environment'
@@ -83,7 +83,7 @@ describe('server/routers', () => {
   })
 
   it('should convert a function router to an object', async () => {
-    const testUrl = '/tests/server/routers/no-registerRouter/router'
+    const testUrl = '/test/server/routers/no-registerRouter/router'
     const app = createApp()
     app.APPLICATION_ROOT = path.join(__dirname, '..', 'resources', 'server')
     app.environment = 'no-registerRouter'
@@ -129,7 +129,7 @@ describe('server/routers', () => {
   })
 
   it('should load the routers by priority', async () => {
-    const testUrl = '/tests/server/routers/priorities/router'
+    const testUrl = '/test/server/routers/priorities/router'
     const app = createApp()
     app.APPLICATION_ROOT = path.join(__dirname, '..', 'resources', 'server')
     app.environment = 'priorities'
@@ -139,7 +139,7 @@ describe('server/routers', () => {
   })
 
   it('should always load the shared routers', async () => {
-    const testUrl = '/tests/server/routers/shared/router'
+    const testUrl = '/test/server/routers/shared/router'
     const app = createApp()
     app.APPLICATION_ROOT = path.join(__dirname, '..', 'resources', 'server')
     app.environment = 'public'

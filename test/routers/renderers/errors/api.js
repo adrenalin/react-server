@@ -7,7 +7,7 @@ const errorRouter = require('../../../../routers/renderers/errors/api')
 
 describe('routers/renderers/api', () => {
   let app, callback
-  const testUrl = '/tests/routers/renderers/errors/api'
+  const testUrl = '/test/routers/renderers/errors/api'
 
   before(async () => {
     app = await init()

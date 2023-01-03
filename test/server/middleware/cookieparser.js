@@ -14,7 +14,7 @@ describe('server/middleware/cookieparser', () => {
   }
 
   it('should not load the cookieparser when enabled flag is off', async () => {
-    const testUrl = '/tests/server/middleware/cookieparser'
+    const testUrl = '/test/server/middleware/cookieparser'
     const cookieName = 'testCookie'
     const cookieValue = 'test-cookie'
 
@@ -34,7 +34,7 @@ describe('server/middleware/cookieparser', () => {
   })
 
   it('should load the cookieparser when enabled flag is on', async () => {
-    const testUrl = '/tests/server/middleware/cookieparser'
+    const testUrl = '/test/server/middleware/cookieparser'
     const cookieName = 'testCookie'
     const cookieValue = 'test-cookie'
 

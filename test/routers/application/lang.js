@@ -7,7 +7,7 @@ const configRouter = require('../../../routers/application/config')
 
 describe('routers/application/lang', () => {
   let app, configuredLang, configuredLanguages, callback
-  const testUrl = '/tests/lib/application/lang'
+  const testUrl = '/test/lib/application/lang'
 
   before(async () => {
     app = await init()

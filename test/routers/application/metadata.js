@@ -9,7 +9,7 @@ const errorRouter = require('../../../routers/renderers/errors/api')
 
 describe('routers/application/metadata', () => {
   let app
-  const testUrl = '/tests/lib/application/metadata'
+  const testUrl = '/test/lib/application/metadata'
 
   let callback = (req, res, next) => {
     next()

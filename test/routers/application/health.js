@@ -6,7 +6,7 @@ const altRouter = require('../../../routers/renderers/alt')
 
 describe('routers/application/health', () => {
   let app
-  const testUrl = '/tests/routers/application/health'
+  const testUrl = '/test/routers/application/health'
 
   before(async () => {
     app = await init()

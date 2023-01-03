@@ -11,7 +11,7 @@ const errorRouter = require('../../../../routers/renderers/errors/api')
 
 describe('routers/renderers/react:metadata', () => {
   let app, siteImage, defaultLocale, defaultLocales, defaultLanguages
-  const testUrl = '/tests/lib/renderers/react/metadata'
+  const testUrl = '/test/lib/renderers/react/metadata'
 
   const react = {}
   const common = {}

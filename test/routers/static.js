@@ -9,7 +9,7 @@ const errorRouter = require('../../routers/renderers/errors/api')
 describe('routers/static', () => {
   let app
   let hasFallenThrough = false
-  const testUrl = '/tests/routers/static'
+  const testUrl = '/test/routers/static'
   const testSource = path.join(__dirname, '..', 'resources', 'routers', 'static')
   const opts = {
     source: testSource
