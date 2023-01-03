@@ -1,5 +1,5 @@
 const path = require('path')
-const expect = require('expect.js')
+const { expect } = require('chai')
 const { Config } = require('@adrenalin/helpers.js')
 const SMTPTester = require('smtp-tester')
 const Mailer = require('../../../services/mailer')
@@ -30,7 +30,7 @@ describe('services/mailer', () => {
     const app = createApp()
     await serviceLoader(app)
     expect(app.services).to.have.property('mailer')
-    expect(app.services.mailer).to.be.a(Mailer)
+    expect(app.services.mailer).to.be.an.instanceof(Mailer)
   })
 
   it('should send a message', (done) => {

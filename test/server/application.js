@@ -1,4 +1,4 @@
-const expect = require('expect.js')
+const { expect } = require('chai')
 const server = require('../../server')
 
 describe('server/application', () => {
@@ -9,6 +9,6 @@ describe('server/application', () => {
       }
     })
     await app.close()
-    expect(app.servers.length).to.be(0)
+    expect(app.servers.length).to.equal(0)
   })
 })

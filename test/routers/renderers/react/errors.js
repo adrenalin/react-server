@@ -1,4 +1,4 @@
-const expect = require('expect.js')
+const { expect } = require('chai')
 const cheerio = require('cheerio')
 const errors = require('@adrenalin/errors')
 const init = require('../../../init')
@@ -46,7 +46,7 @@ describe('routers/renderers/react:errors', () => {
       .get(url)
       .expect(500)
 
-    expect(response.text).to.contain(testUrl)
+    expect(response.text).to.have.string(testUrl)
   })
 
   it('should receive form validation errors', async () => {
@@ -86,7 +86,7 @@ describe('routers/renderers/react:errors', () => {
       .expect(200)
 
     const body = String(response.text)
-    expect(body).to.contain(testTitle)
-    expect(body).to.contain(testLogo)
+    expect(body).to.have.string(testTitle)
+    expect(body).to.have.string(testLogo)
   })
 })

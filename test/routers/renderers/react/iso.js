@@ -1,5 +1,5 @@
 const cheerio = require('cheerio')
-const expect = require('expect.js')
+const { expect } = require('chai')
 const { getValue } = require('@adrenalin/helpers.js')
 const init = require('../../../init')
 
@@ -54,7 +54,7 @@ describe('routers/renderers/react:iso', () => {
     const $ = cheerio.load(response.text)
     const iso = $('script[type="application/json"][data-iso-key]')
 
-    expect(iso.length).to.be(1)
+    expect(iso.length).to.equal(1)
 
     const stores = JSON.parse(JSON.parse(iso.html()))
 
@@ -90,7 +90,7 @@ describe('routers/renderers/react:iso', () => {
     const $ = cheerio.load(response.text)
     const iso = $('script[type="application/json"][data-iso-key]')
 
-    expect(iso.length).to.be(1)
+    expect(iso.length).to.equal(1)
 
     const stores = JSON.parse(JSON.parse(iso.html()))
 
@@ -121,7 +121,7 @@ describe('routers/renderers/react:iso', () => {
     const $ = cheerio.load(response.text)
     const iso = $('script[type="application/json"][data-iso-key]')
 
-    expect(iso.length).to.be(1)
+    expect(iso.length).to.equal(1)
 
     const stores = JSON.parse(JSON.parse(iso.html()))
 

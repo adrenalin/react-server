@@ -1,5 +1,5 @@
 const path = require('path')
-const expect = require('expect.js')
+const { expect } = require('chai')
 const Database = require('../../../lib/database')
 const PsqlDatabase = require('../../../lib/database/psql')
 const ServerConfig = require('@adrenalin/helpers.js/lib/ServerConfig')
@@ -16,7 +16,7 @@ describe('lib/database/psql', () => {
 
   it('should return a psql instance with factory method', (done) => {
     const psql = Database.getEngine(app, engine)
-    expect(psql).to.be.a(PsqlDatabase)
+    expect(psql).to.be.an.instanceof(PsqlDatabase)
     done()
   })
 
@@ -71,17 +71,17 @@ describe('lib/database/psql', () => {
 
       // Test from outside the scope before the transaction has been committed
       const r0 = await c2.query('SELECT id FROM tests_transaction')
-      expect(r0.rows.length).to.be(0)
+      expect(r0.rows.length).to.equal(0)
 
       // Test from inside the scope before the transaction has been committed
       const r1 = await c1.query('SELECT id FROM tests_transaction')
-      expect(r1.rows.length).to.be(1)
+      expect(r1.rows.length).to.equal(1)
 
       await c1.query('COMMIT')
 
       // Test from outside the scope after the transaction has been committed
       const r2 = await c2.query('SELECT id FROM tests_transaction')
-      expect(r2.rows.length).to.be(1)
+      expect(r2.rows.length).to.equal(1)
 
       // Cleanup
       await c1.query('DROP TABLE tests_transaction')

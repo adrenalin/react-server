@@ -1,4 +1,4 @@
-const expect = require('expect.js')
+const { expect } = require('chai')
 const init = require('../../init')
 
 const router = require('../../../routers/locales/render')
@@ -40,7 +40,7 @@ describe('routers/locales/render', () => {
 
     for (const locale in testLocales) {
       expect(locales[locale][lang]).to.eql(testLocales[locale][lang])
-      expect(Object.keys(locales[locale]).length).to.be(1)
+      expect(Object.keys(locales[locale]).length).to.equal(1)
     }
   })
 })

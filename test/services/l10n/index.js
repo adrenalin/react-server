@@ -1,5 +1,5 @@
 const path = require('path')
-const expect = require('expect.js')
+const { expect } = require('chai')
 const { Localization } = require('@adrenalin/helpers.js')
 const init = require('../../init')
 
@@ -22,7 +22,7 @@ describe('services/l10n', () => {
   it('should load l10n service', (done) => {
     app.config.set('services.l10n.enabled', true)
     const l10n = new L10nService(app)
-    expect(l10n).to.be.a(Service)
+    expect(l10n).to.be.an.instanceof(Service)
     done()
   })
 
@@ -40,7 +40,7 @@ describe('services/l10n', () => {
     await l10n.register()
 
     const instance = l10n.getInstance()
-    expect(instance).to.be.a(Localization)
+    expect(instance).to.be.an.instanceof(Localization)
   })
 
   it('should get public registered locales and ignore private', async () => {

@@ -1,6 +1,6 @@
 const fs = require('fs')
 const path = require('path')
-const expect = require('expect.js')
+const { expect } = require('chai')
 const init = require('../init')
 
 const router = require('../../routers/static')
@@ -47,16 +47,16 @@ describe('routers/static', () => {
     const response = await app.tests.requests.create().get(`${testUrl}/test.txt`)
       .expect(200)
 
-    expect(response.headers['content-type']).to.contain('text/plain')
+    expect(response.headers['content-type']).to.have.string('text/plain')
     expect(response.headers['content-encoding']).not.to.eql('gzip')
-    expect(response.body).to.eql(contents)
+    expect(response.text).to.eql(contents)
   })
 
   it('should not find a file that does not exist', async () => {
     await app.tests.requests.create().get(`${testUrl}/undefined.txt`)
       .expect(404)
 
-    expect(hasFallenThrough).to.be(true)
+    expect(hasFallenThrough).to.equal(true)
   })
 
   it('should not fall through when fallthrough option is false', async () => {
@@ -64,6 +64,6 @@ describe('routers/static', () => {
     await app.tests.requests.create().get(`${testUrl}/undefined.txt`)
       .expect(404)
 
-    expect(hasFallenThrough).to.be(false)
+    expect(hasFallenThrough).to.equal(false)
   })
 })

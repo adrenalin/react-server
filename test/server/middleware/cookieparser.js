@@ -1,5 +1,5 @@
 const path = require('path')
-const expect = require('expect.js')
+const { expect } = require('chai')
 const request = require('supertest')
 const { Config } = require('@adrenalin/helpers.js')
 const middlewareLoader = require('../../../server/middleware')

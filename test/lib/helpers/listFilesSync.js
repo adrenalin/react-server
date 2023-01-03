@@ -1,5 +1,5 @@
 const path = require('path')
-const expect = require('expect.js')
+const { expect } = require('chai')
 const listFilesSync = require('../../../lib/helpers/listFilesSync')
 
 describe('lib/helpers/listFilesSync', () => {
@@ -30,7 +30,7 @@ describe('lib/helpers/listFilesSync', () => {
   })
 
   it('should throw an error for an invalid path', (done) => {
-    expect(listFilesSync).withArgs(path.join(resourceDir, 'foobar')).to.throwError()
+    expect(() => listFilesSync(path.join(resourceDir, 'foobar'))).to.throw()
     done()
   })
 

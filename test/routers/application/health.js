@@ -1,4 +1,4 @@
-const expect = require('expect.js')
+const { expect } = require('chai')
 const init = require('../../init')
 
 const router = require('../../../routers/application/health')
@@ -20,7 +20,7 @@ describe('routers/application/health', () => {
       .expect(200)
 
     expect(response.body).to.have.property('status')
-    expect(response.body.status).to.be('ok')
+    expect(response.body.status).to.equal('ok')
 
     expect(response.body).to.have.property('uptime')
     expect(response.body.uptime).to.be.a('string')

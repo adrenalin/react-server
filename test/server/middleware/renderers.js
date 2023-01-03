@@ -1,5 +1,5 @@
 const path = require('path')
-const expect = require('expect.js')
+const { expect } = require('chai')
 const server = require('../../../server/application')
 
 describe('server/middleware/renderers', () => {
@@ -20,7 +20,7 @@ describe('server/middleware/renderers', () => {
       }
     })
 
-    expect(app.renderers[testRendererType]).to.be.an('object')
+    expect(app.renderers[testRendererType]).to.be.a('object')
     const renderer = app.renderers[testRendererType]
 
     expect(renderer.engine).to.eql(testRendererType)

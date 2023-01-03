@@ -1,4 +1,4 @@
-const expect = require('expect.js')
+const { expect } = require('chai')
 const { Config } = require('@adrenalin/helpers.js')
 const application = require('../../server/application')
 
@@ -14,7 +14,7 @@ describe('server/configuration', () => {
       app.config.set('middleware.renderers.foobar.module', ['foobar'])
       throw new Error('Should have thrown a ValidationError')
     } catch (err) {
-      expect(err).to.be.a(Config.errors.ValidationError)
+      expect(err).to.be.an.instanceof(Config.errors.ValidationError)
     }
   })
 
@@ -28,14 +28,14 @@ describe('server/configuration', () => {
       app.config.set('react.application.languages', ['foobar'])
       throw new Error('Should have thrown a ValidationError')
     } catch (err) {
-      expect(err).to.be.a(Config.errors.ValidationError)
+      expect(err).to.be.an.instanceof(Config.errors.ValidationError)
     }
 
     try {
       app.config.set('react.application.defaultLanguage', 'foobar')
       throw new Error('Should have thrown a ValidationError')
     } catch (err) {
-      expect(err).to.be.a(Config.errors.ValidationError)
+      expect(err).to.be.an.instanceof(Config.errors.ValidationError)
     }
   })
 
@@ -49,14 +49,14 @@ describe('server/configuration', () => {
       app.config.set('services.cache.enabled', null)
       throw new Error('Should have thrown a ValidationError')
     } catch (err) {
-      expect(err).to.be.a(Config.errors.ValidationError)
+      expect(err).to.be.an.instanceof(Config.errors.ValidationError)
     }
 
     try {
       app.config.set('services.cache.engine', 'undefined')
       throw new Error('Should have thrown a ValidationError')
     } catch (err) {
-      expect(err).to.be.a(Config.errors.ValidationError)
+      expect(err).to.be.an.instanceof(Config.errors.ValidationError)
     }
   })
 })

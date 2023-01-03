@@ -1,4 +1,4 @@
-const expect = require('expect.js')
+const { expect } = require('chai')
 const init = require('../../init')
 const MailerInterface = require('../../../lib/mailer')
 const MailerInterfaceSMTP = require('../../../lib/mailer/smtp')
@@ -23,7 +23,7 @@ describe('lib/mailer/smtp', () => {
 
   it('should create an instance of MailerInterface with the factory method', (done) => {
     const instance = MailerInterface.getEngine(app, 'smtp')
-    expect(instance).to.be.a(MailerInterfaceSMTP)
+    expect(instance).to.be.an.instanceof(MailerInterfaceSMTP)
     done()
   })
 

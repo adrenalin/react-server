@@ -1,5 +1,5 @@
 const path = require('path')
-const expect = require('expect.js')
+const { expect } = require('chai')
 const { Config } = require('@adrenalin/helpers.js')
 const EventsService = require('../../../services/events')
 

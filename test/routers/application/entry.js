@@ -1,4 +1,4 @@
-const expect = require('expect.js')
+const { expect } = require('chai')
 const init = require('../../init')
 
 const router = require('../../../routers/application/entry')
@@ -33,7 +33,7 @@ describe('routers/application/entry', () => {
     const response = await app.tests.requests.basic.get(testUrl)
       .expect(statusCode)
 
-    expect(response.headers.location).to.be(`./${defaultLang}`)
+    expect(response.headers.location).to.equal(`./${defaultLang}`)
   })
 
   it('should redirect to the user preferred language with accept-language headers', async () => {
@@ -43,7 +43,7 @@ describe('routers/application/entry', () => {
       })
       .expect(302)
 
-    expect(response.headers.location).to.be('./en')
+    expect(response.headers.location).to.equal('./en')
   })
 
   it('should redirect to the defalt language with accept-language headers without an included language', async () => {
@@ -53,6 +53,6 @@ describe('routers/application/entry', () => {
       })
       .expect(302)
 
-    expect(response.headers.location).to.be(`./${defaultLang}`)
+    expect(response.headers.location).to.equal(`./${defaultLang}`)
   })
 })

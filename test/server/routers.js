@@ -1,5 +1,5 @@
 const path = require('path')
-const expect = require('expect.js')
+const { expect } = require('chai')
 const request = require('supertest')
 const errors = require('@adrenalin/errors')
 const { Config } = require('@adrenalin/helpers.js')
@@ -27,7 +27,7 @@ describe('server/routers', () => {
     app.config.set('routers.enabled', true)
     await routerLoader(app)
 
-    expect(app.routers).to.be.an('array')
+    expect(app.routers).to.be.a('array')
   })
 
   it('should always populate res.locals.data', async () => {
@@ -100,7 +100,7 @@ describe('server/routers', () => {
       await routerLoader(app)
       throw new Error('Should have thrown an InternalServerError')
     } catch (err) {
-      expect(err).to.be.a(errors.InternalServerError)
+      expect(err).to.be.an.instanceof(errors.InternalServerError)
     }
   })
 
@@ -112,7 +112,7 @@ describe('server/routers', () => {
       await routerLoader(app)
       throw new Error('Should have thrown an InternalServerError')
     } catch (err) {
-      expect(err).to.be.a(errors.InternalServerError)
+      expect(err).to.be.an.instanceof(errors.InternalServerError)
     }
   })
 
@@ -124,7 +124,7 @@ describe('server/routers', () => {
       await routerLoader(app)
       throw new Error('Should have thrown an InternalServerError')
     } catch (err) {
-      expect(err).to.be.a(errors.InternalServerError)
+      expect(err).to.be.an.instanceof(errors.InternalServerError)
     }
   })
 

@@ -1,4 +1,4 @@
-const expect = require('expect.js')
+const { expect } = require('chai')
 // const errors = require('@adrenalin/errors')
 const DatabaseService = require('../../../services/database')
 
@@ -10,7 +10,7 @@ describe('services/database', () => {
     const service = new DatabaseService(app)
     const registered = await service.register()
 
-    expect(service).to.be(registered)
+    expect(service).to.equal(registered)
   })
 
   it('should have interface methods "query", "connect" and "getClient"', async () => {

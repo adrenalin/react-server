@@ -1,4 +1,4 @@
-const expect = require('expect.js')
+const { expect } = require('chai')
 const { getValue } = require('@adrenalin/helpers.js')
 const init = require('../../init')
 

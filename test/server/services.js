@@ -1,5 +1,5 @@
 const path = require('path')
-const expect = require('expect.js')
+const { expect } = require('chai')
 const errors = require('@adrenalin/errors')
 const { Config } = require('@adrenalin/helpers.js')
 const serviceLoader = require('../../server/services')
@@ -28,7 +28,7 @@ describe('server/services', () => {
     app.config.set('services.l10n.enabled', true)
     await serviceLoader(app)
     expect(app.services).to.have.property('l10n')
-    expect(app.services.l10n).to.be.a(L10nService)
+    expect(app.services.l10n).to.be.an.instanceof(L10nService)
   })
 
   it('should load services found from application root', async () => {
@@ -38,7 +38,7 @@ describe('server/services', () => {
     await serviceLoader(app)
 
     expect(app.services).to.have.property('test')
-    expect(app.services.test).to.be.a(TestService)
+    expect(app.services.test).to.be.an.instanceof(TestService)
   })
 
   it('should not fail when application root has no services', async () => {
@@ -53,7 +53,7 @@ describe('server/services', () => {
     app.config.set(`services.${serviceName}.enabled`, true)
     app.APPLICATION_ROOT = path.join(__dirname, '..', 'resources', 'server')
     await serviceLoader(app)
-    expect(app.services[serviceName]).to.be.a(Service)
+    expect(app.services[serviceName]).to.be.an.instanceof(Service)
   })
 
   it('should register the service name from SERVICE_NAME class property when available', async () => {
@@ -62,7 +62,7 @@ describe('server/services', () => {
     app.config.set(`services.${serviceName}.enabled`, true)
     app.APPLICATION_ROOT = path.join(__dirname, '..', 'resources', 'server')
     await serviceLoader(app)
-    expect(app.services[serviceName]).to.be.a(Service)
+    expect(app.services[serviceName]).to.be.an.instanceof(Service)
   })
 
   it('should register the service name with the configured alias when available', async () => {
@@ -73,7 +73,7 @@ describe('server/services', () => {
     await serviceLoader(app)
 
     expect(app.services).to.have.property('test2')
-    expect(app.services.test2).to.be.a(TestService)
+    expect(app.services.test2).to.be.an.instanceof(TestService)
   })
 
   it('should register the service to an alias when available', async () => {
@@ -84,7 +84,7 @@ describe('server/services', () => {
     await serviceLoader(app)
 
     expect(app.services).to.have.property('test2')
-    expect(app.services.test2).to.be.a(TestService)
+    expect(app.services.test2).to.be.an.instanceof(TestService)
   })
 
   it('should register an array of services', async () => {
@@ -102,10 +102,10 @@ describe('server/services', () => {
     await serviceLoader(app)
 
     expect(app.services).to.have.property('test')
-    expect(app.services.test).to.be.a(TestService)
+    expect(app.services.test).to.be.an.instanceof(TestService)
 
     expect(app.services).to.have.property('test2')
-    expect(app.services.test2).to.be.a(TestService)
+    expect(app.services.test2).to.be.an.instanceof(TestService)
   })
 
   it('should throw an error when a conflicting service is being registered', async () => {
@@ -123,7 +123,7 @@ describe('server/services', () => {
       await serviceLoader(app)
       throw new Error('Should have thrown a Conflict')
     } catch (err) {
-      expect(err).to.be.a(errors.Conflict)
+      expect(err).to.be.an.instanceof(errors.Conflict)
     }
   })
 })

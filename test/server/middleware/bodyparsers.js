@@ -1,5 +1,5 @@
 const axios = require('axios')
-const expect = require('expect.js')
+const { expect } = require('chai')
 const { buildUrl } = require('@adrenalin/helpers.js')
 const init = require('../../init')
 

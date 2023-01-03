@@ -1,4 +1,4 @@
-const expect = require('expect.js')
+const { expect } = require('chai')
 const errors = require('@adrenalin/errors')
 const { sleep } = require('@adrenalin/helpers.js')
 const CacheService = require('../../../services/cache')
@@ -59,7 +59,7 @@ describe('services/cache', () => {
       service.getClient()
       throw new Error('Should have thrown a NotImplemented')
     } catch (err) {
-      expect(err).to.be.a(errors.NotImplemented)
+      expect(err).to.be.an.instanceof(errors.NotImplemented)
     }
   })
 
@@ -153,6 +153,6 @@ describe('services/cache', () => {
     service.hydrate(testKey, testCallback)
     const value = await service.hydrate(testKey, testCallback, 10)
 
-    expect(value).to.be(1)
+    expect(value).to.equal(1)
   })
 })

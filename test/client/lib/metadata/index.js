@@ -1,4 +1,4 @@
-const expect = require('expect.js')
+const { expect } = require('chai')
 const { InvalidArgument } = require('@adrenalin/errors')
 const { castToArray } = require('@adrenalin/helpers.js')
 const Metadata = require('../../../../client/lib/metadata')
@@ -11,7 +11,7 @@ describe('client/lib/metadata', () => {
     const testValue = 'test-value'
 
     const rval = metadata.set(testDomain, testKey, testValue)
-    expect(rval).to.be(metadata)
+    expect(rval).to.equal(metadata)
     expect(metadata.get(testDomain, testKey)).to.eql(testValue)
     done()
   })
@@ -23,7 +23,7 @@ describe('client/lib/metadata', () => {
     const testValue = 'test-value'
 
     const rval = metadata.set(testDomain, { [testKey]: testValue })
-    expect(rval).to.be(metadata)
+    expect(rval).to.equal(metadata)
     expect(metadata.get(testDomain, testKey)).to.eql(testValue)
     done()
   })
@@ -35,7 +35,7 @@ describe('client/lib/metadata', () => {
     const testValue = 'test-value'
 
     const rval = metadata.set({ [testDomain]: { [testKey]: testValue } })
-    expect(rval).to.be(metadata)
+    expect(rval).to.equal(metadata)
     expect(metadata.get(testDomain, testKey)).to.eql(testValue)
     done()
   })
@@ -47,7 +47,7 @@ describe('client/lib/metadata', () => {
       throw new Error('Should have thrown an InvalidArgument')
     } catch (err) {
       console.log(err)
-      expect(err).to.be.an(InvalidArgument)
+      expect(err).to.be.an.instanceof(InvalidArgument)
       done()
     }
   })
@@ -59,7 +59,7 @@ describe('client/lib/metadata', () => {
       throw new Error('Should have thrown an InvalidArgument')
     } catch (err) {
       console.log(err)
-      expect(err).to.be.an(InvalidArgument)
+      expect(err).to.be.an.instanceof(InvalidArgument)
       done()
     }
   })
@@ -69,7 +69,7 @@ describe('client/lib/metadata', () => {
     const values = {}
 
     metadata.bindTo(values)
-    expect(metadata.values).to.be(values)
+    expect(metadata.values).to.equal(values)
     done()
   })
 
@@ -79,7 +79,7 @@ describe('client/lib/metadata', () => {
       metadata.bindTo('foo')
       throw new Error('Should have thrown an InvalidArgument')
     } catch (err) {
-      expect(err).to.be.a(InvalidArgument)
+      expect(err).to.be.an.instanceof(InvalidArgument)
       done()
     }
   })
@@ -90,7 +90,7 @@ describe('client/lib/metadata', () => {
       metadata.bindTo(1)
       throw new Error('Should have thrown an InvalidArgument')
     } catch (err) {
-      expect(err).to.be.a(InvalidArgument)
+      expect(err).to.be.an.instanceof(InvalidArgument)
       done()
     }
   })
@@ -101,7 +101,7 @@ describe('client/lib/metadata', () => {
       metadata.bindTo([])
       throw new Error('Should have thrown an InvalidArgument')
     } catch (err) {
-      expect(err).to.be.a(InvalidArgument)
+      expect(err).to.be.an.instanceof(InvalidArgument)
       done()
     }
   })
@@ -116,13 +116,13 @@ describe('client/lib/metadata', () => {
 
     metadata.bindTo(values)
     metadata.set(testDomain, testKey, testValue)
-    expect(metadata.values).to.be(values)
+    expect(metadata.values).to.equal(values)
     expect(metadata.get(testDomain, testKey)).to.eql(testValue)
 
     const flushed = metadata.flush()
     expect(flushed[testDomain][testKey]).to.eql(testValue)
 
-    expect(metadata.values).not.to.be(values)
+    expect(metadata.values).not.to.equal(values)
     done()
   })
 
@@ -182,10 +182,10 @@ describe('client/lib/metadata', () => {
     const testArray = [' foo ']
 
     expect(Metadata.trim(' foo ')).to.eql('foo')
-    expect(Metadata.trim(testArray)).to.be(testArray)
+    expect(Metadata.trim(testArray)).to.equal(testArray)
 
     const metadata = new Metadata()
-    expect(metadata.trim).to.be(Metadata.trim)
+    expect(metadata.trim).to.equal(Metadata.trim)
     expect(metadata.trim(' foo ')).to.eql('foo')
 
     done()
@@ -198,8 +198,8 @@ describe('client/lib/metadata', () => {
 
     const rval = metadata.opengraph(testKey, testValue)
 
-    expect(rval).to.be(metadata)
-    expect(metadata.get('opengraph', `og:${testKey}`)).to.be(testValue)
+    expect(rval).to.equal(metadata)
+    expect(metadata.get('opengraph', `og:${testKey}`)).to.equal(testValue)
     done()
   })
 
@@ -239,7 +239,7 @@ describe('client/lib/metadata', () => {
 
     const rval = metadata.addImage(testSrc)
 
-    expect(rval).to.be(metadata)
+    expect(rval).to.equal(metadata)
     expect(metadata.get('opengraph', 'og:image')).to.contain(testSrc)
     done()
   })
@@ -264,7 +264,7 @@ describe('client/lib/metadata', () => {
       metadata.opengraph(['value1', 'value2'])
       throw new Error('Should have thrown an InvalidArgument')
     } catch (err) {
-      expect(err).to.be.an(InvalidArgument)
+      expect(err).to.be.an.instanceof(InvalidArgument)
       done()
     }
   })
@@ -274,8 +274,8 @@ describe('client/lib/metadata', () => {
 
     const rval = metadata.setStatusCode(404)
 
-    expect(rval).to.be(metadata)
-    expect(metadata.get('http', 'status')).to.be(404)
+    expect(rval).to.equal(metadata)
+    expect(metadata.get('http', 'status')).to.equal(404)
     done()
   })
 
@@ -286,7 +286,7 @@ describe('client/lib/metadata', () => {
 
     valid.forEach((code) => {
       metadata.setStatusCode(code)
-      expect(metadata.get('http', 'status')).to.be(code)
+      expect(metadata.get('http', 'status')).to.equal(code)
     })
 
     invalid.forEach((code) => {
@@ -294,7 +294,7 @@ describe('client/lib/metadata', () => {
         metadata.setStatusCode(code)
         throw new Error('Should have thrown an InvalidArgument')
       } catch (err) {
-        expect(err).to.be.an(InvalidArgument)
+        expect(err).to.be.an.instanceof(InvalidArgument)
       }
     })
 
@@ -307,8 +307,8 @@ describe('client/lib/metadata', () => {
 
     const rval = metadata.setLocation(location)
 
-    expect(rval).to.be(metadata)
-    expect(metadata.get('http', 'location')).to.be(location)
+    expect(rval).to.equal(metadata)
+    expect(metadata.get('http', 'location')).to.equal(location)
     done()
   })
 
@@ -318,7 +318,7 @@ describe('client/lib/metadata', () => {
     const metadata = new Metadata()
     const rval = metadata.setTitle(testTitle)
 
-    expect(rval).to.be(metadata)
+    expect(rval).to.equal(metadata)
     expect(metadata.get('page', 'title')).to.eql(testTitle)
     done()
   })
@@ -329,7 +329,7 @@ describe('client/lib/metadata', () => {
     const metadata = new Metadata()
     const rval = metadata.setTitle(testTitle)
 
-    expect(rval).to.be(metadata)
+    expect(rval).to.equal(metadata)
     expect(metadata.get('page', 'title')).to.eql(testTitle.join(' | '))
     done()
   })
@@ -340,7 +340,7 @@ describe('client/lib/metadata', () => {
     const metadata = new Metadata()
     const rval = metadata.setTitle(testTitle)
 
-    expect(rval).to.be(metadata)
+    expect(rval).to.equal(metadata)
     expect(metadata.get('page', 'title')).not.to.eql(testTitle.join(' | '))
     expect(metadata.get('page', 'title')).to.eql(testTitle.filter(p => p).join(' | '))
     done()
@@ -416,8 +416,8 @@ describe('client/lib/metadata', () => {
         metadata.setBreadcrumbPath(parts)
         throw new Error('Should have thrown an InvalidArgument')
       } catch (err) {
-        expect(err).to.be.an(InvalidArgument)
-        expect(counter).to.be(0)
+        expect(err).to.be.an.instanceof(InvalidArgument)
+        expect(counter).to.equal(0)
       }
     })
 
@@ -426,11 +426,11 @@ describe('client/lib/metadata', () => {
       metadata.listen('navigation', 'breadcrumb', listener)
       const rval = metadata.setBreadcrumbPath(parts)
 
-      expect(rval).to.be(metadata)
+      expect(rval).to.equal(metadata)
       expect(metadata.get('navigation', 'breadcrumb')).to.eql(castToArray(parts))
       expect(metadata.getBreadcrumbPath()).to.eql(castToArray(parts))
 
-      expect(counter).to.be(i + 1)
+      expect(counter).to.equal(i + 1)
     })
 
     done()
@@ -447,7 +447,7 @@ describe('client/lib/metadata', () => {
     metadata.unlisten('foo', 'bar', callback)
 
     await metadata.trigger('foo', 'bar')
-    expect(touched).to.be(false)
+    expect(touched).to.equal(false)
   })
 
   it('should not crash if a listener throws an error', async () => {
@@ -471,7 +471,7 @@ describe('client/lib/metadata', () => {
     metadata.unlisten('foo', 'bar')
 
     await metadata.trigger('foo', 'bar')
-    expect(touched).to.be(false)
+    expect(touched).to.equal(false)
   })
 
   it('should set page class as a string', (done) => {
@@ -479,7 +479,7 @@ describe('client/lib/metadata', () => {
     const metadata = new Metadata()
     const rval = metadata.setPageClass(testClassName)
 
-    expect(rval).to.be(metadata)
+    expect(rval).to.equal(metadata)
     expect(metadata.get('page', 'className')).to.eql(testClassName)
     done()
   })
@@ -489,7 +489,7 @@ describe('client/lib/metadata', () => {
     const metadata = new Metadata()
     const rval = metadata.setPageClass(testClassName)
 
-    expect(rval).to.be(metadata)
+    expect(rval).to.equal(metadata)
     expect(metadata.get('page', 'className')).to.eql('test-class-name-1 test-class-name-2')
     done()
   })
@@ -499,7 +499,7 @@ describe('client/lib/metadata', () => {
     const metadata = new Metadata()
     const rval = metadata.setPageType(testPageType)
 
-    expect(rval).to.be(metadata)
+    expect(rval).to.equal(metadata)
     expect(metadata.get('page', 'type')).to.eql(testPageType)
     done()
   })
@@ -513,7 +513,7 @@ describe('client/lib/metadata', () => {
     metadata.addPageClass(testClassName2)
     const rval = metadata.addPageClass(testClassName2)
 
-    expect(rval).to.be(metadata)
+    expect(rval).to.equal(metadata)
     expect(metadata.get('page', 'className')).to.eql(`${testClassName1} ${testClassName2}`)
     done()
   })
@@ -527,7 +527,7 @@ describe('client/lib/metadata', () => {
     metadata.addPageClass(testClassName2)
     const rval = metadata.removePageClass(testClassName2)
 
-    expect(rval).to.be(metadata)
+    expect(rval).to.equal(metadata)
     expect(metadata.get('page', 'className')).to.eql(testClassName1)
     done()
   })

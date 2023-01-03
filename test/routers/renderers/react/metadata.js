@@ -1,5 +1,5 @@
 const cheerio = require('cheerio')
-const expect = require('expect.js')
+const { expect } = require('chai')
 const { castToArray } = require('@adrenalin/helpers.js')
 const init = require('../../../init')
 
@@ -91,8 +91,8 @@ describe('routers/renderers/react:metadata', () => {
     expect(tags['og:title']).to.eql(tags['dc.title'])
     expect(tags['og:description']).to.eql(tags['dc.description'])
 
-    expect(tags['og:title']).to.contain('testPageTitle')
-    expect(tags['og:description']).to.contain('testPageDescription')
+    expect(tags['og:title']).to.have.string('testPageTitle')
+    expect(tags['og:description']).to.have.string('testPageDescription')
   })
 
   it('should prepend site url to metadata images', async () => {
@@ -125,7 +125,7 @@ describe('routers/renderers/react:metadata', () => {
     expect(images[0]).to.eql(`${siteUrl}${testImageComponent}`)
 
     // Generic site image, shall be displayed last
-    expect(images[images.length - 1]).to.be(`${siteUrl}${testImageGeneric}`)
+    expect(images[images.length - 1]).to.equal(`${siteUrl}${testImageGeneric}`)
   })
 
   it('should have alternate link content to other locales', async () => {
@@ -166,6 +166,6 @@ describe('routers/renderers/react:metadata', () => {
 
     expect(alternate['en-us']).to.eql(`${siteUrl}${testUrl}/en`)
     expect(alternate['sv-fi']).to.eql(`${siteUrl}${testUrl}/sv`)
-    expect(alternate).not.to.contain('fi-fi')
+    expect(alternate).not.to.have.property('fi-fi')
   })
 })

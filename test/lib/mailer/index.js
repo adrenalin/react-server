@@ -1,4 +1,4 @@
-const expect = require('expect.js')
+const { expect } = require('chai')
 const errors = require('@adrenalin/errors')
 const MailerInterface = require('../../../lib/mailer')
 const mailerErrors = require('../../../lib/mailer/errors')
@@ -11,7 +11,7 @@ describe('lib/mailer', () => {
       await instance._send()
       throw new Error('Should have thrown a NotImplemented')
     } catch (err) {
-      expect(err).to.be.a(errors.NotImplemented)
+      expect(err).to.be.an.instanceof(errors.NotImplemented)
     }
   })
 
@@ -20,7 +20,7 @@ describe('lib/mailer', () => {
 
     for (const err in mailerErrors) {
       expect(MailerInterface.errors).to.have.property(err)
-      expect(MailerInterface.errors[err]).to.be(mailerErrors[err])
+      expect(MailerInterface.errors[err]).to.equal(mailerErrors[err])
     }
 
     done()
@@ -33,7 +33,7 @@ describe('lib/mailer', () => {
 
     for (const err in mailerErrors) {
       expect(instance.errors).to.have.property(err)
-      expect(instance.errors[err]).to.be(mailerErrors[err])
+      expect(instance.errors[err]).to.equal(mailerErrors[err])
     }
 
     done()
@@ -54,20 +54,20 @@ describe('lib/mailer', () => {
   it('should create an instance with the getEngine method', (done) => {
     const app = {}
     const instance = MailerInterface.getEngine(app, 'index')
-    expect(instance).to.be.a(MailerInterface)
+    expect(instance).to.be.an.instanceof(MailerInterface)
     done()
   })
 
   it('should require an alphabetical engine name', (done) => {
     const app = {}
-    expect(MailerInterface.getEngine).withArgs(app, '../calendar').to.throwError()
+    expect(() => MailerInterface.getEngine(app, '../calendar')).to.throw()
     done()
   })
 
   it('should get the engine interface class with getEngine', (done) => {
     const app = {}
     const instance = MailerInterface.getEngine(app, 'index')
-    expect(instance).to.be.a(MailerInterface)
+    expect(instance).to.be.an.instanceof(MailerInterface)
     done()
   })
 
@@ -80,7 +80,7 @@ describe('lib/mailer', () => {
       MailerInterface.validateMessage(message)
       throw new Error('Should have thrown an error')
     } catch (err) {
-      expect(err).to.be.a(errors.ValidationError)
+      expect(err).to.be.an.instanceof(errors.ValidationError)
       done()
     }
   })
@@ -94,7 +94,7 @@ describe('lib/mailer', () => {
       MailerInterface.validateMessage(message)
       throw new Error('Should have thrown an error')
     } catch (err) {
-      expect(err).to.be.a(errors.ValidationError)
+      expect(err).to.be.an.instanceof(errors.ValidationError)
       done()
     }
   })
@@ -108,7 +108,7 @@ describe('lib/mailer', () => {
       MailerInterface.validateMessage(message)
       throw new Error('Should have thrown an error')
     } catch (err) {
-      expect(err).to.be.a(errors.ValidationError)
+      expect(err).to.be.an.instanceof(errors.ValidationError)
       done()
     }
   })
@@ -133,7 +133,7 @@ describe('lib/mailer', () => {
       MailerInterface.validateMessage(message)
       throw new Error('Should have thrown an error')
     } catch (err) {
-      expect(err).to.be.a(errors.ValidationError)
+      expect(err).to.be.an.instanceof(errors.ValidationError)
       done()
     }
   })
@@ -161,7 +161,7 @@ describe('lib/mailer', () => {
       MailerInterface.validateMessage(message)
       throw new Error('Should have thrown an error')
     } catch (err) {
-      expect(err).to.be.a(errors.ValidationError)
+      expect(err).to.be.an.instanceof(errors.ValidationError)
       done()
     }
   })

@@ -1,4 +1,4 @@
-const expect = require('expect.js')
+const { expect } = require('chai')
 const { Localization } = require('@adrenalin/helpers.js')
 const init = require('../../init')
 
@@ -48,7 +48,7 @@ describe('routers/application/lang', () => {
       .expect(200)
 
     expect(response.body).to.have.property('lang')
-    expect(response.body.lang).to.be(lang)
+    expect(response.body.lang).to.equal(lang)
   })
 
   it('should apply the request lang when available', async () => {
@@ -63,7 +63,7 @@ describe('routers/application/lang', () => {
       .expect(200)
 
     expect(response.body).to.have.property('lang')
-    expect(response.body.lang).to.be(languages[0])
+    expect(response.body.lang).to.equal(languages[0])
   })
 
   it('should use the request language for subpaths', async () => {
@@ -78,7 +78,7 @@ describe('routers/application/lang', () => {
       .expect(200)
 
     expect(response.body).to.have.property('lang')
-    expect(response.body.lang).to.be(languages[0])
+    expect(response.body.lang).to.equal(languages[0])
   })
 
   it('should apply the default lang when the request language is not available', async () => {
@@ -93,7 +93,7 @@ describe('routers/application/lang', () => {
       .expect(200)
 
     expect(response.body).to.have.property('lang')
-    expect(response.body.lang).to.be(defaultLang)
+    expect(response.body.lang).to.equal(defaultLang)
   })
 
   it('should apply the language in GET query when applicable', async () => {
@@ -108,7 +108,7 @@ describe('routers/application/lang', () => {
       .expect(200)
 
     expect(response.body).to.have.property('lang')
-    expect(response.body.lang).to.be(languages[2])
+    expect(response.body.lang).to.equal(languages[2])
   })
 
   it('should have a localization instance in the request', async () => {
@@ -126,7 +126,7 @@ describe('routers/application/lang', () => {
     app.config.set('react.application.languages', languages)
 
     callback = (req, res, next) => {
-      expect(req.l10n).to.be.a(Localization)
+      expect(req.l10n).to.be.an.instanceof(Localization)
       expect(req.l10n.get(testUrl)).to.eql(successString)
       next()
     }

@@ -1,4 +1,4 @@
-const expect = require('expect.js')
+const { expect } = require('chai')
 const { Validator } = require('jsonschema')
 const errors = require('@adrenalin/errors')
 const init = require('../../../init')
@@ -105,9 +105,9 @@ describe('routers/renderers/api', () => {
     expect(response.body.status).to.eql('error')
     expect(response.body.code).to.eql(400)
 
-    expect(response.body.errors.required).to.contain('requires')
-    expect(response.body.errors.wrongType).to.contain('type')
-    expect(response.body.errors.patternMismatch).to.contain('pattern')
+    expect(response.body.errors.required).to.have.string('requires')
+    expect(response.body.errors.wrongType).to.have.string('type')
+    expect(response.body.errors.patternMismatch).to.have.string('pattern')
 
     expect(response.body.data.required).to.eql(undefined)
     expect(response.body.data.wrongType).to.eql(wrongType)

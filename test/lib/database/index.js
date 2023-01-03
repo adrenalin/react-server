@@ -1,5 +1,5 @@
 const errors = require('@adrenalin/errors')
-const expect = require('expect.js')
+const { expect } = require('chai')
 const DatabaseBaseclass = require('../../../lib/database')
 const { Config } = require('@adrenalin/helpers.js')
 
@@ -15,7 +15,7 @@ describe('lib/database', () => {
       await db.query('foo')
       throw new Error('Should have thrown an exception')
     } catch (err) {
-      expect(err).to.be.a(errors.NotImplemented)
+      expect(err).to.be.an.instanceof(errors.NotImplemented)
     }
   })
 
@@ -26,7 +26,7 @@ describe('lib/database', () => {
       await db.connect()
       throw new Error('Should have thrown an exception')
     } catch (err) {
-      expect(err).to.be.a(errors.NotImplemented)
+      expect(err).to.be.an.instanceof(errors.NotImplemented)
     }
   })
 
@@ -41,7 +41,7 @@ describe('lib/database', () => {
       DatabaseBaseclass.getEngine(app, 'foo bar')
       throw new Error('Should have thrown an exception')
     } catch (err) {
-      expect(err).to.be.a(errors.BadRequest)
+      expect(err).to.be.an.instanceof(errors.BadRequest)
       done()
     }
   })
@@ -51,7 +51,7 @@ describe('lib/database', () => {
       DatabaseBaseclass.getEngine(app, 'foobar')
       throw new Error('Should have thrown an exception')
     } catch (err) {
-      expect(err).to.be.a(errors.NotImplemented)
+      expect(err).to.be.an.instanceof(errors.NotImplemented)
       done()
     }
   })

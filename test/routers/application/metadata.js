@@ -1,4 +1,4 @@
-const expect = require('expect.js')
+const { expect } = require('chai')
 const { getValue } = require('@adrenalin/helpers.js')
 const init = require('../../init')
 const Metadata = require('../../../client/lib/metadata')
@@ -31,7 +31,7 @@ describe('routers/application/metadata', () => {
 
     callback = (req, res, next) => {
       metadata = res.metadata
-      expect(metadata).to.be.a(Metadata)
+      expect(metadata).to.be.an.instanceof(Metadata)
       res.json({
         status: 'ok'
       })
@@ -41,7 +41,7 @@ describe('routers/application/metadata', () => {
       .expect(200)
 
     callback = (req, res, next) => {
-      expect(metadata).not.to.be(res.metadata)
+      expect(metadata).not.to.equal(res.metadata)
       res.json({
         status: 'ok'
       })

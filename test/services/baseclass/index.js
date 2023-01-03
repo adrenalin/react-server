@@ -1,4 +1,4 @@
-const expect = require('expect.js')
+const { expect } = require('chai')
 const Service = require('../../../services')
 
 class TestService extends Service {
@@ -9,7 +9,7 @@ class TestService extends Service {
 
 describe('services/index', () => {
   it('should list service dependencies', (done) => {
-    expect(Service.DEPENDENCIES).to.be.an('array')
+    expect(Service.DEPENDENCIES).to.be.a('array')
     done()
   })
 
@@ -18,6 +18,6 @@ describe('services/index', () => {
 
     const service = new TestService(app)
     service.register()
-    expect(service.config).to.be(app.config)
+    expect(service.config).to.equal(app.config)
   })
 })

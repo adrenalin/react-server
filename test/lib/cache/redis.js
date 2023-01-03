@@ -1,4 +1,4 @@
-const expect = require('expect.js')
+const { expect } = require('chai')
 const errors = require('@adrenalin/errors')
 const { Config, sleep } = require('@adrenalin/helpers.js')
 const Cache = require('../../../lib/cache')
@@ -24,7 +24,7 @@ describe('lib/cache/redis', () => {
   it('should return a Redis cache instance with factory method', (done) => {
     const cache = Cache.getEngine(app, engine)
 
-    expect(cache).to.be.a(RedisCache)
+    expect(cache).to.be.an.instanceof(RedisCache)
     done()
   })
 
@@ -73,7 +73,7 @@ describe('lib/cache/redis', () => {
       await cache.set(testPath, testValue, 0.0001)
       throw new TestError('Should have thrown an InvalidArgument')
     } catch (err) {
-      expect(err).to.be.a(errors.InvalidArgument)
+      expect(err).to.be.an.instanceof(errors.InvalidArgument)
     }
   })
 
@@ -113,7 +113,7 @@ describe('lib/cache/redis', () => {
     await cache.set(testPath, testValue)
     const value = await cache.get(testPath)
     expect(value).to.eql(testValue)
-    expect(value).not.to.be(testValue)
+    expect(value).not.to.equal(testValue)
   })
 
   it('should delete a set value', async () => {
@@ -153,7 +153,7 @@ describe('lib/cache/redis', () => {
       await cache.callRedis('GET')
       throw new TestError('Should have rejected the promise')
     } catch (err) {
-      expect(err).not.to.be.a(TestError)
+      expect(err).not.to.be.an.instanceof(TestError)
     }
   })
 })

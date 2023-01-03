@@ -1,5 +1,5 @@
 const errors = require('@adrenalin/errors')
-const expect = require('expect.js')
+const { expect } = require('chai')
 const CacheBaseclass = require('../../../lib/cache')
 const { Config } = require('@adrenalin/helpers.js')
 
@@ -15,7 +15,7 @@ describe('lib/cache', () => {
 
     const cache = new CacheBaseclass(app)
     expect(cache).to.have.property('config')
-    expect(cache.config.get(cacheKey)).to.be(cacheValue)
+    expect(cache.config.get(cacheKey)).to.equal(cacheValue)
 
     done()
   })
@@ -27,8 +27,8 @@ describe('lib/cache', () => {
     expect(cache.setStorageKey).to.be.a('function')
     expect(cache.getStorageKey).to.be.a('function')
 
-    expect(cache.setStorageKey(storageKey)).to.be.a(CacheBaseclass)
-    expect(cache.getStorageKey()).to.be(storageKey)
+    expect(cache.setStorageKey(storageKey)).to.be.an.instanceof(CacheBaseclass)
+    expect(cache.getStorageKey()).to.equal(storageKey)
 
     done()
   })
@@ -42,7 +42,7 @@ describe('lib/cache', () => {
         done(new Error('Should have thrown an exception'))
       })
       .catch((err) => {
-        expect(err).to.be.a(errors.NotImplemented)
+        expect(err).to.be.an.instanceof(errors.NotImplemented)
         done()
       })
   })
@@ -56,7 +56,7 @@ describe('lib/cache', () => {
         done(new Error('Should have thrown an exception'))
       })
       .catch((err) => {
-        expect(err).to.be.a(errors.NotImplemented)
+        expect(err).to.be.an.instanceof(errors.NotImplemented)
         done()
       })
   })
@@ -70,7 +70,7 @@ describe('lib/cache', () => {
         done(new Error('Should have thrown an exception'))
       })
       .catch((err) => {
-        expect(err).to.be.a(errors.NotImplemented)
+        expect(err).to.be.an.instanceof(errors.NotImplemented)
         done()
       })
   })
@@ -84,7 +84,7 @@ describe('lib/cache', () => {
         done(new Error('Should have thrown an exception'))
       })
       .catch((err) => {
-        expect(err).to.be.a(errors.NotImplemented)
+        expect(err).to.be.an.instanceof(errors.NotImplemented)
         done()
       })
   })
@@ -94,7 +94,7 @@ describe('lib/cache', () => {
       CacheBaseclass.getEngine(app, 'foo bar')
       throw new Error('Should have thrown an exception')
     } catch (err) {
-      expect(err).to.be.a(errors.BadRequest)
+      expect(err).to.be.an.instanceof(errors.BadRequest)
       done()
     }
   })
@@ -104,15 +104,13 @@ describe('lib/cache', () => {
       CacheBaseclass.getEngine(app, 'foobar')
       throw new Error('Should have thrown an exception')
     } catch (err) {
-      expect(err).to.be.a(errors.NotImplemented)
+      expect(err).to.be.an.instanceof(errors.NotImplemented)
       done()
     }
   })
 
   it('should throw a NotImplemented error for an inexistant cache engine name', (done) => {
-    expect(CacheBaseclass.getEngine).withArgs(app, 'foobar').to.throwException((e) => {
-      expect(e).to.be.a(errors.NotImplemented)
-    })
+    expect(() => CacheBaseclass.getEngine(app, 'foobar')).to.throw(errors.NotImplemented)
     done()
   })
 })

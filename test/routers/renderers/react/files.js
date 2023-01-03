@@ -1,4 +1,4 @@
-const expect = require('expect.js')
+const { expect } = require('chai')
 const init = require('../../../init')
 
 const router = require('../../../../routers/renderers/react')
@@ -34,7 +34,7 @@ describe('routers/renderers/react:files', () => {
 
     app.config.get('react.stylesheets')
       .forEach((stylesheet) => {
-        expect(response.text).to.contain(`href="${stylesheet}"`)
+        expect(response.text).to.have.string(`href="${stylesheet}"`)
       })
   })
 
@@ -47,7 +47,7 @@ describe('routers/renderers/react:files', () => {
 
     app.config.get('react.stylesheets')
       .forEach((stylesheet) => {
-        expect(response.text).to.contain(`href="${stylesheet.replace(/\.min/, '')}"`)
+        expect(response.text).to.have.string(`href="${stylesheet.replace(/\.min/, '')}"`)
       })
   })
 
@@ -58,7 +58,7 @@ describe('routers/renderers/react:files', () => {
     const response = await app.tests.requests.create().get(`${testUrl}/en`)
       .expect(200)
 
-    expect(response.text).to.contain(`src="/js/${app.config.get('react.entry')}.js"`)
+    expect(response.text).to.have.string(`src="/js/${app.config.get('react.entry')}.js"`)
   })
 
   it('should include the minified entry JS file and vendors', async () => {
@@ -68,8 +68,8 @@ describe('routers/renderers/react:files', () => {
     const response = await app.tests.requests.create().get(`${testUrl}/en`)
       .expect(200)
 
-    expect(response.text).to.contain('src="/js/vendors.min.js"')
-    expect(response.text).to.contain(`src="/js/${app.config.get('react.entry')}.min.js"`)
+    expect(response.text).to.have.string('src="/js/vendors.min.js"')
+    expect(response.text).to.have.string(`src="/js/${app.config.get('react.entry')}.min.js"`)
   })
 
   it('should apply commit fingerprint to the static files', async () => {

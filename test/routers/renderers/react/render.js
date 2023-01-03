@@ -1,4 +1,4 @@
-const expect = require('expect.js')
+const { expect } = require('chai')
 const { setValue } = require('@adrenalin/helpers.js')
 
 const init = require('../../../init')
@@ -41,7 +41,7 @@ describe('routers/renderers/react:render', () => {
       .expect(200)
 
     const body = String(response.text)
-    expect(body).to.contain('TestRender')
+    expect(body).to.have.string('TestRender')
   })
 
   it('should render a not found error for an unconfigured route', async () => {
@@ -60,8 +60,8 @@ describe('routers/renderers/react:render', () => {
       .expect(200)
 
     const body = String(response.text)
-    expect(body).to.contain(testTitle)
-    expect(body).to.contain(testLogo)
+    expect(body).to.have.string(testTitle)
+    expect(body).to.have.string(testLogo)
   })
 
   it('should pass rendeder request data to the view', async () => {
@@ -75,6 +75,6 @@ describe('routers/renderers/react:render', () => {
       .expect(200)
 
     // Renderer - when set - is serialized as JSON in the view "views/index.html"
-    expect(response.text).to.contain(`"testUrl":"${testUrl}"`)
+    expect(response.text).to.have.string(`"testUrl":"${testUrl}"`)
   })
 })

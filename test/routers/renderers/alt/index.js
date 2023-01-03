@@ -1,4 +1,4 @@
-const expect = require('expect.js')
+const { expect } = require('chai')
 const init = require('../../../init')
 
 const altRouter = require('../../../../routers/renderers/alt')
