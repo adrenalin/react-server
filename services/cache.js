@@ -37,6 +37,10 @@ class CacheService extends Service {
    * @return { mixed }                Stored value
    */
   async get (key, defaultValue) {
+    if (this.config.get('services.cache.bypass')) {
+      return defaultValue
+    }
+
     return await this.cache.get(key, defaultValue)
   }
 

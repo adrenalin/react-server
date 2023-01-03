@@ -183,9 +183,15 @@
               "default": true
             },
             "engine": {
+              "description": "Cache storage engine",
               "type": "string",
               "enum": ["memcache", "redis"],
               "default": "memcache"
+            },
+            "bypass": {
+              "description": "Bypass cache flag",
+              "type": "boolean",
+              "default": false
             }
           },
           "required": ["engine"]

@@ -155,4 +155,24 @@ describe('services/cache', () => {
 
     expect(value).to.equal(1)
   })
+
+  it('should bypass cache when configured to bypass', async () => {
+    const testKey = 'tests-services-cache-hydrate-bypass-key'
+    const testValue = 'tests-services-cache-hydrate-bypass-value'
+    const app = await require('../../../server/application')()
+
+    app.config.set('services.cache.engine', 'memcache')
+    app.config.set('services.cache.bypass', true)
+
+    const service = new CacheService(app)
+    await service.register()
+
+    await service.set(testKey, testValue, 2)
+
+    const stored = await service.get(testKey, 'defaultValue')
+    const hydrate = await service.hydrate(testKey, () => 'noHydrate', 10)
+
+    expect(stored).to.equal('defaultValue')
+    expect(hydrate).to.equal('noHydrate')
+  })
 })
