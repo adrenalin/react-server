@@ -6,3 +6,5 @@
 /.nyc_output
 /config/local.yml
 /config/local-*.yml
+/client/tsconfig.json
+
