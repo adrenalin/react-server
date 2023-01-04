@@ -185,7 +185,10 @@
             "engine": {
               "description": "Cache storage engine",
               "type": "string",
-              "enum": ["memcache", "redis"],
+              "enum": [
+                "memcache",
+                "redis"
+              ],
               "default": "memcache"
             },
             "bypass": {
@@ -235,7 +238,9 @@
             "engine": {
               "description": "Mailer engine",
               "type": "string",
-              "enum": ["smtp"]
+              "enum": [
+                "smtp"
+              ]
             },
 
             "smtp": {
@@ -261,7 +266,9 @@
                       "description": "Use secure connection (true for 465, false for other ports)",
                       "type": "boolean",
                       "default": false,
-                      "enum": [false]
+                      "enum": [
+                        false
+                      ]
                     },
                     "auth": {
                       "description": "SMTP authentication",
@@ -278,7 +285,10 @@
                         "type": {
                           "description": "SMTP authentication type",
                           "type": "string",
-                          "enum": ["login", "oauth2"],
+                          "enum": [
+                            "login",
+                            "oauth2"
+                          ],
                           "default": "login"
                         }
                       }
@@ -286,7 +296,10 @@
                     "authMethod": {
                       "description": "Authentication method",
                       "type": ["null", "string"],
-                      "enum": [null, "PLAIN"]
+                      "enum": [
+                        null,
+                        "PLAIN"
+                      ]
                     },
                     "tls": {
                       "description": "TLS",
@@ -406,7 +419,10 @@
         "enabled": {
           "description": "Enabled flag",
           "type": "booleam",
-          "enum": [true, false],
+          "enum": [
+            true,
+            false
+          ],
           "default": false
         }
       }
@@ -428,7 +444,9 @@
         "engine": {
           "description": "Database engine name",
           "type": "string",
-          "enum": ["psql"],
+          "enum": [
+            "psql"
+          ],
           "default": "psql"
         },
         "connection": {
