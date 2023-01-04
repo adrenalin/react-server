@@ -81,10 +81,12 @@ class CacheService extends Service {
    *
    * @method CacheService#del
    * @param { string } key            Storage key
+   * @return { CacheService }         Resolves with self
    */
   async del (key) {
     const cacheKey = this.getCacheKey(key)
-    return await this.cache.del(cacheKey)
+    await this.cache.del(cacheKey)
+    return this
   }
 
   /**
@@ -169,24 +171,23 @@ class CacheService extends Service {
    * @return { mixed }                Whatever the callback returns
    */
   async hydrate (key, callback, expires = null) {
-    const cacheKey = this.getCacheKey(key)
-    const cached = await this.get(cacheKey)
+    const cached = await this.get(key)
 
     if (cached) {
       return cached
     }
 
-    if (this.watchers[cacheKey]) {
+    if (this.watchers[key]) {
       return new Promise((resolve, reject) => {
         this.watchers[key].push({ resolve, reject })
       })
     }
 
-    const watchers = this.watchers[cacheKey] = []
+    const watchers = this.watchers[key] = []
 
     try {
       const hydrated = await callback()
-      this.set(cacheKey, hydrated, expires)
+      this.set(key, hydrated, expires)
 
       // Resolve each promise with the value
       watchers.forEach((watcher) => {
