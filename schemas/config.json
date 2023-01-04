@@ -192,6 +192,10 @@
               "description": "Bypass cache flag",
               "type": "boolean",
               "default": false
+            },
+            "prefix": {
+              "description": "Cache prefix string to prepend to cache key when storing",
+              "type": "string"
             }
           },
           "required": ["engine"]

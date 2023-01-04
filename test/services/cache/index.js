@@ -10,6 +10,7 @@ describe('services/cache', () => {
 
     const app = await require('../../../server/application')()
     app.config.set('services.cache.engine', 'memcache')
+    app.config.set('services.cache.bypass', false)
 
     const service = new CacheService(app)
     await service.register()
@@ -32,6 +33,7 @@ describe('services/cache', () => {
 
     const app = await require('../../../server/application')()
     app.config.set('services.cache.engine', 'memcache')
+    app.config.set('services.cache.bypass', false)
 
     const service = new CacheService(app)
     await service.register()
@@ -53,6 +55,7 @@ describe('services/cache', () => {
     try {
       const app = await require('../../../server/application')()
       app.config.set('services.cache.engine', 'memcache')
+      app.config.set('services.cache.bypass', false)
 
       const service = new CacheService(app)
       await service.register()
@@ -66,6 +69,7 @@ describe('services/cache', () => {
   it('should return Redis client for Redis cache storage engine', async () => {
     const app = await require('../../../server/application')()
     app.config.set('services.cache.engine', 'redis')
+    app.config.set('services.cache.bypass', false)
 
     const service = new CacheService(app)
     await service.register()
@@ -77,6 +81,7 @@ describe('services/cache', () => {
 
     const app = await require('../../../server/application')()
     app.config.set('services.cache.engine', 'memcache')
+    app.config.set('services.cache.bypass', false)
 
     const service = new CacheService(app)
     await service.register()
@@ -93,6 +98,7 @@ describe('services/cache', () => {
 
     const app = await require('../../../server/application')()
     app.config.set('services.cache.engine', 'memcache')
+    app.config.set('services.cache.bypass', false)
 
     const service = new CacheService(app)
     await service.register()
@@ -107,8 +113,10 @@ describe('services/cache', () => {
   it('should get hydrated value if it exists', async () => {
     const testKey = 'tests-services-cache-hydrate-exists-key'
     const testValue = 'tests-services-cache-hydrate-exists-value'
+
     const app = await require('../../../server/application')()
     app.config.set('services.cache.engine', 'memcache')
+    app.config.set('services.cache.bypass', false)
 
     const service = new CacheService(app)
     await service.register()
@@ -122,8 +130,10 @@ describe('services/cache', () => {
   it('should use callback to hydrate the key that does not exist', async () => {
     const testKey = 'tests-services-cache-hydrate-callback-key'
     const testValue = 'tests-services-cache-hydrate-callback-value'
+
     const app = await require('../../../server/application')()
     app.config.set('services.cache.engine', 'memcache')
+    app.config.set('services.cache.bypass', false)
 
     const service = new CacheService(app)
     await service.register()
@@ -146,6 +156,7 @@ describe('services/cache', () => {
 
     const app = await require('../../../server/application')()
     app.config.set('services.cache.engine', 'memcache')
+    app.config.set('services.cache.bypass', false)
 
     const service = new CacheService(app)
     await service.register()
@@ -159,8 +170,8 @@ describe('services/cache', () => {
   it('should bypass cache when configured to bypass', async () => {
     const testKey = 'tests-services-cache-hydrate-bypass-key'
     const testValue = 'tests-services-cache-hydrate-bypass-value'
-    const app = await require('../../../server/application')()
 
+    const app = await require('../../../server/application')()
     app.config.set('services.cache.engine', 'memcache')
     app.config.set('services.cache.bypass', true)
 
@@ -174,5 +185,35 @@ describe('services/cache', () => {
 
     expect(stored).to.equal('defaultValue')
     expect(hydrate).to.equal('noHydrate')
+  })
+
+  it('should allow setting cache prefix', async () => {
+    const testPrefix = 'test-prefix'
+    const testKey = 'tests-services-cache-set-prefix-key'
+    const testValue = 'tests-services-cache-set-prefix-value'
+
+    const app = await require('../../../server/application')()
+    app.config.set('services.cache.bypass', false)
+    app.config.set('services.cache.engine', 'memcache')
+    app.config.set('services.cache.prefix', testPrefix)
+
+    const service = new CacheService(app)
+    await service.register()
+
+    await service.set(testKey, testValue, 2)
+
+    const afterSet = await service.get(testKey)
+    expect(afterSet).to.eql(testValue, 'Test value before prefix change')
+
+    // Reset prefix
+    app.config.set('services.cache.prefix', null)
+
+    const afterDifferentPrefix = await service.get(testKey)
+    expect(afterDifferentPrefix).to.eql(undefined, 'Test value with different prefix')
+
+    // Return the initial prefix
+    app.config.set('services.cache.prefix', testPrefix)
+    const afterReset = await service.get(testKey)
+    expect(afterReset).to.eql(testValue, 'Test value after resetting the prefix')
   })
 })

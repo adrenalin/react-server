@@ -15,8 +15,22 @@ class CacheService extends Service {
   }
 
   /**
+   * Get cache key
+   *
+   * @method CacheService#getCacheKey
+   * @private
+   * @param { string } key            Cache key
+   * @return { string }               Prefixed cache key
+   */
+  getCacheKey (key) {
+    const prefix = this.config.get('services.cache.prefix')
+    return prefix ? `${prefix}.${key}` : key
+  }
+
+  /**
    * Register database service
    *
+   * @method CacheService#register
    * @return { CacheService }         This instance
    */
   async register () {
@@ -32,6 +46,7 @@ class CacheService extends Service {
   /**
    * Get value
    *
+   * @method CacheService#get
    * @param { string } key            Storage key
    * @param { mixed } defaultValue    Default value
    * @return { mixed }                Stored value
@@ -42,69 +57,82 @@ class CacheService extends Service {
       return defaultValue
     }
 
-    return await this.cache.get(key, defaultValue)
+    const cacheKey = this.getCacheKey(key)
+    return await this.cache.get(cacheKey, defaultValue)
   }
 
   /**
    * Set value
    *
+   * @method CacheService#set
    * @param { string } key            Storage key
    * @param { mixed } value           Storage value
    * @param { number } expires        Number of seconds the value should be stored
    * @return { CacheService }         Resolves with self
    */
   async set (key, value, expires) {
-    await this.cache.set(key, value, expires)
+    const cacheKey = this.getCacheKey(key)
+    await this.cache.set(cacheKey, value, expires)
     return this
   }
 
   /**
    * Delete a key
    *
+   * @method CacheService#del
    * @param { string } key            Storage key
    */
   async del (key) {
-    return await this.cache.del(key)
+    const cacheKey = this.getCacheKey(key)
+    return await this.cache.del(cacheKey)
   }
 
   /**
    * Set expiration to a key
    *
+   * @method CacheService#expire
    * @param { string } key            Storage key
    * @param { number } expires        Number of seconds the value should be stored
    * @return { CacheService }         Resolves with self
    */
   async expire (key, expires) {
-    await this.cache.expire(key, expires)
+    const cacheKey = this.getCacheKey(key)
+    await this.cache.expire(cacheKey, expires)
     return this
   }
 
   /**
    * Add to a storage key
    *
+   * @method CacheService#add
    * @param { string } key            Storage key
    * @param { mixed } values          Values to store
    */
   async add (key, ...values) {
-    const value = await this.cache.get(key)
+    const cacheKey = this.getCacheKey(key)
+
+    const value = await this.cache.get(cacheKey)
     const stored = castToArray(value)
 
     values.forEach((v) => {
       stored.push(v)
     })
 
-    await this.cache.set(key, stored)
+    await this.cache.set(cacheKey, stored)
     return this
   }
 
   /**
    * Remove from to a storage key
    *
+   * @method CacheService#remove
    * @param { string } key            Storage key
    * @param { mixed } values          Values to store
    */
   async remove (key, ...values) {
-    const value = await this.cache.get(key)
+    const cacheKey = this.getCacheKey(key)
+
+    const value = await this.cache.get(cacheKey)
     const stored = castToArray(value)
 
     values.forEach((v) => {
@@ -113,18 +141,19 @@ class CacheService extends Service {
       }
     })
 
-    await this.cache.set(key, stored)
+    await this.cache.set(cacheKey, stored)
     return this
   }
 
   /**
    * Get the storage client
    *
+   * @method CacheService#getClient
    * @return { mixed }                Storage client
    */
   getClient () {
     if (typeof this.cache.getClient !== 'function') {
-      throw new errors.NotImplemented(`Method "getEngine" is not defined in cache engine "${this.cache.constructor.name}"`)
+      throw new errors.NotImplemented(`Method "getClient" is not defined in cache engine "${this.cache.constructor.name}"`)
     }
 
     return this.cache.getClient()
@@ -140,23 +169,24 @@ class CacheService extends Service {
    * @return { mixed }                Whatever the callback returns
    */
   async hydrate (key, callback, expires = null) {
-    const cached = await this.get(key)
+    const cacheKey = this.getCacheKey(key)
+    const cached = await this.get(cacheKey)
 
     if (cached) {
       return cached
     }
 
-    if (this.watchers[key]) {
+    if (this.watchers[cacheKey]) {
       return new Promise((resolve, reject) => {
         this.watchers[key].push({ resolve, reject })
       })
     }
 
-    const watchers = this.watchers[key] = []
+    const watchers = this.watchers[cacheKey] = []
 
     try {
       const hydrated = await callback()
-      this.set(key, hydrated, expires)
+      this.set(cacheKey, hydrated, expires)
 
       // Resolve each promise with the value
       watchers.forEach((watcher) => {
