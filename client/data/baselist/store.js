@@ -1,4 +1,4 @@
-import alt from '../../lib/alt'
+const alt = require('../../lib/alt')
 
 module.exports = {
   generate: function generate (storeName, structure = {}) {
@@ -70,7 +70,6 @@ module.exports = {
       }
 
       handleFetchItems () {
-        this[responseKey] = null
         this.error = null
         this.removed = false
       }
