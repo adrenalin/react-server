@@ -4,9 +4,9 @@
   "description": "React server",
   "main": "index.js",
   "scripts": {
-    "test": "ENVIRONMENT=test nyc --exclude test/ mocha --exit --require @babel/register --timeout 10000 --exclude test/resources/**/*.js --recursive",
     "coverage": "nyc report --reporter=text-lcov | coveralls",
-    "postinstall": "node install.js"
+    "prepare": "node install.js",
+    "test": "ENVIRONMENT=test nyc --exclude test/ mocha --exit --require @babel/register --timeout 10000 --exclude test/resources/**/*.js --recursive"
   },
   "repository": {
     "type": "git",
