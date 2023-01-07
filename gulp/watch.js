@@ -1,7 +1,7 @@
 const path = require('path')
 const gulp = require('gulp')
 const gulpWatch = require('gulp-watch')
-const { castToArray } = require('@adrenalin/helpers.js')
+const { castToArray } = require('@vapaaradikaali/helpers.js')
 const config = require('./config')
 config.set('exitOnError', false)
 

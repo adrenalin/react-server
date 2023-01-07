@@ -1,7 +1,7 @@
 const path = require('path')
 const { expect } = require('chai')
-const errors = require('@adrenalin/errors')
-const { Config } = require('@adrenalin/helpers.js')
+const errors = require('@vapaaradikaali/errors')
+const { Config } = require('@vapaaradikaali/helpers.js')
 const serviceLoader = require('../../server/services')
 
 const Service = require('../../services')

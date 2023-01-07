@@ -1,6 +1,6 @@
 const express = require('express')
-const Logger = require('@adrenalin/logger')
-const { buildUrl } = require('@adrenalin/helpers.js')
+const Logger = require('@vapaaradikaali/logger')
+const { buildUrl } = require('@vapaaradikaali/helpers.js')
 const Metadata = require('../../client/lib/metadata')
 
 module.exports = (app, options = {}) => {

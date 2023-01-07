@@ -1,6 +1,6 @@
 const axios = require('axios')
 const { expect } = require('chai')
-const { buildUrl } = require('@adrenalin/helpers.js')
+const { buildUrl } = require('@vapaaradikaali/helpers.js')
 const init = require('../../init')
 
 describe('server/middleware/bodyparsers', () => {

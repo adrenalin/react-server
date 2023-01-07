@@ -1,7 +1,7 @@
 const { expect } = require('chai')
 const Cache = require('../../../lib/cache')
 const MemCache = require('../../../lib/cache/memcache')
-const { sleep, Config } = require('@adrenalin/helpers.js')
+const { sleep, Config } = require('@vapaaradikaali/helpers.js')
 
 describe('lib/cache/memcache', () => {
   const app = {

@@ -11,8 +11,8 @@ import PropTypes from 'prop-types'
 import EventHandler from './events'
 import Metadata from './metadata'
 import request from './request'
-import helpers from '@adrenalin/helpers.js'
-import Logger from '@adrenalin/logger'
+import helpers from '@vapaaradikaali/helpers.js'
+import Logger from '@vapaaradikaali/logger'
 import ApplicationStore from '../data/application/store'
 import UserStore from '../data/user/store'
 import config from './config'
@@ -151,7 +151,7 @@ module.exports = class Component extends React.Component {
   }
 
   /**
-   * Shared helper functions, https://github.com/adrenalin/helpers.js
+   * Shared helper functions, https://github.com/vapaaradikaali/helpers.js
    *
    * @const { object } Component#helpers
    */
@@ -160,7 +160,7 @@ module.exports = class Component extends React.Component {
   }
 
   /**
-   * Shared helper functions, https://github.com/adrenalin/helpers.js
+   * Shared helper functions, https://github.com/vapaaradikaali/helpers.js
    *
    * @const { object } Component.helpers
    */

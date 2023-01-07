@@ -1,5 +1,5 @@
 const { expect } = require('chai')
-const { Localization } = require('@adrenalin/helpers.js')
+const { Localization } = require('@vapaaradikaali/helpers.js')
 const init = require('../../init')
 
 const router = require('../../../routers/application/lang')

@@ -1,6 +1,6 @@
 const cheerio = require('cheerio')
 const { expect } = require('chai')
-const { getValue } = require('@adrenalin/helpers.js')
+const { getValue } = require('@vapaaradikaali/helpers.js')
 const init = require('../../../init')
 
 const router = require('../../../../routers/renderers/react')

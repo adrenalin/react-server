@@ -1,6 +1,6 @@
 const path = require('path')
 const { expect } = require('chai')
-const { Config } = require('@adrenalin/helpers.js')
+const { Config } = require('@vapaaradikaali/helpers.js')
 const SMTPTester = require('smtp-tester')
 const Mailer = require('../../../services/mailer')
 const serviceLoader = require('../../../server/services')

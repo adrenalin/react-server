@@ -1,5 +1,5 @@
 const path = require('path')
-const Logger = require('@adrenalin/logger')
+const Logger = require('@vapaaradikaali/logger')
 
 module.exports = async (app) => {
   const logger = new Logger('@adrenalin/react-server/server/middleware/renderers')

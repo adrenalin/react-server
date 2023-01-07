@@ -1,5 +1,5 @@
 const { expect } = require('chai')
-const { Config } = require('@adrenalin/helpers.js')
+const { Config } = require('@vapaaradikaali/helpers.js')
 
 describe('client/lib/config', () => {
   it('should create a config singleton', (done) => {

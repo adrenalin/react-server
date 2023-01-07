@@ -1,7 +1,7 @@
 const path = require('path')
 const { expect } = require('chai')
 const request = require('supertest')
-const { Config } = require('@adrenalin/helpers.js')
+const { Config } = require('@vapaaradikaali/helpers.js')
 const middlewareLoader = require('../../../server/middleware')
 
 describe('server/middleware/cookieparser', () => {

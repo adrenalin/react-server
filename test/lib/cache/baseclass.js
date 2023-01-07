@@ -1,7 +1,7 @@
-const errors = require('@adrenalin/errors')
+const errors = require('@vapaaradikaali/errors')
 const { expect } = require('chai')
 const CacheBaseclass = require('../../../lib/cache')
-const { Config } = require('@adrenalin/helpers.js')
+const { Config } = require('@vapaaradikaali/helpers.js')
 
 describe('lib/cache', () => {
   const app = {

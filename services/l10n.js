@@ -2,7 +2,7 @@ const fs = require('fs')
 const path = require('path')
 const YAML = require('yaml')
 const Service = require('./')
-const { Localization, castToArray, copyObject } = require('@adrenalin/helpers.js')
+const { Localization, castToArray, copyObject } = require('@vapaaradikaali/helpers.js')
 const listFilesSync = require('../lib/helpers/listFilesSync')
 
 const registered = {}

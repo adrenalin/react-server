@@ -4,8 +4,8 @@ const path = require('path')
 const Moment = require('moment-timezone')
 const PersistentConnection = require('./PersistentConnection')
 const initServer = require('../server')
-const Logger = require('@adrenalin/logger')
-const { Localization } = require('@adrenalin/helpers.js')
+const Logger = require('@vapaaradikaali/logger')
+const { Localization } = require('@vapaaradikaali/helpers.js')
 
 // Disable noisy localization
 Localization.registerLogger(() => {})

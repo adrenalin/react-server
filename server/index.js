@@ -1,5 +1,5 @@
-const Logger = require('@adrenalin/logger')
-const { castToArray } = require('@adrenalin/helpers.js')
+const Logger = require('@vapaaradikaali/logger')
+const { castToArray } = require('@vapaaradikaali/helpers.js')
 
 module.exports = async (opts = {}) => {
   const logger = new Logger('@adrenalin/react-server/server/index')

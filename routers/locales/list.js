@@ -1,5 +1,5 @@
 const express = require('express')
-const Logger = require('@adrenalin/logger')
+const Logger = require('@vapaaradikaali/logger')
 
 module.exports = (app, options = {}) => {
   const logger = new Logger('@adrenalin/react-server/routers/locales/list')

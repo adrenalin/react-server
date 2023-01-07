@@ -1,6 +1,6 @@
 const { expect } = require('chai')
-const errors = require('@adrenalin/errors')
-const { setValue, Localization } = require('@adrenalin/helpers.js')
+const errors = require('@vapaaradikaali/errors')
+const { setValue, Localization } = require('@vapaaradikaali/helpers.js')
 const init = require('../../../init')
 
 const configRouter = require('../../../../routers/application/config')

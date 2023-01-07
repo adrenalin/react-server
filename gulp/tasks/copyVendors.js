@@ -1,7 +1,7 @@
 const path = require('path')
 const gulp = require('gulp')
 const config = require('../config')
-const { getValue } = require('@adrenalin/helpers.js')
+const { getValue } = require('@vapaaradikaali/helpers.js')
 
 module.exports = function copyVendors () {
   const vendors = getValue(config, 'build.vendors')

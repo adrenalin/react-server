@@ -1,6 +1,6 @@
 const path = require('path')
 const { expect } = require('chai')
-const { Localization } = require('@adrenalin/helpers.js')
+const { Localization } = require('@vapaaradikaali/helpers.js')
 const init = require('../../init')
 
 const Service = require('../../../services')

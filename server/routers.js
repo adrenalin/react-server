@@ -1,7 +1,7 @@
 const fs = require('fs')
-const errors = require('@adrenalin/errors')
-const Logger = require('@adrenalin/logger')
-const { castToArray } = require('@adrenalin/helpers.js')
+const errors = require('@vapaaradikaali/errors')
+const Logger = require('@vapaaradikaali/logger')
+const { castToArray } = require('@vapaaradikaali/helpers.js')
 const path = require('path')
 const listFilesSync = require('../lib/helpers/listFilesSync')
 

@@ -1,8 +1,8 @@
 const fs = require('fs')
 const path = require('path')
 const express = require('express')
-const errors = require('@adrenalin/errors')
-const Logger = require('@adrenalin/logger')
+const errors = require('@vapaaradikaali/errors')
+const Logger = require('@vapaaradikaali/logger')
 
 module.exports = (app) => {
   const logger = new Logger('@adrenalin/react-server/routers/application/favicon')

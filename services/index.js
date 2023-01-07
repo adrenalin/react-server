@@ -1,4 +1,4 @@
-const Logger = require('@adrenalin/logger')
+const Logger = require('@vapaaradikaali/logger')
 
 module.exports = class Service {
   static get LOG_LEVEL () {

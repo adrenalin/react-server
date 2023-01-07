@@ -2,7 +2,7 @@ import Iso from 'iso'
 import React from 'react'
 import { render } from 'react-dom'
 import { BrowserRouter } from 'react-router-dom'
-import { Localization } from '@adrenalin/helpers.js'
+import { Localization } from '@vapaaradikaali/helpers.js'
 
 import Application from './test/application'
 import alt from './lib/alt'

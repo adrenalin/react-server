@@ -1,6 +1,6 @@
-const Logger = require('@adrenalin/logger')
+const Logger = require('@vapaaradikaali/logger')
 const Metadata = require('../../../client/lib/metadata')
-const { castToArray, getValue, Localization } = require('@adrenalin/helpers.js')
+const { castToArray, getValue, Localization } = require('@vapaaradikaali/helpers.js')
 
 const getOpenGraph = require('../../../lib/helpers/getOpenGraph')
 const getMetaTags = require('../../../lib/helpers/getMetaTags')

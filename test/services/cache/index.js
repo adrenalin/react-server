@@ -1,6 +1,6 @@
 const { expect } = require('chai')
-const errors = require('@adrenalin/errors')
-const { sleep } = require('@adrenalin/helpers.js')
+const errors = require('@vapaaradikaali/errors')
+const { sleep } = require('@vapaaradikaali/helpers.js')
 const CacheService = require('../../../services/cache')
 
 describe('services/cache', () => {
@@ -206,7 +206,7 @@ describe('services/cache', () => {
     expect(afterSet).to.eql(testValue, 'Test value before prefix change')
 
     // Reset prefix
-    app.config.set('services.cache.prefix', null)
+    app.config.set('services.cache.prefix', '')
 
     const afterDifferentPrefix = await service.get(testKey)
     expect(afterDifferentPrefix).to.eql(undefined, 'Test value with different prefix')

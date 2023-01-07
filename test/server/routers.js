@@ -1,8 +1,8 @@
 const path = require('path')
 const { expect } = require('chai')
 const request = require('supertest')
-const errors = require('@adrenalin/errors')
-const { Config } = require('@adrenalin/helpers.js')
+const errors = require('@vapaaradikaali/errors')
+const { Config } = require('@vapaaradikaali/helpers.js')
 const routerLoader = require('../../server/routers')
 
 describe('server/routers', () => {

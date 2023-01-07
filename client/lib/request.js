@@ -1,5 +1,5 @@
 const request = require('axios')
-const { getValue } = require('@adrenalin/helpers.js')
+const { getValue } = require('@vapaaradikaali/helpers.js')
 const EventHandler = require('./events')
 
 const events = new EventHandler()

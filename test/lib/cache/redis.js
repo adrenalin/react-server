@@ -1,6 +1,6 @@
 const { expect } = require('chai')
-const errors = require('@adrenalin/errors')
-const { Config, sleep } = require('@adrenalin/helpers.js')
+const errors = require('@vapaaradikaali/errors')
+const { Config, sleep } = require('@vapaaradikaali/helpers.js')
 const Cache = require('../../../lib/cache')
 const RedisCache = require('../../../lib/cache/redis')
 class TestError extends Error {}

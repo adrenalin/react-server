@@ -1,6 +1,6 @@
-const Logger = require('@adrenalin/logger')
-const { InvalidArgument } = require('@adrenalin/errors')
-const { castToArray, getValue, isObject, setValue } = require('@adrenalin/helpers.js')
+const Logger = require('@vapaaradikaali/logger')
+const { InvalidArgument } = require('@vapaaradikaali/errors')
+const { castToArray, getValue, isObject, setValue } = require('@vapaaradikaali/helpers.js')
 
 module.exports = class Metadata {
   /**

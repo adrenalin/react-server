@@ -5,7 +5,7 @@ import {
 } from 'react-router-dom'
 import Component from '../lib/component'
 
-import { Localization } from '@adrenalin/helpers.js'
+import { Localization } from '@vapaaradikaali/helpers.js'
 
 // Error pages
 import ErrorBoundary from '../shared/errors/errorboundary'

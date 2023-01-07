@@ -1,5 +1,5 @@
 const path = require('path')
-const ServerConfig = require('@adrenalin/helpers.js/lib/ServerConfig')
+const ServerConfig = require('@vapaaradikaali/helpers.js/lib/ServerConfig')
 
 const moduleRoot = path.join(__dirname, '..', '..')
 const clientRoot = process.cwd()

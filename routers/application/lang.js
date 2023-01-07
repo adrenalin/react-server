@@ -1,6 +1,6 @@
-const Logger = require('@adrenalin/logger')
+const Logger = require('@vapaaradikaali/logger')
 const router = require('express')()
-const { getValue, Localization } = require('@adrenalin/helpers.js')
+const { getValue, Localization } = require('@vapaaradikaali/helpers.js')
 
 module.exports = (app) => {
   const logger = new Logger('@adrenalin/react-server/routers/application/lang')

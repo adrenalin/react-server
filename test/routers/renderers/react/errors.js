@@ -1,6 +1,6 @@
 const { expect } = require('chai')
 const cheerio = require('cheerio')
-const errors = require('@adrenalin/errors')
+const errors = require('@vapaaradikaali/errors')
 const init = require('../../../init')
 
 const router = require('../../../../routers/renderers/react')

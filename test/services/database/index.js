@@ -1,5 +1,5 @@
 const { expect } = require('chai')
-// const errors = require('@adrenalin/errors')
+// const errors = require('@vapaaradikaali/errors')
 const DatabaseService = require('../../../services/database')
 
 describe('services/database', () => {

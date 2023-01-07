@@ -1,4 +1,4 @@
-const errors = require('@adrenalin/errors')
+const errors = require('@vapaaradikaali/errors')
 
 module.exports = (app) => {
   return (err, req, res, next) => {

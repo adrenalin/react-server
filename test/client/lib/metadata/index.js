@@ -1,6 +1,6 @@
 const { expect } = require('chai')
-const { InvalidArgument } = require('@adrenalin/errors')
-const { castToArray } = require('@adrenalin/helpers.js')
+const { InvalidArgument } = require('@vapaaradikaali/errors')
+const { castToArray } = require('@vapaaradikaali/helpers.js')
 const Metadata = require('../../../../client/lib/metadata')
 
 describe('client/lib/metadata', () => {

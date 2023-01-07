@@ -1,6 +1,6 @@
-const Logger = require('@adrenalin/logger')
+const Logger = require('@vapaaradikaali/logger')
 const express = require('express')
-const { castToArray, setValue, Config } = require('@adrenalin/helpers.js')
+const { castToArray, setValue, Config } = require('@vapaaradikaali/helpers.js')
 
 module.exports = (app) => {
   const router = express.Router()

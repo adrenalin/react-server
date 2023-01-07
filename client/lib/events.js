@@ -1,5 +1,5 @@
-const { castToArray } = require('@adrenalin/helpers.js')
-const Logger = require('@adrenalin/logger')
+const { castToArray } = require('@vapaaradikaali/helpers.js')
+const Logger = require('@vapaaradikaali/logger')
 const events = {}
 
 module.exports = class EventHandler {

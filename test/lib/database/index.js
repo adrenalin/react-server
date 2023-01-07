@@ -1,7 +1,7 @@
-const errors = require('@adrenalin/errors')
+const errors = require('@vapaaradikaali/errors')
 const { expect } = require('chai')
 const DatabaseBaseclass = require('../../../lib/database')
-const { Config } = require('@adrenalin/helpers.js')
+const { Config } = require('@vapaaradikaali/helpers.js')
 
 describe('lib/database', () => {
   const app = {

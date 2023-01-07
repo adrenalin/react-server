@@ -1,6 +1,6 @@
-const Logger = require('@adrenalin/logger')
+const Logger = require('@vapaaradikaali/logger')
 const express = require('express')
-const { merge } = require('@adrenalin/helpers.js')
+const { merge } = require('@vapaaradikaali/helpers.js')
 
 /* istanbul ignore next */
 module.exports = (app, options = {}) => {

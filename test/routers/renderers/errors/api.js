@@ -1,6 +1,6 @@
 const { expect } = require('chai')
 const { Validator } = require('jsonschema')
-const errors = require('@adrenalin/errors')
+const errors = require('@vapaaradikaali/errors')
 const init = require('../../../init')
 
 const errorRouter = require('../../../../routers/renderers/errors/api')

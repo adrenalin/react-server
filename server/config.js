@@ -1,6 +1,6 @@
 const path = require('path')
-const Logger = require('@adrenalin/logger')
-const ServerConfig = require('@adrenalin/helpers.js/lib/ServerConfig')
+const Logger = require('@vapaaradikaali/logger')
+const ServerConfig = require('@vapaaradikaali/helpers.js/lib/ServerConfig')
 
 module.exports = (app, overrides) => {
   const logger = new Logger('@adrenalin/react-server/server/config')

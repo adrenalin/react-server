@@ -1,6 +1,6 @@
 const express = require('express')
-const errors = require('@adrenalin/errors')
-const { getValue } = require('@adrenalin/helpers.js')
+const errors = require('@vapaaradikaali/errors')
+const { getValue } = require('@vapaaradikaali/helpers.js')
 
 module.exports = (app, opts) => {
   const router = express.Router()

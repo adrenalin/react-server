@@ -1,5 +1,5 @@
-const errors = require('@adrenalin/errors')
-const { castToArray } = require('@adrenalin/helpers.js')
+const errors = require('@vapaaradikaali/errors')
+const { castToArray } = require('@vapaaradikaali/helpers.js')
 const Service = require('./')
 const Cache = require('../lib/cache')
 

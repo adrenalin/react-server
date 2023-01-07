@@ -2,7 +2,7 @@ const path = require('path')
 const { expect } = require('chai')
 const Database = require('../../../lib/database')
 const PsqlDatabase = require('../../../lib/database/psql')
-const ServerConfig = require('@adrenalin/helpers.js/lib/ServerConfig')
+const ServerConfig = require('@vapaaradikaali/helpers.js/lib/ServerConfig')
 
 describe('lib/database/psql', () => {
   const app = {

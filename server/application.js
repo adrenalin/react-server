@@ -1,7 +1,7 @@
 const path = require('path')
 const EventEmitter = require('events')
-const Logger = require('@adrenalin/logger')
-const helpers = require('@adrenalin/helpers.js')
+const Logger = require('@vapaaradikaali/logger')
+const helpers = require('@vapaaradikaali/helpers.js')
 
 const getValue = helpers.getValue
 

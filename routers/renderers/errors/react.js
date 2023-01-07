@@ -1,5 +1,5 @@
 // Local components
-const Logger = require('@adrenalin/logger')
+const Logger = require('@vapaaradikaali/logger')
 
 module.exports = (app) => {
   const logger = new Logger('@adrenalin/react-server/routers/renderers/errors/react')

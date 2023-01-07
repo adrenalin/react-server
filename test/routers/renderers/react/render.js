@@ -1,5 +1,5 @@
 const { expect } = require('chai')
-const { setValue } = require('@adrenalin/helpers.js')
+const { setValue } = require('@vapaaradikaali/helpers.js')
 
 const init = require('../../../init')
 

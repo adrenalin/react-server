@@ -9,9 +9,9 @@ const { renderToString } = require('react-dom/server')
 const Iso = require('iso').default
 
 // Local components
-const Logger = require('@adrenalin/logger')
+const Logger = require('@vapaaradikaali/logger')
 const Metadata = require('../../client/lib/metadata')
-const { buildUrl, castToArray, getValue, setValue } = require('@adrenalin/helpers.js')
+const { buildUrl, castToArray, getValue, setValue } = require('@vapaaradikaali/helpers.js')
 const getStructuredData = require('../../lib/helpers/getStructuredData')
 const getOpenGraph = require('../../lib/helpers/getOpenGraph')
 const getMetaTags = require('../../lib/helpers/getMetaTags')

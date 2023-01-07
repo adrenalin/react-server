@@ -1,4 +1,4 @@
-const Logger = require('@adrenalin/logger')
+const Logger = require('@vapaaradikaali/logger')
 const express = require('express')
 
 module.exports = (app, storeNames) => {

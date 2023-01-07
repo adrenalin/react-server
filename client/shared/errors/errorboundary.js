@@ -6,8 +6,8 @@ import {
   Row
 } from 'reactstrap'
 
-import { Localization } from '@adrenalin/helpers.js'
-import Logger from '@adrenalin/logger'
+import { Localization } from '@vapaaradikaali/helpers.js'
+import Logger from '@vapaaradikaali/logger'
 import ApplicationStore from '../../data/application/store'
 
 module.exports = class ErrorBoundary extends React.Component {

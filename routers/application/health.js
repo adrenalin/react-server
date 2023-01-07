@@ -1,7 +1,7 @@
 const express = require('express')
 const Moment = require('moment')
-const { setValue } = require('@adrenalin/helpers.js')
-const Logger = require('@adrenalin/logger')
+const { setValue } = require('@vapaaradikaali/helpers.js')
+const Logger = require('@vapaaradikaali/logger')
 
 module.exports = (app) => {
   const logger = new Logger('@adrenalin/react-server/routers/application/health')
