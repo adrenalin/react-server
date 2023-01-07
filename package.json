@@ -1,11 +1,12 @@
 {
   "name": "@vapaaradikaali/react-server",
-  "version": "0.8.25",
+  "version": "0.8.26",
   "description": "React server",
   "main": "index.js",
   "scripts": {
     "coverage": "nyc report --reporter=text-lcov | coveralls",
-    "prepare": "node install.js",
+    "prepare": "node scripts/prepare.js",
+    "postinstall": "node scripts/postinstall.js",
     "test": "ENVIRONMENT=test nyc --exclude test/ mocha --exit --require @babel/register --timeout 10000 --exclude test/resources/**/*.js --recursive"
   },
   "repository": {
