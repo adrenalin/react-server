@@ -216,4 +216,26 @@ describe('services/cache', () => {
     const afterReset = await service.get(testKey)
     expect(afterReset).to.eql(testValue, 'Test value after resetting the prefix')
   })
+
+  it('should flush cache', async () => {
+    const testKey = 'tests-services-cache-flush-all-key'
+    const testValue = 'tests-services-cache-flush-all-value'
+
+    const app = await require('../../../server/application')()
+    app.config.set('services.cache.bypass', false)
+    app.config.set('services.cache.engine', 'memcache')
+
+    const service = new CacheService(app)
+    await service.register()
+
+    await service.set(testKey, testValue, 2)
+
+    const pre = await service.get(testKey)
+    expect(pre).to.eql(testValue, 'Test value before cache flush')
+
+    await service.flush()
+
+    const post = await service.get(testKey)
+    expect(post).to.eql(undefined, 'Test value after cache flush')
+  })
 })

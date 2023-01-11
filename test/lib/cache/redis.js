@@ -156,4 +156,37 @@ describe('lib/cache/redis', () => {
       expect(err).not.to.be.an.instanceof(TestError)
     }
   })
+
+  it('should flush the cache', async () => {
+    const testKey = 'cache-flush-all'
+    const testValue = 'cache-flush-all-value'
+
+    const cache = Cache.getEngine(app, engine)
+    await cache.set(testKey, testValue)
+
+    const pre = await cache.get(testKey)
+    expect(pre).to.equal(testValue)
+
+    await cache.flush()
+
+    const post = await cache.get(testKey)
+    expect(post).to.equal(undefined)
+  })
+
+  it('should use a needle to flush parts of cache', async () => {
+    const cache = Cache.getEngine(app, engine)
+    await cache.set('test-key-1-1', 'test-value-1-1')
+    await cache.set('test-key-1-2', 'test-value-1-1')
+    await cache.set('test-key-2-1', 'test-value-2-1')
+
+    await cache.flush('test-key-1')
+
+    const v11 = await cache.get('test-key-1-1')
+    const v12 = await cache.get('test-key-1-2')
+    const v21 = await cache.get('test-key-2-1')
+
+    expect(v11).to.equal(undefined)
+    expect(v12).to.equal(undefined)
+    expect(v21).to.equal('test-value-2-1')
+  })
 })

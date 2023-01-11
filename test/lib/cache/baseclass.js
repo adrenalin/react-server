@@ -113,4 +113,14 @@ describe('lib/cache', () => {
     expect(() => CacheBaseclass.getEngine(app, 'foobar')).to.throw(errors.NotImplemented)
     done()
   })
+
+  it('should throw a NotImplemented for cache flush', async () => {
+    try {
+      const cache = new CacheBaseclass(app)
+      await cache.flush()
+      throw new Error('Should have thrown a NotImplemented')
+    } catch (err) {
+      expect(err).to.be.an.instanceof(errors.NotImplemented)
+    }
+  })
 })

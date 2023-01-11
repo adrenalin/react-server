@@ -207,6 +207,19 @@ class CacheService extends Service {
       delete this.watchers[key]
     }
   }
+
+  /**
+   * Flush cache, optionally with a search string
+   *
+   * @method CacheService#flush
+   * @param { string } [needle]       Needle
+   * @param { number } expires        Number of seconds the value should be stored
+   * @return { CacheService }         This instance
+   */
+  async flush (needle) {
+    await this.cache.flush(needle)
+    return this
+  }
 }
 
 module.exports = CacheService
