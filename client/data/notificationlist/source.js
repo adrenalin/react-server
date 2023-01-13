@@ -1,5 +1,5 @@
-import SourceBuilder from '../builder'
-import NotificationListActions from './action'
+const SourceBuilder = require('../builder')
+const NotificationListActions = require('./action')
 
 module.exports = SourceBuilder.build({
   name: 'NotificationListSource',

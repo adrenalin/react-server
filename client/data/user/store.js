@@ -1,6 +1,6 @@
-import UserActions from './action'
-import UserSource from './source'
-import ModelStore from '../basemodel/store'
+const UserActions = require('./action')
+const UserSource = require('./source')
+const ModelStore = require('../basemodel/store')
 
 module.exports = ModelStore.generate('UserStore', {
   actions: UserActions,

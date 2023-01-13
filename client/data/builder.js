@@ -1,5 +1,5 @@
-import { merge } from '../lib/helpers'
-import request from '../lib/request'
+const { merge } = require('../lib/helpers')
+const request = require('../lib/request')
 
 function generateMethod (name, definition, sourceBase) {
   const methodDefinition = {

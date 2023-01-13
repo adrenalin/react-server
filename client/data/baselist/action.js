@@ -1,5 +1,5 @@
-import { merge } from '../../lib/helpers'
-import alt from '../../lib/alt'
+const { merge } = require('../../lib/helpers')
+const alt = require('../../lib/alt')
 
 module.exports = {
   generate: function generate (name, definitions = {}) {

@@ -1,6 +1,6 @@
-import NotificationListActions from './action'
-import NotificationListSource from './source'
-import ListStore from '../baselist/store'
+const NotificationListActions = require('./action')
+const NotificationListSource = require('./source')
+const ListStore = require('../baselist/store')
 
 module.exports = ListStore.generate('NotificationListStore', {
   actions: NotificationListActions,

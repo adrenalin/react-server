@@ -1,4 +1,4 @@
-import alt from '../../lib/alt'
+const alt = require('../../lib/alt')
 // const debug = require('../debugger')('ApplicationStore')
 
 class ApplicationStore {

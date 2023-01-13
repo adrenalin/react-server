@@ -1,6 +1,6 @@
-import LocalesActions from './action'
-import LocalesSource from './source'
-import ModelStore from '../basemodel/store'
+const LocalesActions = require('./action')
+const LocalesSource = require('./source')
+const ModelStore = require('../basemodel/store')
 
 module.exports = ModelStore.generate('LocalesStore', {
   actions: LocalesActions,

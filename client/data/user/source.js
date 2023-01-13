@@ -1,5 +1,5 @@
-import SourceBuilder from '../builder'
-import UserActions from './action'
+const SourceBuilder = require('../builder')
+const UserActions = require('./action')
 
 module.exports = SourceBuilder.build({
   name: 'UserSource',
