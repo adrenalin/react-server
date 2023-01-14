@@ -1,5 +1,5 @@
 const { expect } = require('chai')
-const { InvalidArgument, MethodNotAllowed } = require('@vapaaradikaali/errors')
+const { BadRequest, InvalidArgument, MethodNotAllowed } = require('@vapaaradikaali/errors')
 const MockAdapter = require('axios-mock-adapter')
 const { getModelActions } = require('../../../../client/lib/builder/actions')
 const buildSource = require('../../../../client/lib/builder/source')
@@ -14,9 +14,7 @@ describe('client/lib/builder/source', () => {
     getItem: {
       method: 'get',
       uri: testUrl,
-      response: {
-        key: 'item'
-      },
+      key: 'item',
       actions: {
         success: actions.getSuccess
       }
@@ -53,6 +51,9 @@ describe('client/lib/builder/source', () => {
     expect(source.getItem).to.be.a('function')
     expect(source.constructor.name).to.eql('TestSourceBuildFromObjectSource')
     expect(source).to.equal(singleton)
+
+    expect(source.constructor.actions).to.equal(actions)
+    expect(Array.from(source.constructor.responseKeys)).to.contain('item')
   })
 
   it('should throw an InvalidArgument when there is no action for the configured methods', () => {
@@ -109,9 +110,7 @@ describe('client/lib/builder/source', () => {
       getItem: {
         method: 'get',
         uri: testUrl,
-        response: {
-          key: testKey
-        },
+        key: testKey,
         actions: {
           success: actions.getSuccess
         }
@@ -133,9 +132,7 @@ describe('client/lib/builder/source', () => {
       getItem: {
         method: 'get',
         uri: testUrl,
-        response: {
-          keys: [testKey]
-        },
+        keys: [testKey],
         actions: {
           success: actions.getSuccess
         }
@@ -147,6 +144,32 @@ describe('client/lib/builder/source', () => {
 
     const response = await source.getItem().remote()
     expect(response).to.eql({ [testKey]: testItem })
+  })
+
+  it('should throw a BadRequest when all custom keys are not found', async () => {
+    try {
+      const testItem = { id: 1 }
+      const testKey = 'item'
+
+      const testMethods = {
+        getItem: {
+          method: 'get',
+          uri: testUrl,
+          keys: ['foobar'],
+          actions: {
+            success: actions.getSuccess
+          }
+        }
+      }
+
+      mock.onGet(testUrl).reply(200, { status: 'ok', [testKey]: testItem })
+      const source = buildSource('TestNoMatchingCustomKeysAsArray', actions, testMethods)
+
+      await source.getItem().remote()
+      throw new Error('Should have thrown a BadRequest')
+    } catch (err) {
+      expect(err).to.be.instanceof(BadRequest)
+    }
   })
 
   it('should fail when specified keys were not found', (done) => {
@@ -176,9 +199,7 @@ describe('client/lib/builder/source', () => {
           expect(args).to.eql(testArgs)
           return `${testUrl}?foo=bar`
         },
-        response: {
-          key: 'item'
-        },
+        key: 'item',
         actions: {
           success: actions.getSuccess
         }
@@ -201,9 +222,7 @@ describe('client/lib/builder/source', () => {
       getItem: {
         method: 'get',
         uri: testUrl,
-        response: {
-          key: 'item'
-        },
+        key: 'item',
         local: (state, ...args) => {
           expect(state).to.eql(testState)
           expect(args).to.eql(testArgs)
@@ -305,9 +324,7 @@ describe('client/lib/builder/source', () => {
       getItem: {
         method: 'get',
         uri: testUrl,
-        response: {
-          keys: [testKey]
-        },
+        keys: [testKey],
         actions: {
           success: 'getSuccess'
         }
@@ -315,9 +332,28 @@ describe('client/lib/builder/source', () => {
     }
 
     mock.onGet(testUrl).reply(200, { status: 'ok', [testKey]: testItem })
-    const source = buildSource('TestMatchCustomKeysAsArray', actions, testMethods)
+    const source = buildSource('TestActionAsString', actions, testMethods)
 
     const response = await source.getItem().remote()
     expect(response).to.eql({ [testKey]: testItem })
+  })
+
+  it('should throw an InvalidArgument when action as a string is not found', async () => {
+    const testItem = { id: 1 }
+    const testKey = 'foobar'
+
+    const testMethods = {
+      getItem: {
+        method: 'get',
+        uri: testUrl,
+        keys: [testKey],
+        actions: {
+          success: 'foobar'
+        }
+      }
+    }
+
+    mock.onGet(testUrl).reply(200, { status: 'ok', [testKey]: testItem })
+    expect(() => buildSource('TestActionAsStringFailure', actions, testMethods)).to.throw(InvalidArgument)
   })
 })

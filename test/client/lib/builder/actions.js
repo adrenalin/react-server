@@ -1,5 +1,5 @@
 const { expect } = require('chai')
-const { getActions, getModelActions, getListActions } = require('../../../../client/lib/builder/actions')
+const { getActions, getModelActions, getListActions, modelActions, listActions } = require('../../../../client/lib/builder/actions')
 
 describe('client/lib/builder/actions', () => {
   it('should build model actions', () => {
@@ -93,12 +93,12 @@ describe('client/lib/builder/actions', () => {
     expect(actions.listItems.data.name).to.eql('listItems')
     expect(actions.LIST_ITEMS).to.eql(`${modelName}.listItems`)
 
-    expect(actions.updateItems).to.be.a('function')
-    expect(actions.updateItems.id).to.eql(`${modelName}.updateItems`)
-    expect(actions.updateItems.data.id).to.eql(`${modelName}.updateItems`)
-    expect(actions.updateItems.data.namespace).to.eql(modelName)
-    expect(actions.updateItems.data.name).to.eql('updateItems')
-    expect(actions.UPDATE_ITEMS).to.eql(`${modelName}.updateItems`)
+    expect(actions.listSuccess).to.be.a('function')
+    expect(actions.listSuccess.id).to.eql(`${modelName}.listSuccess`)
+    expect(actions.listSuccess.data.id).to.eql(`${modelName}.listSuccess`)
+    expect(actions.listSuccess.data.namespace).to.eql(modelName)
+    expect(actions.listSuccess.data.name).to.eql('listSuccess')
+    expect(actions.LIST_SUCCESS).to.eql(`${modelName}.listSuccess`)
 
     expect(actions.removeItem).to.be.a('function')
     expect(actions.removeItem.id).to.eql(`${modelName}.removeItem`)
@@ -129,7 +129,7 @@ describe('client/lib/builder/actions', () => {
     expect(actions.TEST_METHOD).to.eql(`${modelName}.testMethod`)
   })
 
-  it('should build combined actions', () => {
+  it('should build combined actions', async () => {
     const modelName = 'TestActionsCombined'
 
     const actions = getActions(modelName, {
@@ -141,5 +141,51 @@ describe('client/lib/builder/actions', () => {
     })
 
     expect(actions).to.equal(singleton)
+  })
+
+  it('should dispatch success values', async () => {
+    const testData = {
+      key: 'value'
+    }
+
+    let i = 0
+
+    const cb = (model) => {
+      i++
+    }
+
+    expect(modelActions.createItem(testData)).to.equal(testData)
+    const c1 = modelActions.createSuccess(testData)
+    await c1(cb)
+    expect(i).to.equal(1)
+
+    expect(modelActions.getItem(testData)).to.equal(testData)
+    const c2 = modelActions.getSuccess(testData)
+    await c2(cb)
+    expect(i).to.equal(2)
+
+    expect(modelActions.updateItem(testData)).to.equal(testData)
+    const c3 = modelActions.updateSuccess(testData)
+    await c3(cb)
+    expect(i).to.equal(3)
+
+    expect(modelActions.requestFailed(testData)).to.equal(testData)
+
+    expect(listActions.listItems(testData)).to.equal(testData)
+    const c4 = listActions.listSuccess(testData)
+    await c4(cb)
+    expect(i).to.equal(4)
+
+    expect(listActions.updateItems(testData)).to.equal(testData)
+    const c5 = listActions.updateSuccess(testData)
+    await c5(cb)
+    expect(i).to.equal(5)
+
+    expect(listActions.removeItem(testData)).to.equal(testData)
+    const c6 = listActions.removeSuccess(testData)
+    await c6(cb)
+    expect(i).to.equal(6)
+
+    expect(listActions.requestFailed(testData)).to.equal(testData)
   })
 })

@@ -17,15 +17,43 @@ describe('client/lib/builder/store', () => {
   const methods = {
     getItem: {
       method: 'get',
-      uri: (state, ...args) => {
-        return testUrl
+      uri: (state, id) => {
+        return `${testUrl}/${id}`
       },
-      response: {
-        keys: ['item', 'value']
+      keys: ['item', 'value'],
+      success: actions.getSuccess
+    },
+    createItem: {
+      method: 'post',
+      uri: testUrl,
+      keys: ['item'],
+      success: 'createSuccess'
+    },
+    updateItem: {
+      method: 'patch',
+      uri: (state, id) => {
+        return `${testUrl}/${id}`
       },
-      actions: {
-        success: actions.getSuccess
-      }
+      params: (state, id, data) => {
+        return data
+      },
+      keys: ['item'],
+      success: 'updateSuccess'
+    },
+    listItems: {
+      method: 'get',
+      uri: testUrl,
+      keys: ['items'],
+      success: 'listSuccess'
+    },
+    updateItems: {
+      method: 'patch',
+      uri: testUrl,
+      params: (state, data) => {
+        return data
+      },
+      keys: ['items'],
+      success: 'listSuccess'
     }
   }
 
@@ -36,6 +64,10 @@ describe('client/lib/builder/store', () => {
   const listener = (...args) => {
     cb(...args) // eslint-disable-line standard/no-callback-literal
   }
+
+  beforeEach(() => {
+    store.state.resetModel()
+  })
 
   afterEach(async () => {
     cb = () => {}
@@ -60,8 +92,28 @@ describe('client/lib/builder/store', () => {
     expect(state.value).to.eql(null, 'state.value should be null')
   })
 
+  it('should create an item and dispatch it', (done) => {
+    mock.onPost(testUrl).reply(200, { status: 'ok', item: testItem, value: true })
+    cb = (state) => {
+      if (state.error) {
+        done(state.error)
+        done = () => {}
+      }
+
+      if (state.item) {
+        expect(state.item).to.eql(testItem)
+        done()
+        done = () => {}
+      }
+    }
+    store.listen(listener)
+    store.createItem()
+  })
+
   it('should get an item and dispatch it', (done) => {
-    mock.onGet(testUrl).reply(200, { status: 'ok', item: testItem, value: true })
+    const id = 1
+    const url = `${testUrl}/${id}`
+    mock.onGet(url).reply(200, { status: 'ok', item: testItem, value: true })
     cb = (state) => {
       if (state.error) {
         done(state.error)
@@ -76,6 +128,62 @@ describe('client/lib/builder/store', () => {
       }
     }
     store.listen(listener)
-    store.getItem(1)
+    store.getItem(id)
+  })
+
+  it('should update an item and dispatch it', (done) => {
+    const id = 1
+    const url = `${testUrl}/${id}`
+    mock.onPatch(url, testItem).reply(200, { status: 'ok', item: testItem })
+    cb = (state) => {
+      if (state.error) {
+        done(state.error)
+        done = () => {}
+      }
+
+      if (state.item) {
+        expect(state.item).to.eql(testItem)
+        done()
+        done = () => {}
+      }
+    }
+    store.listen(listener)
+    store.updateItem(id, testItem)
+  })
+
+  it('should list items and dispatch them', (done) => {
+    mock.onGet(testUrl).reply(200, { status: 'ok', items: [testItem] })
+    cb = (state) => {
+      if (state.error) {
+        done(state.error)
+        done = () => {}
+      }
+
+      if (state.items) {
+        expect(state.items).to.eql([testItem])
+        done()
+        done = () => {}
+      }
+    }
+    store.listen(listener)
+    store.listItems()
+  })
+
+  it('should update items and dispatch them', (done) => {
+    mock.onPatch(testUrl, [testItem]).reply(200, { status: 'ok', items: [testItem] })
+    cb = (state) => {
+      if (state.error) {
+        done(state.error)
+        done = () => {}
+      }
+
+      if (state.items) {
+        expect(state.items).to.eql([testItem])
+        done()
+        done = () => {}
+      }
+    }
+    store.listen(listener)
+    store.updateItems([testItem])
   })
 })

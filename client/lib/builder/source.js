@@ -81,6 +81,9 @@ function buildSource (name, actions, methods, options) {
         this[name] = this.generateMethod(name, methods[name]).bind(this)
         logger.debug('Method set', name)
       }
+
+      this.listeners = {}
+      this.publicMethods = {}
     }
 
     /**
@@ -95,14 +98,14 @@ function buildSource (name, actions, methods, options) {
         throw new InvalidArgument(`No action found for method "${name}"`)
       }
 
-      const keys = castToArray(getValue(options, ['response.key', 'response.keys'], 'item'))
+      const keys = castToArray(getValue(options, ['key', 'keys'], 'item'))
 
       keys.forEach(k => responseKeys.add(k))
 
       // Backwards compatibility for remote as an option
       const remote = options.remote || options
 
-      const { success, error, loading } = options.actions
+      const { success, error, loading } = options.actions || options
 
       const opts = {
         keys,
@@ -114,7 +117,7 @@ function buildSource (name, actions, methods, options) {
       }
 
       if (!(opts.success instanceof Function)) {
-        throw new InvalidArgument('Success is not a function')
+        throw new InvalidArgument('Action success is not a function')
       }
 
       remote.method = (remote.method || 'get').toUpperCase()
@@ -146,10 +149,11 @@ function buildSource (name, actions, methods, options) {
 
           const data = {}
 
-          opts.keys.forEach((key) => {
+          keys.forEach((key) => {
             logger.debug('Check for key', key, 'from response data')
-            if (response.data[key] == null) {
-              throw new BadRequest(`Response is missing the required key "${key}"`)
+
+            if (response.data[key] === undefined) {
+              throw new BadRequest(`Key "${key}" missing from response`)
             }
 
             data[key] = response.data[key]
