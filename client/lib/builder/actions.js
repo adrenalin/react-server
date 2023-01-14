@@ -1,59 +1,54 @@
 const alt = require('../alt')
 
 const cached = {}
+const defer = (...args) => {
+  return async (dispatch) => {
+    dispatch(...args)
+  }
+}
 
-const modelActions = {
+const modelActions = exports.modelActions = {
   createItem: (data) => {
     return data
   },
   createSuccess: (model) => {
-    return (dispatch) => {
-      setTimeout(() => {
-        dispatch(model)
-      })
-    }
+    return defer(model)
   },
   getItem: (data) => {
     return data
   },
   getSuccess: (model) => {
-    return (dispatch) => {
-      setTimeout(() => {
-        dispatch(model)
-      })
-    }
+    return defer(model)
   },
   updateItem: (data) => {
     return data
   },
   updateSuccess: (model) => {
-    return (dispatch) => {
-      setTimeout(() => {
-        dispatch(model)
-      })
-    }
+    return defer(model)
   },
   requestFailed: (error) => {
     return error
   }
 }
 
-const listActions = {
-  listItems: (query) => {
-    return query
+const listActions = exports.listActions = {
+  listItems: (model) => {
+    return model
   },
-  updateItems: (items) => {
-    return (dispatch) => {
-      setTimeout(() => {
-        dispatch(items)
-      })
-    }
+  listSuccess: (items) => {
+    return defer(items)
+  },
+  updateItems: (data) => {
+    return data
+  },
+  updateSuccess: (models) => {
+    return defer(models)
   },
   removeItem: (id) => {
     return id
   },
   removeSuccess: (id) => {
-    return id
+    return defer(id)
   },
   requestFailed: (error) => {
     return error

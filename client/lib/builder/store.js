@@ -23,6 +23,10 @@ module.exports = function buildStore (source) {
   const actions = source.constructor.actions
   const responseKeys = source.constructor.responseKeys || new Set(['item', 'items'])
 
+  const defer = async (cb) => {
+    cb()
+  }
+
   for (const key in actions) {
     if (!key.match(/^[A-Z]+(_[A-Z]+)+$/)) {
       continue
@@ -37,6 +41,7 @@ module.exports = function buildStore (source) {
 
   const store = class Store {
     static get name () {
+      /* istanbul ignore next constructor name for context readability */
       return storeName
     }
 
@@ -116,9 +121,8 @@ module.exports = function buildStore (source) {
       this.creating = true
 
       if (!this.getInstance().isLoading()) {
-        setTimeout(() => {
-          this.getInstance().createItem(model)
-        })
+        logger.log('handleCreateItem not loading, pass to createItem', model)
+        defer(() => this.getInstance().createItem(model))
       }
     }
 
@@ -146,9 +150,8 @@ module.exports = function buildStore (source) {
       this.creating = false
 
       if (!this.getInstance().isLoading()) {
-        setTimeout(() => {
-          this.getInstance().updateItem(model)
-        })
+        logger.log('handleUpdateItem not loading, pass to updateItem', model)
+        defer(() => this.getInstance().updateItem(model))
       }
     }
 
@@ -176,10 +179,8 @@ module.exports = function buildStore (source) {
       this.creating = false
 
       if (!this.getInstance().isLoading()) {
-        logger.log('handleGetItem not loading, update item', model)
-        setTimeout(() => {
-          this.getInstance().getSuccess(model)
-        })
+        logger.log('handleGetItem not loading, pass to getSuccess', model)
+        defer(() => this.getInstance().getSuccess(model))
       }
     }
 
@@ -208,10 +209,8 @@ module.exports = function buildStore (source) {
       this.creating = false
 
       if (!this.getInstance().isLoading()) {
-        setTimeout(() => {
-          logger.log('handleListItems not loading, update items', model)
-          this.getInstance().updateItems(model)
-        })
+        logger.log('handleListItems not loading, update items', model)
+        defer(() => this.getInstance().updateItems(model))
       }
     }
 
@@ -241,10 +240,8 @@ module.exports = function buildStore (source) {
       this.removed = false
 
       if (!this.getInstance().isLoading()) {
-        setTimeout(() => {
-          logger.log('handleUpdateItems not loading, update items', model)
-          this.getInstance().updateItems(model)
-        })
+        logger.log('handleUpdateItems not loading, pass to updateItems', model)
+        defer(() => this.getInstance().updateItems(model))
       }
     }
 
@@ -294,5 +291,6 @@ module.exports = function buildStore (source) {
   }
 
   cached[storeName] = alt.createStore(store, storeName)
+  // cached[storeName].store = store
   return cached[storeName]
 }
