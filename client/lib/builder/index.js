@@ -22,6 +22,9 @@ function createStore (name, params) {
   const store = buildStore(source)
 
   return {
+    actions,
+    source,
+    store,
     [`${name}Actions`]: actions,
     [`${name}Source`]: source,
     [`${name}Store`]: store
