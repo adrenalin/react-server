@@ -27,6 +27,7 @@ module.exports = {
   Notifications: require('./dist/shared/notifications'),
 
   // Alt
+  buildStore: require('./dir/lib/builder'),
   BaseSourceBuilder: require('./dist/data/builder'),
   BaseModelAction: require('./dist/data/basemodel/action'),
   BaseModelStore: require('./dist/data/basemodel/store'),
