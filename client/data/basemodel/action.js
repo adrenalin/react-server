@@ -1,9 +1,8 @@
-const { merge } = require('../../lib/helpers')
 const alt = require('../../lib/alt')
 
 module.exports = {
   generate: function generate (name, definitions = {}) {
-    const actions = merge({}, {
+    const actions = {
       createItem: (data) => {
         return data
       },
@@ -24,8 +23,10 @@ module.exports = {
       },
       requestFailed: (error) => {
         return error
-      }
-    }, definitions || {})
+      },
+      ...(definitions || {}),
+      name
+    }
 
     return alt.createActions(actions)
   }

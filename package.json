@@ -46,6 +46,7 @@
   "devDependencies": {
     "@babel/eslint-parser": ">=7.19.1",
     "@ronilaukkarinen/gulp-stylelint": ">=14.0.8",
+    "axios-mock-adapter": "^1.21.2",
     "chai": "^4.3.7",
     "cheerio": ">=1.0.0-rc.12",
     "fuse-box": ">=3.7.1 < 4.0.0",

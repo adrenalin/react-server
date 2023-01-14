@@ -3,11 +3,13 @@ const alt = require('../../lib/alt')
 module.exports = {
   generate: function generate (storeName, structure = {}) {
     if (!structure.actions) {
-      throw new Error(`no actions defined for ListStore ${storeName}`)
+      throw new Error(`No actions defined for ListStore "${storeName}"`)
     }
+
     if (!structure.source) {
-      throw new Error(`no source defined for ListStore ${storeName}`)
+      throw new Error(`No source defined for ListStore "${storeName}"`)
     }
+
     const responseKey = structure.key || 'items'
 
     const listeners = {
