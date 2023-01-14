@@ -449,6 +449,11 @@
           ],
           "default": "psql"
         },
+        "locale": {
+          "description": "Locale for collations",
+          "type": "string",
+          "pattern": "^[a-zA-Z]{2}_[a-zA-Z]{2}"
+        },
         "connection": {
           "description": "Database connection",
           "type": "object",
