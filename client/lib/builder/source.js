@@ -89,29 +89,20 @@ function buildSource (name, actions, methods, options) {
     /**
      * Get action
      *
-     * @param { string|string[]|function } needle   Action to search
+     * @param { string||function } needle           Action to search
      * @param { object } options                    Source options
-     * @param { Function } defaultValue             Default value if needle was not found
      * @return { Function }                         Matching action
      */
-    getAction (needle, options, defaultValue) {
+    getAction (needle) {
       if (needle instanceof Function) {
         return needle
       }
 
-      needle = castToArray(needle)
-
-      for (const n of needle) {
-        if (actions[n] instanceof Function) {
-          return actions[n]
-        }
+      if (actions[needle] instanceof Function) {
+        return actions[needle]
       }
 
-      if (!defaultValue) {
-        throw new InvalidArgument(`Action "${needle.join('", "')}" is not a function`)
-      }
-
-      return defaultValue
+      throw new InvalidArgument(`Cannot get action for "${needle}"`)
     }
 
     /**
@@ -136,9 +127,9 @@ function buildSource (name, actions, methods, options) {
         local: options.local,
 
         // Bind actions
-        loading: this.getAction(options.loading || name, options),
-        success: this.getAction(options.success, options),
-        error: this.getAction('error', options, this.onError)
+        loading: this.getAction(options.loading || name),
+        success: this.getAction(options.success || name.replace(/[A-Z][a-z]+$/, 'Success')),
+        error: this.getAction(options.error || this.onError)
       }
 
       remote.method = (remote.method || 'get').toUpperCase()
