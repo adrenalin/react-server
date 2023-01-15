@@ -1,6 +1,6 @@
 const Logger = require('@vapaaradikaali/logger')
 const { BadRequest, InvalidArgument, MethodNotAllowed } = require('@vapaaradikaali/errors')
-const { getValue, castToArray, isObject } = require('@vapaaradikaali/helpers.js')
+const { castToArray, getValue, isObject } = require('@vapaaradikaali/helpers.js')
 const request = require('../request')
 
 const cached = {}
@@ -87,6 +87,34 @@ function buildSource (name, actions, methods, options) {
     }
 
     /**
+     * Get action
+     *
+     * @param { string|string[]|function } needle   Action to search
+     * @param { object } options                    Source options
+     * @param { Function } defaultValue             Default value if needle was not found
+     * @return { Function }                         Matching action
+     */
+    getAction (needle, options, defaultValue) {
+      if (needle instanceof Function) {
+        return needle
+      }
+
+      needle = castToArray(needle)
+
+      for (const n of needle) {
+        if (actions[n] instanceof Function) {
+          return actions[n]
+        }
+      }
+
+      if (!defaultValue) {
+        throw new InvalidArgument(`Action "${needle.join('", "')}" is not a function`)
+      }
+
+      return defaultValue
+    }
+
+    /**
      * Generate method
      *
      * @param { string } name           Method name
@@ -94,9 +122,6 @@ function buildSource (name, actions, methods, options) {
      */
     generateMethod (name, options) {
       logger.log('generateMethod', name)
-      if (!actions[name]) {
-        throw new InvalidArgument(`No action found for method "${name}"`)
-      }
 
       const keys = castToArray(getValue(options, ['key', 'keys'], 'item'))
 
@@ -105,19 +130,15 @@ function buildSource (name, actions, methods, options) {
       // Backwards compatibility for remote as an option
       const remote = options.remote || options
 
-      const { success, error, loading } = options.actions || options
-
       const opts = {
         keys,
         response: remote.response,
         local: options.local,
-        success: typeof success === 'string' ? actions[success] : success,
-        error: error || this.onError,
-        loading: loading || actions[name]
-      }
 
-      if (!(opts.success instanceof Function)) {
-        throw new InvalidArgument('Action success is not a function')
+        // Bind actions
+        loading: this.getAction(options.loading || name, options),
+        success: this.getAction(options.success, options),
+        error: this.getAction('error', options, this.onError)
       }
 
       remote.method = (remote.method || 'get').toUpperCase()

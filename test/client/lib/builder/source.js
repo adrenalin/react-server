@@ -15,9 +15,7 @@ describe('client/lib/builder/source', () => {
       method: 'get',
       uri: testUrl,
       key: 'item',
-      actions: {
-        success: actions.getSuccess
-      }
+      success: actions.getSuccess
     }
   }
 
@@ -44,7 +42,7 @@ describe('client/lib/builder/source', () => {
   })
 
   it('should build a source from an object', () => {
-    const actions = getModelActions('TestModelActions')
+    const actions = getModelActions('TestSourceBuildFromObject')
     const source = buildSource({ name: 'TestSourceBuildFromObject', actions, methods })
     const singleton = buildSource({ name: 'TestSourceBuildFromObject', actions, methods })
 
@@ -67,7 +65,7 @@ describe('client/lib/builder/source', () => {
   it('should throw a MethodNotAllowed for an invalid method type in methods', () => {
     const invalidMethods = JSON.parse(JSON.stringify(methods))
     invalidMethods.getItem.method = 'foobar'
-    invalidMethods.getItem.actions.success = actions.getSuccess
+    invalidMethods.getItem.success = actions.getSuccess
 
     expect(() => buildSource('TestMethodNotAllowed', actions, invalidMethods)).to.throw(MethodNotAllowed)
   })
@@ -89,9 +87,7 @@ describe('client/lib/builder/source', () => {
       getItem: {
         method: 'get',
         uri: testUrl,
-        actions: {
-          success: actions.getSuccess
-        }
+        success: actions.getSuccess
       }
     }
 
@@ -111,9 +107,7 @@ describe('client/lib/builder/source', () => {
         method: 'get',
         uri: testUrl,
         key: testKey,
-        actions: {
-          success: actions.getSuccess
-        }
+        success: actions.getSuccess
       }
     }
 
@@ -133,9 +127,7 @@ describe('client/lib/builder/source', () => {
         method: 'get',
         uri: testUrl,
         keys: [testKey],
-        actions: {
-          success: actions.getSuccess
-        }
+        success: actions.getSuccess
       }
     }
 
@@ -156,9 +148,7 @@ describe('client/lib/builder/source', () => {
           method: 'get',
           uri: testUrl,
           keys: ['foobar'],
-          actions: {
-            success: actions.getSuccess
-          }
+          success: actions.getSuccess
         }
       }
 
@@ -200,9 +190,7 @@ describe('client/lib/builder/source', () => {
           return `${testUrl}?foo=bar`
         },
         key: 'item',
-        actions: {
-          success: actions.getSuccess
-        }
+        success: actions.getSuccess
       }
     }
 
@@ -228,9 +216,7 @@ describe('client/lib/builder/source', () => {
           expect(args).to.eql(testArgs)
           return { item: testItem }
         },
-        actions: {
-          success: actions.getSuccess
-        }
+        success: actions.getSuccess
       }
     }
 
@@ -251,9 +237,7 @@ describe('client/lib/builder/source', () => {
         local: () => {
           return { item: testItem }
         },
-        actions: {
-          success: actions.getSuccess
-        }
+        success: actions.getSuccess
       }
     }
 
@@ -275,9 +259,7 @@ describe('client/lib/builder/source', () => {
         method: 'post',
         uri: testUrl,
         params: testData,
-        actions: {
-          success: actions.getSuccess
-        }
+        success: actions.getSuccess
       }
     }
 
@@ -304,9 +286,7 @@ describe('client/lib/builder/source', () => {
           expect(args).to.eql(testArgs)
           return testData
         },
-        actions: {
-          success: actions.getSuccess
-        }
+        success: actions.getSuccess
       }
     }
 
@@ -325,9 +305,8 @@ describe('client/lib/builder/source', () => {
         method: 'get',
         uri: testUrl,
         keys: [testKey],
-        actions: {
-          success: 'getSuccess'
-        }
+        loading: actions.getItem,
+        success: 'getSuccess'
       }
     }
 
@@ -339,21 +318,15 @@ describe('client/lib/builder/source', () => {
   })
 
   it('should throw an InvalidArgument when action as a string is not found', async () => {
-    const testItem = { id: 1 }
-    const testKey = 'foobar'
-
     const testMethods = {
-      getItem: {
+      noDefaultActionAvailable: {
         method: 'get',
         uri: testUrl,
-        keys: [testKey],
-        actions: {
-          success: 'foobar'
-        }
+        keys: 'item',
+        success: 'foobar'
       }
     }
 
-    mock.onGet(testUrl).reply(200, { status: 'ok', [testKey]: testItem })
     expect(() => buildSource('TestActionAsStringFailure', actions, testMethods)).to.throw(InvalidArgument)
   })
 })
