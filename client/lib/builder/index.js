@@ -21,14 +21,11 @@ function createStore (name, params) {
   const source = buildSource(name, actions, params.methods || {}, params.options)
   const store = buildStore(source)
 
-  return {
-    actions,
-    source,
-    store,
-    [`${name}Actions`]: actions,
-    [`${name}Source`]: source,
-    [`${name}Store`]: store
-  }
+  store.store = store
+  store.actions = actions
+  store.source = source
+
+  return store
 }
 
 module.exports = createStore
