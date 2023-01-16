@@ -248,7 +248,7 @@ module.exports = (app) => {
         res.set('location', location)
       }
 
-      res.render('index.html', {
+      res.render(req.config.get('template', 'index.html'), {
         locals: {
           html,
           castToArray,

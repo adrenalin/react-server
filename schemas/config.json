@@ -563,6 +563,17 @@
           }
         },
 
+        "template": {
+          "description": "Default render template",
+          "type": ["null", "string"],
+          "default": "index.html"
+        },
+        "errorTemplate": {
+          "description": "Default render template for errors",
+          "type": ["null", "string"],
+          "default": "error.html"
+        },
+
         "application": {
           "description": "Public application configuration",
           "type": "object",

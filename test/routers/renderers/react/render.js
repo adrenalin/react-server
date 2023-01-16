@@ -8,7 +8,7 @@ const configRouter = require('../../../../routers/application/config')
 const errorRouter = require('../../../../routers/renderers/errors/api')
 
 describe('routers/renderers/react:render', () => {
-  let app, siteTitle, siteLogo, callback
+  let app, siteTitle, siteLogo, template, callback
   const testUrl = '/test/lib/renderers/react/render'
 
   before(async () => {
@@ -23,6 +23,7 @@ describe('routers/renderers/react:render', () => {
 
     siteTitle = app.config.get('react.application.site.title')
     siteLogo = app.config.get('react.application.site.logo')
+    template = app.config.get('react.template')
   })
 
   beforeEach(async () => {
@@ -34,6 +35,7 @@ describe('routers/renderers/react:render', () => {
   afterEach(async () => {
     app.config.set('react.application.site.title', siteTitle)
     app.config.set('react.application.site.logo', siteLogo)
+    app.config.set('react.template', template)
   })
 
   it('should render the configured project', async () => {
@@ -76,5 +78,30 @@ describe('routers/renderers/react:render', () => {
 
     // Renderer - when set - is serialized as JSON in the view "views/index.html"
     expect(response.text).to.have.string(`"testUrl":"${testUrl}"`)
+  })
+
+  it('should render with the template defined in config', async () => {
+    app.config.set('react.template', 'renderTest')
+    const response = await app.tests.requests.basic
+      .get(`${testUrl}/fi`)
+      .expect(200)
+
+    // console.log(Object.keys(response))
+    expect(response.text).to.eql('renderTest\n')
+  })
+
+  it('should render with the template defined in local config', async () => {
+    const hostname = 'testhost'
+
+    app.config.set(`sites.${hostname}.template`, 'renderTest')
+    app.config.set(`sites.${hostname}.hosts`, [hostname])
+
+    const response = await app.tests.requests.basic
+      .get(`${testUrl}/fi`)
+      .set({ host: hostname })
+      .expect(200)
+
+    // console.log(Object.keys(response))
+    expect(response.text).to.eql('renderTest\n')
   })
 })

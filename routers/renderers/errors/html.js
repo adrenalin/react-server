@@ -7,6 +7,8 @@ const getMetaTags = require('../../../lib/helpers/getMetaTags')
 
 module.exports = (app) => {
   const renderErrorPage = (err, req, res, next) => {
+    const config = req.config || app.config
+
     const logger = new Logger('@adrenalin/react-server/routers/renderers/errors/html')
     logger.setLevel(3)
 
@@ -27,7 +29,7 @@ module.exports = (app) => {
     }
 
     if (!metadata.get('site', 'title')) {
-      metadata.set('site', 'title', req.config.get('application.site.title'))
+      metadata.set('site', 'title', config.get('application.site.title'))
     }
 
     const locals = {
@@ -46,14 +48,14 @@ module.exports = (app) => {
       renderer: getValue(res, 'locals.data.renderer', {})
     }
 
-    res.render('error.html', { locals }, (renderErr, html) => {
+    res.render(config.get('errorTemplate', 'error.html'), { locals }, (renderErr, html) => {
       if (renderErr) {
         /* istanbul ignore next */
         return next(err)
       }
 
       locals.html = html
-      res.render('index.html', { locals })
+      res.render(config.get('template', 'index.html'), { locals })
     })
   }
 
