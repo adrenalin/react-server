@@ -1,14 +1,14 @@
 const { expect } = require('chai')
 const { InvalidArgument } = require('@vapaaradikaali/errors')
 const MockAdapter = require('axios-mock-adapter')
-const { getActions } = require('../../../../client/lib/builder/actions')
-const buildSource = require('../../../../client/lib/builder/source')
-const buildStore = require('../../../../client/lib/builder/store')
+const { getActions } = require('../../../../client/lib/store/actions')
+const buildSource = require('../../../../client/lib/store/source')
+const buildStore = require('../../../../client/lib/store/store')
 const request = require('../../../../client/lib/request')
 
-describe('client/lib/builder/store', () => {
+describe('client/lib/store/store', () => {
   const mock = new MockAdapter(request)
-  const testUrl = '/test/client/lib/builder/store'
+  const testUrl = '/test/client/lib/store/store'
   const actions = getActions('TestStoreActions')
   const testItem = {
     id: 1

@@ -1,12 +1,12 @@
 const { expect } = require('chai')
 const { BadRequest, InvalidArgument, MethodNotAllowed } = require('@vapaaradikaali/errors')
 const MockAdapter = require('axios-mock-adapter')
-const { getModelActions } = require('../../../../client/lib/builder/actions')
-const buildSource = require('../../../../client/lib/builder/source')
+const { getModelActions } = require('../../../../client/lib/store/actions')
+const buildSource = require('../../../../client/lib/store/source')
 const request = require('../../../../client/lib/request')
 
-describe('client/lib/builder/source', () => {
-  const testUrl = '/test/client/lib/builder/source'
+describe('client/lib/store/source', () => {
+  const testUrl = '/test/client/lib/store/source'
   const mock = new MockAdapter(request)
 
   const actions = getModelActions('TestSourceActions')

@@ -1,7 +1,7 @@
 const { expect } = require('chai')
-const { getActions, getModelActions, getListActions, modelActions, listActions } = require('../../../../client/lib/builder/actions')
+const { getActions, getModelActions, getListActions, modelActions, listActions } = require('../../../../client/lib/store/actions')
 
-describe('client/lib/builder/actions', () => {
+describe('client/lib/store/actions', () => {
   it('should build model actions', () => {
     const modelName = 'TestActionsModel'
 
