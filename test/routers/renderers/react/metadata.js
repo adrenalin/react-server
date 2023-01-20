@@ -1,4 +1,5 @@
 const cheerio = require('cheerio')
+const request = require('supertest')
 const { expect } = require('chai')
 const { castToArray } = require('@vapaaradikaali/helpers.js')
 const init = require('../../../init')
@@ -82,7 +83,7 @@ describe('routers/renderers/react:metadata', () => {
     const lang = app.config.get('react.application.languages', ['fi'])[0]
     const url = `${testUrl}/${lang}`
 
-    const response = await app.tests.requests.create()
+    const response = await request(app)
       .get(url)
       .expect(200)
 
@@ -114,7 +115,7 @@ describe('routers/renderers/react:metadata', () => {
     app.config.set('react.application.site.image', testImageGeneric)
     app.config.set('react.application.tests.lib.react.metadata.image', testImageComponent)
 
-    const response = await app.tests.requests.create()
+    const response = await request(app)
       .get(url)
       .expect(200)
 
@@ -152,7 +153,7 @@ describe('routers/renderers/react:metadata', () => {
     app.config.set('react.locales', locales)
     app.config.set('react.application.languages', languages)
 
-    const response = await app.tests.requests.create()
+    const response = await request(app)
       .get(url)
       .expect(200)
 

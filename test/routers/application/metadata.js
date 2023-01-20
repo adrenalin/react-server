@@ -1,4 +1,5 @@
 const { expect } = require('chai')
+const request = require('supertest')
 const { getValue } = require('@vapaaradikaali/helpers.js')
 const init = require('../../init')
 const Metadata = require('../../../client/lib/metadata')
@@ -37,7 +38,7 @@ describe('routers/application/metadata', () => {
       })
     }
 
-    await app.tests.requests.create().get(testUrl)
+    await request(app).get(testUrl)
       .expect(200)
 
     callback = (req, res, next) => {
@@ -47,7 +48,7 @@ describe('routers/application/metadata', () => {
       })
     }
 
-    await app.tests.requests.create().get(testUrl)
+    await request(app).get(testUrl)
       .expect(200)
   })
 
@@ -67,7 +68,7 @@ describe('routers/application/metadata', () => {
       })
     }
 
-    const response = await app.tests.requests.create().get(testUrl).expect(200)
+    const response = await request(app).get(testUrl).expect(200)
 
     expect(getValue(response.body.metadata, 'http.url')).to.eql(testUrl)
     expect(getValue(response.body.metadata, 'http.port')).to.eql(port)

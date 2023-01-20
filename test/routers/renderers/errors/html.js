@@ -1,4 +1,5 @@
 const { expect } = require('chai')
+const request = require('supertest')
 const errors = require('@vapaaradikaali/errors')
 const { setValue, Localization } = require('@vapaaradikaali/helpers.js')
 const init = require('../../../init')
@@ -35,7 +36,7 @@ describe('routers/renderers/html', () => {
       next(new errors.NotImplemented(errorDescription))
     }
 
-    const response = await app.tests.requests.basic
+    const response = await request(app)
       .get(testUrl)
       .expect(501)
 
@@ -50,7 +51,7 @@ describe('routers/renderers/html', () => {
       next(new errors.NotImplemented('Renderer error'))
     }
 
-    const response = await app.tests.requests.basic
+    const response = await request(app)
       .get(testUrl)
       .expect(501)
 

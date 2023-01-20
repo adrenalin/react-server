@@ -1,4 +1,5 @@
 const { expect } = require('chai')
+const request = require('supertest')
 const { setValue } = require('@vapaaradikaali/helpers.js')
 
 const init = require('../../../init')
@@ -39,7 +40,7 @@ describe('routers/renderers/react:render', () => {
   })
 
   it('should render the configured project', async () => {
-    const response = await app.tests.requests.create().get(`${testUrl}/fi`)
+    const response = await request(app).get(`${testUrl}/fi`)
       .expect(200)
 
     const body = String(response.text)
@@ -47,7 +48,7 @@ describe('routers/renderers/react:render', () => {
   })
 
   it('should render a not found error for an unconfigured route', async () => {
-    await app.tests.requests.create().get(`${testUrl}/path/not/found`)
+    await request(app).get(`${testUrl}/path/not/found`)
       .expect(404)
   })
 
@@ -58,7 +59,7 @@ describe('routers/renderers/react:render', () => {
     app.config.set('react.application.site.title', testTitle)
     app.config.set('react.application.site.logo', testLogo)
 
-    const response = await app.tests.requests.create().get(`${testUrl}/fi`)
+    const response = await request(app).get(`${testUrl}/fi`)
       .expect(200)
 
     const body = String(response.text)
@@ -72,7 +73,7 @@ describe('routers/renderers/react:render', () => {
       next()
     }
 
-    const response = await app.tests.requests.basic
+    const response = await request(app)
       .get(`${testUrl}/fi`)
       .expect(200)
 
@@ -82,7 +83,7 @@ describe('routers/renderers/react:render', () => {
 
   it('should render with the template defined in config', async () => {
     app.config.set('react.template', 'renderTest')
-    const response = await app.tests.requests.basic
+    const response = await request(app)
       .get(`${testUrl}/fi`)
       .expect(200)
 
@@ -96,7 +97,7 @@ describe('routers/renderers/react:render', () => {
     app.config.set(`sites.${hostname}.template`, 'renderTest')
     app.config.set(`sites.${hostname}.hosts`, [hostname])
 
-    const response = await app.tests.requests.basic
+    const response = await request(app)
       .get(`${testUrl}/fi`)
       .set({ host: hostname })
       .expect(200)

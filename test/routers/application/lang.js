@@ -1,4 +1,5 @@
 const { expect } = require('chai')
+const request = require('supertest')
 const { Localization } = require('@vapaaradikaali/helpers.js')
 const init = require('../../init')
 
@@ -43,7 +44,7 @@ describe('routers/application/lang', () => {
 
     app.config.set('react.application.defaultLanguage', lang)
 
-    const response = await app.tests.requests.create()
+    const response = await request(app)
       .get(testUrl)
       .expect(200)
 
@@ -58,7 +59,7 @@ describe('routers/application/lang', () => {
     app.config.set('react.application.defaultLanguage', defaultLang)
     app.config.set('react.application.languages', languages)
 
-    const response = await app.tests.requests.create()
+    const response = await request(app)
       .get(`${testUrl}/${languages[0]}`)
       .expect(200)
 
@@ -73,7 +74,7 @@ describe('routers/application/lang', () => {
     app.config.set('react.application.defaultLanguage', defaultLang)
     app.config.set('react.application.languages', languages)
 
-    const response = await app.tests.requests.create()
+    const response = await request(app)
       .get(`${testUrl}/${languages[0]}/sub/path`)
       .expect(200)
 
@@ -88,7 +89,7 @@ describe('routers/application/lang', () => {
     app.config.set('react.application.defaultLanguage', defaultLang)
     app.config.set('react.application.languages', languages)
 
-    const response = await app.tests.requests.create()
+    const response = await request(app)
       .get(`${testUrl}/zz`)
       .expect(200)
 
@@ -103,7 +104,7 @@ describe('routers/application/lang', () => {
     app.config.set('react.application.defaultLanguage', defaultLang)
     app.config.set('react.application.languages', languages)
 
-    const response = await app.tests.requests.create()
+    const response = await request(app)
       .get(`${testUrl}?lang=${languages[2]}`)
       .expect(200)
 
@@ -131,7 +132,7 @@ describe('routers/application/lang', () => {
       next()
     }
 
-    await app.tests.requests.create()
+    await request(app)
       .get(`${testUrl}/${lang}`)
       .expect(200)
   })

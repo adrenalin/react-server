@@ -1,4 +1,5 @@
 const { expect } = require('chai')
+const request = require('supertest')
 const init = require('../../init')
 
 const router = require('../../../routers/locales/render')
@@ -32,7 +33,7 @@ describe('routers/locales/render', () => {
 
   it('should find the locales for the given language', async () => {
     const lang = app.config.get('react.application.defaultLanguage')
-    const response = await app.tests.requests.basic
+    const response = await request(app)
       .get(`${testUrl}/${lang}`)
       .expect(200)
 

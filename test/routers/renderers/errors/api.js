@@ -1,4 +1,5 @@
 const { expect } = require('chai')
+const request = require('supertest')
 const { Validator } = require('jsonschema')
 const errors = require('@vapaaradikaali/errors')
 const init = require('../../../init')
@@ -25,7 +26,7 @@ describe('routers/renderers/api', () => {
       next(new Error(errorMessage))
     }
 
-    const response = await app.tests.requests.basic
+    const response = await request(app)
       .get(testUrl)
       .expect(500)
 
@@ -41,7 +42,7 @@ describe('routers/renderers/api', () => {
       next(new errors.BadRequest(errorMessage))
     }
 
-    const response = await app.tests.requests.basic
+    const response = await request(app)
       .get(testUrl)
       .expect(400)
 
@@ -63,7 +64,7 @@ describe('routers/renderers/api', () => {
       next(new errors.FormValidation(e, d))
     }
 
-    const response = await app.tests.requests.basic
+    const response = await request(app)
       .get(testUrl)
 
     expect(response.body.status).to.eql('error')
@@ -99,7 +100,7 @@ describe('routers/renderers/api', () => {
       return next(new errors.ValidationError('validationFailed', result.errors))
     }
 
-    const response = await app.tests.requests.basic
+    const response = await request(app)
       .get(testUrl)
 
     expect(response.body.status).to.eql('error')

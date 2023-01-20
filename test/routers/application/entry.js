@@ -1,4 +1,5 @@
 const { expect } = require('chai')
+const request = require('supertest')
 const init = require('../../init')
 
 const router = require('../../../routers/application/entry')
@@ -30,14 +31,14 @@ describe('routers/application/entry', () => {
   })
 
   it('should redirect to the default language', async () => {
-    const response = await app.tests.requests.basic.get(testUrl)
+    const response = await request(app).get(testUrl)
       .expect(statusCode)
 
     expect(response.headers.location).to.equal(`./${defaultLang}`)
   })
 
   it('should redirect to the user preferred language with accept-language headers', async () => {
-    const response = await app.tests.requests.basic.get(testUrl)
+    const response = await request(app).get(testUrl)
       .set({
         'accept-language': 'en-US,en;q=0.8,fi;q=0.5,it;q=0.3'
       })
@@ -47,7 +48,7 @@ describe('routers/application/entry', () => {
   })
 
   it('should redirect to the defalt language with accept-language headers without an included language', async () => {
-    const response = await app.tests.requests.basic.get(testUrl)
+    const response = await request(app).get(testUrl)
       .set({
         'accept-language': 'it;q=0.8'
       })

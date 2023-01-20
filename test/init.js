@@ -2,7 +2,6 @@ require('@babel/register')
 const fs = require('fs')
 const path = require('path')
 const Moment = require('moment-timezone')
-const PersistentConnection = require('./PersistentConnection')
 const initServer = require('../server')
 const Logger = require('@vapaaradikaali/logger')
 const { Localization } = require('@vapaaradikaali/helpers.js')
@@ -43,15 +42,6 @@ module.exports = async (options = {}) => {
     ...opts,
     ...options
   })
-
-  app.tests = {
-    requests: {
-      basic: new PersistentConnection(app),
-      create: () => {
-        return new PersistentConnection(app)
-      }
-    }
-  }
 
   return app
 }

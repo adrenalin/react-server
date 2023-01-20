@@ -1,6 +1,7 @@
 const fs = require('fs')
 const path = require('path')
 const { expect } = require('chai')
+const request = require('supertest')
 const init = require('../init')
 
 const router = require('../../routers/static')
@@ -44,7 +45,7 @@ describe('routers/static', () => {
 
   it('should find a static file', async () => {
     const contents = fs.readFileSync(path.join(testSource, 'test.txt'), 'utf-8')
-    const response = await app.tests.requests.create().get(`${testUrl}/test.txt`)
+    const response = await request(app).get(`${testUrl}/test.txt`)
       .expect(200)
 
     expect(response.headers['content-type']).to.have.string('text/plain')
@@ -53,7 +54,7 @@ describe('routers/static', () => {
   })
 
   it('should not find a file that does not exist', async () => {
-    await app.tests.requests.create().get(`${testUrl}/undefined.txt`)
+    await request(app).get(`${testUrl}/undefined.txt`)
       .expect(404)
 
     expect(hasFallenThrough).to.equal(true)
@@ -61,7 +62,7 @@ describe('routers/static', () => {
 
   it('should not fall through when fallthrough option is false', async () => {
     opts.fallthrough = false
-    await app.tests.requests.create().get(`${testUrl}/undefined.txt`)
+    await request(app).get(`${testUrl}/undefined.txt`)
       .expect(404)
 
     expect(hasFallenThrough).to.equal(false)

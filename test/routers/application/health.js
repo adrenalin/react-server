@@ -1,4 +1,5 @@
 const { expect } = require('chai')
+const request = require('supertest')
 const init = require('../../init')
 
 const router = require('../../../routers/application/health')
@@ -16,7 +17,7 @@ describe('routers/application/health', () => {
   })
 
   it('should find the health route', async () => {
-    const response = await app.tests.requests.create().get(testUrl)
+    const response = await request(app).get(testUrl)
       .expect(200)
 
     expect(response.body).to.have.property('status')

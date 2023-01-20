@@ -1,4 +1,5 @@
 const { expect } = require('chai')
+const request = require('supertest')
 const init = require('../../../init')
 
 const router = require('../../../../routers/renderers/react')
@@ -29,7 +30,7 @@ describe('routers/renderers/react:files', () => {
     app.config.set('react.minified', true)
     app.config.set('react.fingerprint', false)
 
-    const response = await app.tests.requests.create().get(`${testUrl}/en`)
+    const response = await request(app).get(`${testUrl}/en`)
       .expect(200)
 
     app.config.get('react.stylesheets')
@@ -42,7 +43,7 @@ describe('routers/renderers/react:files', () => {
     app.config.set('react.minified', false)
     app.config.set('react.fingerprint', false)
 
-    const response = await app.tests.requests.create().get(`${testUrl}/en`)
+    const response = await request(app).get(`${testUrl}/en`)
       .expect(200)
 
     app.config.get('react.stylesheets')
@@ -55,7 +56,7 @@ describe('routers/renderers/react:files', () => {
     app.config.set('react.minified', false)
     app.config.set('react.fingerprint', false)
 
-    const response = await app.tests.requests.create().get(`${testUrl}/en`)
+    const response = await request(app).get(`${testUrl}/en`)
       .expect(200)
 
     expect(response.text).to.have.string(`src="/js/${app.config.get('react.entry')}.js"`)
@@ -65,7 +66,7 @@ describe('routers/renderers/react:files', () => {
     app.config.set('react.minified', true)
     app.config.set('react.fingerprint', false)
 
-    const response = await app.tests.requests.create().get(`${testUrl}/en`)
+    const response = await request(app).get(`${testUrl}/en`)
       .expect(200)
 
     expect(response.text).to.have.string('src="/js/vendors.min.js"')
@@ -76,7 +77,7 @@ describe('routers/renderers/react:files', () => {
     app.config.set('react.minified', true)
     app.config.set('react.fingerprint', true)
 
-    const response = await app.tests.requests.create().get(`${testUrl}/en`)
+    const response = await request(app).get(`${testUrl}/en`)
       .expect(200)
 
     const files = [

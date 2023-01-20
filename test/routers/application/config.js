@@ -1,4 +1,5 @@
 const { expect } = require('chai')
+const request = require('supertest')
 const { getValue } = require('@vapaaradikaali/helpers.js')
 const init = require('../../init')
 
@@ -20,14 +21,14 @@ describe('routers/application/config', () => {
   })
 
   it('should find the application store', async () => {
-    const response = await app.tests.requests.create().get(testUrl)
+    const response = await request(app).get(testUrl)
       .expect(200)
 
     expect(response.body).to.have.property('config')
   })
 
   it('should find the application store', async () => {
-    const response = await app.tests.requests.create().get(testUrl)
+    const response = await request(app).get(testUrl)
       .expect(200)
 
     expect(response.body).to.have.property('config')
@@ -36,7 +37,7 @@ describe('routers/application/config', () => {
   it('should find a set configuration value', async () => {
     app.config.set(`react.application.${testConfigPath}`, testUrl)
 
-    const response = await app.tests.requests.create().get(testUrl)
+    const response = await request(app).get(testUrl)
       .expect(200)
 
     const config = JSON.parse(JSON.stringify(response.body.config))
@@ -52,9 +53,9 @@ describe('routers/application/config', () => {
     app.config.set(`sites.${host}.hosts`, [host])
     app.config.set(`sites.${host}.application.${testConfigPath}`, overrideConfigValue)
 
-    const response = await app.tests.requests.create()
-      .setHeader('host', host)
+    const response = await request(app)
       .get(testUrl)
+      .set('host', host)
       .expect(200)
 
     const config = JSON.parse(JSON.stringify(response.body.config))
@@ -70,9 +71,9 @@ describe('routers/application/config', () => {
     app.config.set(`sites.${host}.hosts`, [host])
     app.config.set(`sites.${host}.application.merged.${testConfigPath}.bar`, overrideConfigValue)
 
-    const response = await app.tests.requests.create()
-      .setHeader('host', host)
+    const response = await request(app)
       .get(testUrl)
+      .set('host', host)
       .expect(200)
 
     const config = JSON.parse(JSON.stringify(response.body.config))

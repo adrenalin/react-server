@@ -1,4 +1,5 @@
 const { expect } = require('chai')
+const request = require('supertest')
 const cheerio = require('cheerio')
 const errors = require('@vapaaradikaali/errors')
 const init = require('../../../init')
@@ -42,7 +43,7 @@ describe('routers/renderers/react:errors', () => {
     const lang = app.config.get('react.languages', ['fi'])[0]
     const url = `${testUrl}/${lang}/undefined`
 
-    const response = await app.tests.requests.create()
+    const response = await request(app)
       .get(url)
       .expect(500)
 
@@ -66,7 +67,7 @@ describe('routers/renderers/react:errors', () => {
       next(err)
     }
 
-    const response = await app.tests.requests.create()
+    const response = await request(app)
       .get(`${testUrl}/${lang}/formvalidation`)
       .expect(400)
 
@@ -82,7 +83,7 @@ describe('routers/renderers/react:errors', () => {
     app.config.set('react.application.site.title', testTitle)
     app.config.set('react.application.site.logo', testLogo)
 
-    const response = await app.tests.requests.create().get(`${testUrl}/fi`)
+    const response = await request(app).get(`${testUrl}/fi`)
       .expect(200)
 
     const body = String(response.text)

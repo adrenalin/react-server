@@ -1,4 +1,5 @@
 const { expect } = require('chai')
+const request = require('supertest')
 const init = require('../../init')
 
 const router = require('../../../routers/locales/list')
@@ -27,7 +28,7 @@ describe('routers/locales/list', () => {
   })
 
   it('should find the locales list for all languages', async () => {
-    const response = await app.tests.requests.basic.get(testUrl)
+    const response = await request(app).get(testUrl)
       .expect(200)
 
     expect(response.body).to.have.property('locales')
@@ -39,7 +40,7 @@ describe('routers/locales/list', () => {
 
   it('should find the locales list for the given language', async () => {
     const lang = 'it'
-    const response = await app.tests.requests.basic.get(`${testUrl}/${lang}`)
+    const response = await request(app).get(`${testUrl}/${lang}`)
       .expect(200)
 
     expect(response.body).to.have.property('locales')

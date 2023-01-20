@@ -1,4 +1,5 @@
 const { expect } = require('chai')
+const request = require('supertest')
 const init = require('../../../init')
 
 const altRouter = require('../../../../routers/renderers/alt')
@@ -27,7 +28,7 @@ describe('routers/renderers/alt', () => {
       next()
     }
 
-    app.tests.requests.basic
+    request(app)
       .get(testUrl)
       .expect(200)
       .then((response) => {
@@ -47,7 +48,7 @@ describe('routers/renderers/alt', () => {
       next()
     }
 
-    app.tests.requests.basic
+    request(app)
       .get(testUrl)
       .expect(200)
       .then((response) => {
@@ -67,7 +68,7 @@ describe('routers/renderers/alt', () => {
       next()
     }
 
-    app.tests.requests.basic
+    request(app)
       .get(testUrl)
       .expect(400)
       .then((response) => {
@@ -88,7 +89,7 @@ describe('routers/renderers/alt', () => {
       next()
     }
 
-    app.tests.requests.basic
+    request(app)
       .get(testUrl)
       .expect(value.code)
       .then((response) => {

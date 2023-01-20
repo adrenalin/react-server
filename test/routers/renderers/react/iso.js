@@ -1,4 +1,5 @@
 const cheerio = require('cheerio')
+const request = require('supertest')
 const { expect } = require('chai')
 const { getValue } = require('@vapaaradikaali/helpers.js')
 const init = require('../../../init')
@@ -46,8 +47,7 @@ describe('routers/renderers/react:iso', () => {
     const lang = app.config.get('react.languages', ['fi'])[0]
     const url = `${testUrl}/${lang}`
 
-    const response = await app.tests.requests.create()
-      .setHeader('host', common.host)
+    const response = await request(app)
       .get(url)
       .expect(200)
 
@@ -82,9 +82,9 @@ describe('routers/renderers/react:iso', () => {
     const siteUrl = `${ssl ? 'https' : 'http'}://${host}:${port}`
     const fullUrl = `${siteUrl}${url}`
 
-    const response = await app.tests.requests.create()
-      .setHeader('host', host)
+    const response = await request(app)
       .get(url)
+      .set('host', host)
       .expect(200)
 
     const $ = cheerio.load(response.text)
@@ -113,9 +113,9 @@ describe('routers/renderers/react:iso', () => {
     const siteUrl = `${ssl ? 'https' : 'http'}://${host}:${port}`
     const fullUrl = `${siteUrl}${url}`
 
-    const response = await app.tests.requests.create()
-      .setHeader('host', host)
+    const response = await request(app)
       .get(url)
+      .set('host', host)
       .expect(200)
 
     const $ = cheerio.load(response.text)

@@ -1,5 +1,4 @@
-const fs = require('fs')
-const path = require('path')
+const request = require('supertest')
 const init = require('../../init')
 const router = require('../../../routers/application/favicon')
 const configRouter = require('../../../routers/application/config')
@@ -24,13 +23,13 @@ describe('routers/application/favicon', () => {
 
   it('should find the favicon when the image exists', async () => {
     app.config.set('react.favicon', '../../index.js')
-    await app.tests.requests.create().get(`${testUrl}/favicon.ico`)
+    await request(app).get(`${testUrl}/favicon.ico`)
       .expect(200)
   })
 
   it('should not find the favicon when the image does not exist', async () => {
     app.config.set('react.favicon', '/path/to/image/that/does/not/exist.png')
-    await app.tests.requests.create().get(`${testUrl}/favicon.ico`)
+    await request(app).get(`${testUrl}/favicon.ico`)
       .expect(404)
   })
 })
