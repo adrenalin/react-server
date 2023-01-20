@@ -7,9 +7,9 @@ module.exports = async (opts = {}) => {
   logger.info('Start initializing the server')
 
   const app = await require('./application')(opts)
-  logger.debug('Start listener on port', app.config.get('server.port'))
 
   castToArray(app.config.get('server.port'))
+    .filter(port => port)
     .forEach((port) => {
       const server = app.listen(port)
       app.servers = app.servers || []
