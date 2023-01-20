@@ -1,7 +1,16 @@
 import React from 'react'
 import Component from './component'
 
+/**
+ * @class Widget
+ * @implements @Component
+ */
 module.exports = class Widget extends Component {
+  /**
+   * Default widget proptypes
+   *
+   * @const { object } Widget.propTypes
+   */
   static get propTypes () {
     return {
       id: Widget.PropTypes.string,
@@ -11,7 +20,11 @@ module.exports = class Widget extends Component {
     }
   }
 
-  // Default class name
+  /**
+   * Default widget className
+   *
+   * @const { object } Widget.DEFAULT_CLASSNAME
+   */
   static get DEFAULT_CLASSNAME () {
     return null
   }
@@ -19,6 +32,7 @@ module.exports = class Widget extends Component {
   /**
    * Get widget class name
    *
+   * @method Widget.getWidgetClassName
    * @return { string }               Class name
    */
   getWidgetClassName () {
@@ -28,6 +42,7 @@ module.exports = class Widget extends Component {
   /**
    * Get widget class name
    *
+   * @method Widget.getClassName
    * @return { string }               Class name
    */
   getClassName () {
@@ -47,6 +62,7 @@ module.exports = class Widget extends Component {
   /**
    * Get extra classes that might be tied to props or state
    *
+   * @method Widget.getExtraClasses
    * @return { string }               Extra classes
    */
   getExtraClasses () {
@@ -58,6 +74,7 @@ module.exports = class Widget extends Component {
    * is mostly used to inject id, title, class name etc. generic properties
    * to the widget container.
    *
+   * @method Widget.getCommonProperties
    * @return { object }               Props as key-value pairs
    */
   getCommonProperties () {
@@ -94,7 +111,8 @@ module.exports = class Widget extends Component {
   /**
    * Render the widget
    *
-   * @return { ReactChild }           React child
+   * @method Widget.render
+   * @return { React.Element }        React element
    */
   render () {
     this.logger.error('Widget', this.constructor.name, 'needs a renderer')
