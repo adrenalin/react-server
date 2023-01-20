@@ -4,10 +4,9 @@ const MockAdapter = require('axios-mock-adapter')
 const { getActions } = require('../../../../client/lib/store/actions')
 const buildSource = require('../../../../client/lib/store/source')
 const buildStore = require('../../../../client/lib/store/store')
-const request = require('../../../../client/lib/request')
 
 describe('client/lib/store/store', () => {
-  const mock = new MockAdapter(request)
+  let request, mock
   const testUrl = '/test/client/lib/store/store'
   const actions = getActions('TestStoreActions')
   const testItem = {
@@ -62,11 +61,13 @@ describe('client/lib/store/store', () => {
   let cb = () => {}
 
   const listener = (...args) => {
-    cb(...args) // eslint-disable-line standard/no-callback-literal
+    cb(...args) // eslint-disable-line
   }
 
   beforeEach(() => {
     store.state.resetModel()
+    request = buildSource.request
+    mock = new MockAdapter(request)
   })
 
   afterEach(async () => {

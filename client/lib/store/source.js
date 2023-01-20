@@ -183,7 +183,7 @@ function buildSource (name, actions, methods, options) {
 
       opts.remote.bind(this)
 
-      const method = function request () {
+      const method = function requestMethod () {
         this.name = name
         this.keys = keys
         return opts
@@ -198,5 +198,6 @@ function buildSource (name, actions, methods, options) {
 }
 
 buildSource.Source = Source
+buildSource.request = request
 
 module.exports = buildSource

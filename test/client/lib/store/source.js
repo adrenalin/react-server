@@ -3,11 +3,10 @@ const { BadRequest, InvalidArgument, MethodNotAllowed } = require('@vapaaradikaa
 const MockAdapter = require('axios-mock-adapter')
 const { getModelActions } = require('../../../../client/lib/store/actions')
 const buildSource = require('../../../../client/lib/store/source')
-const request = require('../../../../client/lib/request')
 
 describe('client/lib/store/source', () => {
   const testUrl = '/test/client/lib/store/source'
-  const mock = new MockAdapter(request)
+  let mock, request
 
   const actions = getModelActions('TestSourceActions')
   const methods = {
@@ -18,6 +17,11 @@ describe('client/lib/store/source', () => {
       success: actions.getSuccess
     }
   }
+
+  beforeEach(() => {
+    request = buildSource.request
+    mock = new MockAdapter(request)
+  })
 
   afterEach(async () => {
     mock.reset()
@@ -73,7 +77,8 @@ describe('client/lib/store/source', () => {
   it('should use requestFailed', (done) => {
     const testActions = {
       ...getModelActions('TestModelActions'),
-      requestFailed: (err) => { // eslint-disable-line handle-callback-err
+      requestFailed: (err) => { // eslint-disable-line node/handle-callback-err
+        expect(err).to.be.an.instanceof(Error)
         done()
       }
     }

@@ -5,7 +5,7 @@ const alt = require('../alt')
 
 const cached = {}
 
-module.exports = function buildStore (source) {
+function buildStore (source) {
   if (!(source instanceof Source)) {
     throw new InvalidArgument('buildStore requires a Source as its first argument')
   }
@@ -294,3 +294,5 @@ module.exports = function buildStore (source) {
   // cached[storeName].store = store
   return cached[storeName]
 }
+
+module.exports = buildStore
