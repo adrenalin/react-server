@@ -77,7 +77,7 @@ describe('client/lib/store/source', () => {
   it('should use requestFailed', (done) => {
     const testActions = {
       ...getModelActions('TestModelActions'),
-      requestFailed: (err) => { // eslint-disable-line node/handle-callback-err
+      requestFailed: (err) => {
         expect(err).to.be.an.instanceof(Error)
         done()
       }
@@ -167,11 +167,33 @@ describe('client/lib/store/source', () => {
     }
   })
 
+  it('should override required keys', async () => {
+    const testItem = { id: 1 }
+    const testKey = 'item'
+
+    const testMethods = {
+      getItem: {
+        method: 'get',
+        uri: testUrl,
+        keys: [testKey, 'foobar'],
+        requiredKeys: [testKey],
+        success: actions.getSuccess
+      }
+    }
+
+    mock.onGet(testUrl).reply(200, { status: 'ok', [testKey]: testItem })
+    const source = buildSource('TestExplicitRequiredKeys', actions, testMethods)
+
+    const response = await source.getItem().remote()
+    expect(response).to.eql({ item: testItem })
+  })
+
   it('should fail when specified keys were not found', (done) => {
     const testItem = { id: 1 }
     const testActions = {
       ...getModelActions('TestModelActions'),
-      requestFailed: (err) => { // eslint-disable-line handle-callback-err
+      requestFailed: (err) => {
+        expect(err).to.be.an.instanceof(Error)
         done()
       }
     }

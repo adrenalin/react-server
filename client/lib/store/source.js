@@ -123,6 +123,7 @@ function buildSource (name, actions, methods, options) {
 
       const opts = {
         keys,
+        requiredKeys: new Set(options.requiredKeys || keys),
         response: remote.response,
         local: options.local,
 
@@ -165,7 +166,11 @@ function buildSource (name, actions, methods, options) {
             logger.debug('Check for key', key, 'from response data')
 
             if (response.data[key] === undefined) {
-              throw new BadRequest(`Key "${key}" missing from response`)
+              if (opts.requiredKeys.has(key)) {
+                throw new BadRequest(`Key "${key}" missing from response`)
+              }
+
+              return
             }
 
             data[key] = response.data[key]
