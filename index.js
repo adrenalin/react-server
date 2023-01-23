@@ -28,17 +28,10 @@ module.exports = {
 
   // Alt
   createStore: require('./dist/lib/store'),
-  BaseSourceBuilder: require('./dist/data/builder'),
-  BaseModelAction: require('./dist/data/basemodel/action'),
-  BaseModelStore: require('./dist/data/basemodel/store'),
-  BaseListAction: require('./dist/data/baselist/action'),
-  BaseListStore: require('./dist/data/baselist/store'),
 
   ApplicationStore: require('./dist/data/application'),
   ErrorStore: require('./dist/data/error'),
-
   LocalesStore: require('./dist/data/locales'),
-
   NotificationsStore: require('./dist/data/notifications'),
   UserStore: require('./dist/data/user')
 }
