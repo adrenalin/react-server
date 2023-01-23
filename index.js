@@ -37,8 +37,7 @@ module.exports = {
   ApplicationStore: require('./dist/data/application'),
   ErrorStore: require('./dist/data/error/store'),
 
-  LocalesSource: require('./dist/data/locales/source'),
-  LocalesStore: require('./dist/data/locales/store'),
+  LocalesStore: require('./dist/data/locales'),
 
   NotificationsStore: require('./dist/data/notifications'),
   UserStore: require('./dist/data/user')
