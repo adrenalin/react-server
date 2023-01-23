@@ -16,9 +16,21 @@ const types = {
   model: actions.getModelActions
 }
 
-function createStore (name, params) {
-  const actions = types[params.type || ''](name)
-  const source = buildSource(name, actions, params.methods || {}, params.options)
+/**
+ * Create an Alt store
+ *
+ * @function createStore
+ * @param { string } name             Store name
+ * @param { object } [methods]        Public methods
+ * @param { object } [options]        Options
+ * @return { AltStore }               Alt store
+ */
+function createStore (name, methods, options) {
+  methods = methods || {}
+  options = options || {}
+
+  const actions = options.actions || types[options.type || ''](name)
+  const source = buildSource(name, actions, methods, options)
   const store = buildStore(source)
 
   store.store = store

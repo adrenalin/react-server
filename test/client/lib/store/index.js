@@ -34,7 +34,7 @@ describe('client/lib/store', () => {
   })
 
   it('should build actions, source and store', () => {
-    const params = {
+    const methods = {
       getItem: {
         method: 'get',
         uri: testUrl,
@@ -51,7 +51,7 @@ describe('client/lib/store', () => {
     const source = createStore.buildSource('TestBuild', actions)
     const store = createStore.buildStore(source)
 
-    const TestBuildStore = createStore('TestBuild', params)
+    const TestBuildStore = createStore('TestBuild', methods)
 
     expect(TestBuildStore.actions).to.equal(actions)
     expect(TestBuildStore.source).to.equal(source)
