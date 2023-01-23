@@ -66,7 +66,7 @@ module.exports = class ErrorBoundary extends React.Component {
   /**
    * Render stack traces
    *
-   * @return { ReactChild }           React child for rendering
+   * @return { React.node }           React node for rendering
    */
   renderStackTraces () {
     if (!this.application.errors) {
@@ -84,7 +84,7 @@ module.exports = class ErrorBoundary extends React.Component {
   /**
    * Render stack trace
    *
-   * @return { ReactChild }           React child for rendering
+   * @return { React.node }           React node for rendering
    */
   renderStackTrace (stack) {
     return (
@@ -112,7 +112,7 @@ module.exports = class ErrorBoundary extends React.Component {
   /**
    * Render error stack trace
    *
-   * @return { ReactChild }           React child for rendering
+   * @return { React.node }           React node for rendering
    */
   renderErrorStackTrace () {
     if (!this.state.error.stack) {
@@ -142,7 +142,7 @@ module.exports = class ErrorBoundary extends React.Component {
   /**
    * Render component stack trace
    *
-   * @return { ReactChild }           React child for rendering
+   * @return { React.node }           React node for rendering
    */
   renderComponentStackTrace () {
     if (!this.state.info || !this.state.info.componentStack || !this.application.errors) {
@@ -168,7 +168,7 @@ module.exports = class ErrorBoundary extends React.Component {
   /**
    * Render error page
    *
-   * @return { ReactChild }           React child for rendering
+   * @return { React.node }           React node for rendering
    */
   render () {
     if (this.state.error) {

@@ -659,7 +659,7 @@ module.exports = class Component extends React.Component {
    * Render error
    *
    * @param { string } key            Field name
-   * @return { mixed }                React child or null if not applicable
+   * @return { mixed }                React node or null if not applicable
    */
   renderFormError (key) {
     const error = this.helpers.getValue(this.state, `errors.${key}`)
@@ -686,7 +686,7 @@ module.exports = class Component extends React.Component {
   /**
    * Render the error from the component state if applicable
    *
-   * @return { ReactChild }           React child for rendering
+   * @return { React.node }           React node for rendering
    */
   renderError () {
     /**
@@ -720,7 +720,7 @@ module.exports = class Component extends React.Component {
   /**
    * Render onLoading view
    *
-   * @return { ReactChild }           React child for rendering
+   * @return { React.node }           React node for rendering
    */
   renderOnLoading () {
     return (
@@ -738,7 +738,7 @@ module.exports = class Component extends React.Component {
   /**
    * Render role required view
    *
-   * @return { ReactChild }           React child for rendering
+   * @return { React.node }           React node for rendering
    */
   renderRoleRequired () {
     return (
@@ -758,7 +758,7 @@ module.exports = class Component extends React.Component {
   /**
    * Render forbidden
    *
-   * @return { ReactChild }           React child for rendering
+   * @return { React.node }           React node for rendering
    */
   renderForbidden () {
     return (
@@ -779,7 +779,7 @@ module.exports = class Component extends React.Component {
    * Render the component
    *
    * @method Component#render
-   * @return { ReactChild }           React child for rendering
+   * @return { React.node }           React node for rendering
    */
   render () {
     if (this.isLoading()) {

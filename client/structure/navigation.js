@@ -106,7 +106,7 @@ class Navigation extends Widget {
    *
    * @param { object } item           Navigation item
    * @param { number } index          Navigation item index
-   * @return { ReactChild }           React child for rendering
+   * @return { React.node }           React node for rendering
    */
   renderItem (item, index) {
     if (!this.shouldDisplay(item)) {
@@ -149,7 +149,7 @@ class Navigation extends Widget {
   /**
    * Render the component
    *
-   * @return { ReactChild }           React child for rendering
+   * @return { React.node }           React node for rendering
    */
   render () {
     const classes = ['navigation-items', 'd-lg-flex']

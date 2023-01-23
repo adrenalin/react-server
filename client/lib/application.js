@@ -111,7 +111,7 @@ module.exports = class Application extends Component {
   /**
    * Render routers
    *
-   * @return { ReactChild }           React child for rendering
+   * @return { React.node }           React node for rendering
    */
   renderRouter (routes) {
     const routers = []
@@ -142,7 +142,7 @@ module.exports = class Application extends Component {
   /**
    * Render component
    *
-   * @return { ReactChild }           React child for rendering
+   * @return { React.node }           React node for rendering
    */
   render () {
     const RouterType = this.props.router

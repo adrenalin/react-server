@@ -17,7 +17,7 @@ module.exports = class TestFormValidation extends Page {
   /**
    * Render the component
    *
-   * @return { ReactChild }           React child for rendering
+   * @return { React.node }           React node for rendering
    */
   render () {
     return (

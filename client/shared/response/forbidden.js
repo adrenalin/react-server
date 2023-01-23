@@ -31,7 +31,7 @@ module.exports = class Forbidden extends DefaultError {
   /**
    * Render required roles list
    *
-   * @return { ReactChild }           React child for rendering
+   * @return { React.node }           React node for rendering
    */
   renderRequiredRoles () {
     if (!this.props.roles || !this.props.roles.length) {
@@ -82,7 +82,7 @@ module.exports = class Forbidden extends DefaultError {
   /**
    * Render the component
    *
-   * @return { ReactChild }           React child for rendering
+   * @return { React.node }           React node for rendering
    */
   render () {
     return (

@@ -40,7 +40,7 @@ module.exports = class ImageWidget extends Widget {
   /**
    * Render the component
    *
-   * @return { ReactChild }           React child for rendering
+   * @return { React.node }           React node for rendering
    */
   render () {
     const props = {

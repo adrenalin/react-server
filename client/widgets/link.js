@@ -42,7 +42,7 @@ module.exports = class LinkWidget extends Widget {
   /**
    * Render the component
    *
-   * @return { ReactChild }           React child for rendering
+   * @return { React.node }           React node for rendering
    */
   render () {
     const nopass = [

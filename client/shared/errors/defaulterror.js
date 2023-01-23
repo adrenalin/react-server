@@ -28,7 +28,7 @@ module.exports = class DefaultError extends Page {
   /**
    * Get the error message
    *
-   * @return { ReactChild }           React child for rendering
+   * @return { React.node }           React node for rendering
    */
   getErrorMessage () {
     const errors = []
@@ -80,7 +80,7 @@ module.exports = class DefaultError extends Page {
   /**
    * Render error page
    *
-   * @return { ReactChild }           React child for rendering
+   * @return { React.node }           React node for rendering
    */
   render () {
     const title = this.props.title || `errorTitle${this.constructor.STATUS_CODE}`

@@ -53,7 +53,7 @@ module.exports = class MovedPermanently extends DefaultError {
    * Render the component
    *
    * @method MovedPermanently#render
-   * @return { ReactChild }           React child for rendering
+   * @return { React.node }           React node for rendering
    */
   render () {
     const link = `<a href=${this.props.location}>${this.props.location}</a>`

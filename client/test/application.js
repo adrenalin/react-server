@@ -50,7 +50,7 @@ module.exports = class TestApplication extends Application {
   /**
    * Render component
    *
-   * @return { ReactChild }           React child for rendering
+   * @return { React.node }           React node for rendering
    */
   render () {
     const RouterType = this.props.router
