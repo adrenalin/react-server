@@ -11,7 +11,7 @@ import { Localization } from '@vapaaradikaali/helpers.js'
 import ErrorBoundary from '../shared/errors/errorboundary'
 
 import ApplicationStore from '../data/application'
-import LocalesStore from '../data/locales/store'
+import LocalesStore from '../data/locales'
 
 module.exports = class Application extends Component {
   static get DEFAULT_LANG () {
