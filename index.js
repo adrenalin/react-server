@@ -37,15 +37,11 @@ module.exports = {
   ApplicationStore: require('./dist/data/application/store'),
   ErrorStore: require('./dist/data/error/store'),
 
-  LocalesAction: require('./dist/data/locales/action'),
   LocalesSource: require('./dist/data/locales/source'),
   LocalesStore: require('./dist/data/locales/store'),
 
-  NotificationListAction: require('./dist/data/notificationlist/action'),
-  NotifiicationListSource: require('./dist/data/notificationlist/source'),
-  NotificationListStore: require('./dist/data/locales/store'),
+  NotificationsStore: require('./dist/data/notifications'),
 
-  UserAction: require('./dist/data/user/action'),
   UserSource: require('./dist/data/user/source'),
   UserStore: require('./dist/data/user/store')
 }
