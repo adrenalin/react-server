@@ -8,7 +8,7 @@ import {
 
 import { Localization } from '@vapaaradikaali/helpers.js'
 import Logger from '@vapaaradikaali/logger'
-import ApplicationStore from '../../data/application/store'
+import ApplicationStore from '../../data/application'
 
 module.exports = class ErrorBoundary extends React.Component {
   state = {

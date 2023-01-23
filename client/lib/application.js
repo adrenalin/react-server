@@ -10,7 +10,7 @@ import { Localization } from '@vapaaradikaali/helpers.js'
 // Error pages
 import ErrorBoundary from '../shared/errors/errorboundary'
 
-import ApplicationStore from '../data/application/store'
+import ApplicationStore from '../data/application'
 import LocalesStore from '../data/locales/store'
 
 module.exports = class Application extends Component {

@@ -18,7 +18,7 @@ import Notifications from '../shared/notifications'
 // Error pages
 import ErrorBoundary from '../shared/errors/errorboundary'
 
-import ApplicationStore from '../data/application/store'
+import ApplicationStore from '../data/application'
 
 module.exports = class TestApplication extends Application {
   /**
