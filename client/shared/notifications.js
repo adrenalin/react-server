@@ -10,28 +10,43 @@ import Widget from '../lib/widget'
 import Icon from '../widgets/icon'
 import Link from '../widgets/link'
 
-import NotificationListStore from '../data/notificationlist/store'
+import NotificationStore from '../data/notifications'
 
+/**
+ * Notifications
+ *
+ * @class Notifications
+ */
 module.exports = class Notifications extends Widget {
+  /**
+   * Stores to attach to this context
+   *
+   * @const { array } Notifications.STORES
+   */
   static get STORES () {
     return [
-      NotificationListStore
+      NotificationStore
     ]
   }
 
   /**
    * Get initial state for the component
    *
+   * @method Notifications#getInitialState
    * @return { object }               Initial component state
    */
   getInitialState () {
     return {
-      notifications: NotificationListStore.getState().notifications || []
+      notifications: NotificationStore.getState().notifications || []
     }
   }
 
   /**
    * Set timers for the notifications
+   *
+   * @method Notifications#createTimer
+   * @param { object } notification   New notification
+   * @return { object }               Notification
    */
   createTimer (notification) {
     if (!notification) {
@@ -49,13 +64,15 @@ module.exports = class Notifications extends Widget {
 
     notification.timer = setTimeout(clearNotification.bind(this), notification.duration * 1000)
 
-    this.logger.log('created timer', notification.timer)
+    this.logger.debug('created timer', notification.timer)
     return notification
   }
 
   /**
    * React component lifecycle event that will be triggered after the component
    * has been mounted to DOM
+   *
+   * @method Notifications#componentDidMount
    */
   componentDidMount () {
     const notifications = this.helpers.castToArray(this.state.notifications)
@@ -77,11 +94,12 @@ module.exports = class Notifications extends Widget {
   /**
    * Add a notification
    *
+   * @method Notifications#onAddNotification
    * @param { object } notification   Notification
    * @return { array }                Notifications
    */
   onAddNotification (notification) {
-    this.logger.log('add notification', notification)
+    this.logger.debug('add notification', notification)
     const notifications = this.helpers.castToArray(this.state.notifications)
 
     const ids = notifications.map(notification => notification.id)
@@ -104,7 +122,7 @@ module.exports = class Notifications extends Widget {
       notifications.push(this.createTimer(notification))
     }
 
-    this.logger.log('all notifications', notifications)
+    this.logger.debug('all notifications', notifications)
 
     this.setState({
       notifications
@@ -116,11 +134,12 @@ module.exports = class Notifications extends Widget {
   /**
    * Close a notification
    *
+   * @method Notifications#onCloseNotification
    * @param { object } notification   Notification
    * @return { array }                Notifications
    */
   onCloseNotification (notification) {
-    this.logger.log('closeNotification', notification)
+    this.logger.debug('closeNotification', notification)
     const notifications = this.helpers.castToArray(this.state.notifications)
 
     const id = notification.id || notification
@@ -147,17 +166,21 @@ module.exports = class Notifications extends Widget {
 
   /**
    * Bind component events
+   *
+   * @method Notifications#getInitialState
    */
   bindEvents () {
     super.bindEvents()
 
-    this.logger.log('this.addNotification', this.addNotification)
+    this.logger.debug('this.addNotification', this.addNotification)
     this.events.on('notifications.add', this.addNotification)
     this.events.on('notifications.close', this.closeNotification)
   }
 
   /**
    * Unbind component events
+   *
+   * @method Notifications#unbindEvents
    */
   unbindEvents () {
     super.unbindEvents()
@@ -176,8 +199,9 @@ module.exports = class Notifications extends Widget {
   /**
    * Render extra notification content by status code
    *
+   * @method Notifications#renderStatusCodeMessage
    * @param { number } statusCode     Received status code
-   * @return { ReactChild }           React child for rendering
+   * @return { React.node }           React node for rendering
    */
   renderStatusCodeMessage (statusCode) {
     switch (statusCode) {
@@ -200,9 +224,115 @@ module.exports = class Notifications extends Widget {
   }
 
   /**
+   * Get default color for a notification
+   *
+   * @method Notifications#getDefaultColor
+   * @return { string }               Default theme color
+   */
+  getDefaultColor () {
+    return 'success'
+  }
+
+  /**
+   * Get notification color
+   *
+   * @method Notifications#getNotificationColor
+   * @param { object } notification   Notification
+   * @return { string }               Notification color
+   */
+  getNotificationColor (notification) {
+    return notification.color || this.getDefaultColor()
+  }
+
+  /**
+   * Render an individual notification
+   *
+   * @method Notifications#renderNotification
+   * @param { object } notification   Notification
+   * @param { number } index          Notification index
+   * @return { React.Node }           React node for rendering
+   */
+  renderNotification (notification, index) {
+    return (
+      <Toast
+        key={index}
+        isOpen
+        color={this.getNotificationColor(notification)}
+      >
+        {this.renderNotificationHeader(notification)}
+        {this.renderNotificationBody(notification)}
+      </Toast>
+    )
+  }
+
+  /**
+   * Render an individual notification
+   *
+   * @method Notifications#renderNotificationHeader
+   * @param { object } notification   Notification
+   * @return { React.Node }           React node for rendering
+   */
+  renderNotificationHeader (notification) {
+    const color = notification.color || 'success'
+    return (
+      <ToastHeader icon={color}>
+        {this.l10n.get(notification.title)}
+        {this.renderNotificationClose(notification)}
+      </ToastHeader>
+    )
+  }
+
+  /**
+   * Render a notification body
+   *
+   * @method Notifications#renderNotificationBody
+   * @param { object } notification   Notification
+   * @return { React.Node }           React node for rendering
+   */
+  renderNotificationBody (notification) {
+    return (
+      <ToastBody>
+        <p
+          className='mb-0'
+          dangerouslySetInnerHTML={{
+            __html: this.l10n.get(...this.helpers.castToArray(notification.message))
+          }}
+        />
+        {this.renderStatusCodeMessage(notification.statusCode)}
+      </ToastBody>
+    )
+  }
+
+  /**
+   * Render the close button for a notification
+   *
+   * @method Notifications#renderNotificationClose
+   * @param { object } notification   Notification
+   * @return { React.Node }           React node for rendering
+   */
+  renderNotificationClose (notification) {
+    return (
+      <Button
+        className='close'
+        color={this.getNotificationColor(notification)}
+        size='xs'
+        onClick={(e) => {
+          e.preventDefault()
+          e.stopPropagation()
+          this.closeNotification(notification)
+          return false
+        }}
+      >
+        <Icon icon='times' set='s' />
+      </Button>
+    )
+  }
+
+  /**
    * Render the component
    *
-   * @return { ReactChild }           React child for rendering
+   * @method Notifications#render
+   * @return { React.Node }           React node for rendering
    */
   render () {
     const notifications = this.helpers.castToArray(this.state.notifications)
@@ -210,42 +340,7 @@ module.exports = class Notifications extends Widget {
 
     return (
       <div id='notifications'>
-        {notifications.map((notification, i) => {
-          const color = notification.color || 'success'
-          return (
-            <Toast
-              key={i}
-              isOpen
-              color={color}
-            >
-              <ToastHeader icon={color}>
-                {this.l10n.get(notification.title)}
-                <Button
-                  className='close'
-                  color={color}
-                  size='xs'
-                  onClick={(e) => {
-                    e.preventDefault()
-                    e.stopPropagation()
-                    this.closeNotification(notification)
-                    return false
-                  }}
-                >
-                  <Icon icon='times' set='s' />
-                </Button>
-              </ToastHeader>
-              <ToastBody>
-                <p
-                  className='mb-0'
-                  dangerouslySetInnerHTML={{
-                    __html: this.l10n.get(...this.helpers.castToArray(notification.message))
-                  }}
-                />
-                {this.renderStatusCodeMessage(notification.statusCode)}
-              </ToastBody>
-            </Toast>
-          )
-        })}
+        {notifications.map((notification, i) => this.renderNotification(notification, i))}
       </div>
     )
   }
