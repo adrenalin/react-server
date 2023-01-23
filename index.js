@@ -41,7 +41,5 @@ module.exports = {
   LocalesStore: require('./dist/data/locales/store'),
 
   NotificationsStore: require('./dist/data/notifications'),
-
-  UserSource: require('./dist/data/user/source'),
-  UserStore: require('./dist/data/user/store')
+  UserStore: require('./dist/data/user')
 }

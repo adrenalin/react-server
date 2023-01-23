@@ -14,7 +14,7 @@ import request from './request'
 import helpers from '@vapaaradikaali/helpers.js'
 import Logger from '@vapaaradikaali/logger'
 import ApplicationStore from '../data/application'
-import UserStore from '../data/user/store'
+import UserStore from '../data/user'
 import config from './config'
 
 // Singleton instances

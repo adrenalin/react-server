@@ -5,7 +5,7 @@ import Widget from '../lib/widget'
 import Icon from '../widgets/icon'
 import Link from '../widgets/link'
 
-import UserStore from '../data/user/store'
+import UserStore from '../data/user'
 
 class Navigation extends Widget {
   static get propTypes () {
