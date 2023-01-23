@@ -1,5 +1,4 @@
-const alt = require('../../lib/alt')
-// const debug = require('../debugger')('ApplicationStore')
+const alt = require('../lib/alt')
 
 class ErrorStore {
   constructor () {

@@ -1,6 +1,6 @@
 import React from 'react'
 import Page from '../../lib/page'
-import ErrorStore from '../../data/error/store'
+import ErrorStore from '../../data/error'
 
 module.exports = class TestFormValidation extends Page {
   /**

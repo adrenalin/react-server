@@ -35,7 +35,7 @@ module.exports = {
   BaseListStore: require('./dist/data/baselist/store'),
 
   ApplicationStore: require('./dist/data/application'),
-  ErrorStore: require('./dist/data/error/store'),
+  ErrorStore: require('./dist/data/error'),
 
   LocalesStore: require('./dist/data/locales'),
 
