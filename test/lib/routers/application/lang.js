@@ -1,10 +1,10 @@
 const { expect } = require('chai')
 const request = require('supertest')
 const { Localization } = require('@vapaaradikaali/helpers.js')
-const init = require('../../init')
+const init = require('../../../init')
 
-const router = require('../../../routers/application/lang')
-const configRouter = require('../../../routers/application/config')
+const router = require('../../../../lib/routers/application/lang')
+const configRouter = require('../../../../lib/routers/application/config')
 
 describe('routers/application/lang', () => {
   let app, configuredLang, configuredLanguages, callback

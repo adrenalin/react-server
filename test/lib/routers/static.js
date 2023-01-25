@@ -2,16 +2,16 @@ const fs = require('fs')
 const path = require('path')
 const { expect } = require('chai')
 const request = require('supertest')
-const init = require('../init')
+const init = require('../../init')
 
-const router = require('../../routers/static')
-const errorRouter = require('../../routers/renderers/errors/api')
+const router = require('../../../lib/routers/static')
+const errorRouter = require('../../../lib/routers/renderers/errors/api')
 
 describe('routers/static', () => {
   let app
   let hasFallenThrough = false
-  const testUrl = '/test/routers/static'
-  const testSource = path.join(__dirname, '..', 'resources', 'routers', 'static')
+  const testUrl = '/test/lib/routers/static'
+  const testSource = path.join(__dirname, '..', '..', 'resources', 'lib', 'routers', 'static')
   const opts = {
     source: testSource
   }

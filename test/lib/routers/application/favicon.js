@@ -1,12 +1,12 @@
 const request = require('supertest')
-const init = require('../../init')
-const router = require('../../../routers/application/favicon')
-const configRouter = require('../../../routers/application/config')
-const errorRouter = require('../../../routers/renderers/errors/api')
+const init = require('../../../init')
+const router = require('../../../../lib/routers/application/favicon')
+const configRouter = require('../../../../lib/routers/application/config')
+const errorRouter = require('../../../../lib/routers/renderers/errors/api')
 
 describe('routers/application/favicon', () => {
   let app, favicon
-  const testUrl = '/test/routers/application/favicon'
+  const testUrl = '/test/lib/routers/application/favicon'
 
   before(async () => {
     app = await init()

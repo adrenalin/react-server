@@ -1,10 +1,10 @@
 const { expect } = require('chai')
 const request = require('supertest')
-const init = require('../../../init')
+const init = require('../../../../init')
 
-const router = require('../../../../routers/renderers/react')
-const configRouter = require('../../../../routers/application/config')
-const errorRouter = require('../../../../routers/renderers/errors/api')
+const router = require('../../../../../lib/routers/renderers/react')
+const configRouter = require('../../../../../lib/routers/application/config')
+const errorRouter = require('../../../../../lib/routers/renderers/errors/api')
 
 describe('routers/renderers/react:files', () => {
   let app, minified, fingerprint

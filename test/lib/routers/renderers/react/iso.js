@@ -2,12 +2,12 @@ const cheerio = require('cheerio')
 const request = require('supertest')
 const { expect } = require('chai')
 const { getValue } = require('@vapaaradikaali/helpers.js')
-const init = require('../../../init')
+const init = require('../../../../init')
 
-const router = require('../../../../routers/renderers/react')
-const langRouter = require('../../../../routers/application/lang')
-const configRouter = require('../../../../routers/application/config')
-const errorRouter = require('../../../../routers/renderers/errors/api')
+const router = require('../../../../../lib/routers/renderers/react')
+const langRouter = require('../../../../../lib/routers/application/lang')
+const configRouter = require('../../../../../lib/routers/application/config')
+const errorRouter = require('../../../../../lib/routers/renderers/errors/api')
 
 describe('routers/renderers/react:iso', () => {
   let app

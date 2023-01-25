@@ -1,11 +1,11 @@
 const { expect } = require('chai')
 const request = require('supertest')
 const { getValue } = require('@vapaaradikaali/helpers.js')
-const init = require('../../init')
+const init = require('../../../init')
 
-const router = require('../../../routers/application/config')
-const altRouter = require('../../../routers/renderers/alt')
-const errorRouter = require('../../../routers/renderers/errors/api')
+const router = require('../../../../lib/routers/application/config')
+const altRouter = require('../../../../lib/routers/renderers/alt')
+const errorRouter = require('../../../../lib/routers/renderers/errors/api')
 
 describe('routers/application/config', () => {
   let app

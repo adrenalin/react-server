@@ -1,12 +1,12 @@
 const { expect } = require('chai')
 const request = require('supertest')
-const init = require('../../init')
+const init = require('../../../init')
 
-const router = require('../../../routers/locales/render')
-const altRouter = require('../../../routers/renderers/alt')
-const configRouter = require('../../../routers/application/config')
-const errorRouter = require('../../../routers/renderers/errors/api')
-const langRouter = require('../../../routers/application/lang')
+const router = require('../../../../lib/routers/locales/render')
+const altRouter = require('../../../../lib/routers/renderers/alt')
+const configRouter = require('../../../../lib/routers/application/config')
+const errorRouter = require('../../../../lib/routers/renderers/errors/api')
+const langRouter = require('../../../../lib/routers/application/lang')
 
 describe('routers/locales/render', () => {
   let app

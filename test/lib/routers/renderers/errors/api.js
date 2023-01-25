@@ -2,13 +2,13 @@ const { expect } = require('chai')
 const request = require('supertest')
 const { Validator } = require('jsonschema')
 const errors = require('@vapaaradikaali/errors')
-const init = require('../../../init')
+const init = require('../../../../init')
 
-const errorRouter = require('../../../../routers/renderers/errors/api')
+const errorRouter = require('../../../../../lib/routers/renderers/errors/api')
 
 describe('routers/renderers/api', () => {
   let app, callback
-  const testUrl = '/test/routers/renderers/errors/api'
+  const testUrl = '/test/lib/routers/renderers/errors/api'
 
   before(async () => {
     app = await init()

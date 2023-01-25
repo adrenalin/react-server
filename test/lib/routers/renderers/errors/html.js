@@ -2,14 +2,14 @@ const { expect } = require('chai')
 const request = require('supertest')
 const errors = require('@vapaaradikaali/errors')
 const { setValue, Localization } = require('@vapaaradikaali/helpers.js')
-const init = require('../../../init')
+const init = require('../../../../init')
 
-const configRouter = require('../../../../routers/application/config')
-const errorRouter = require('../../../../routers/renderers/errors/html')
+const configRouter = require('../../../../../lib/routers/application/config')
+const errorRouter = require('../../../../../lib/routers/renderers/errors/html')
 
 describe('routers/renderers/html', () => {
   let app, callback
-  const testUrl = '/test/routers/renderers/errors/html'
+  const testUrl = '/test/lib/routers/renderers/errors/html'
 
   before(async () => {
     app = await init()

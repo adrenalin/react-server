@@ -1,13 +1,13 @@
 const { expect } = require('chai')
 const request = require('supertest')
-const init = require('../../init')
+const init = require('../../../init')
 
-const router = require('../../../routers/application/health')
-const altRouter = require('../../../routers/renderers/alt')
+const router = require('../../../../lib/routers/application/health')
+const altRouter = require('../../../../lib/routers/renderers/alt')
 
 describe('routers/application/health', () => {
   let app
-  const testUrl = '/test/routers/application/health'
+  const testUrl = '/test/lib/routers/application/health'
 
   before(async () => {
     app = await init()

@@ -362,7 +362,6 @@ describe('client/lib/metadata', () => {
     let counter = 0
 
     const listener = () => {
-      console.log('trigger')
       counter++
     }
 

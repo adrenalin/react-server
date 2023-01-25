@@ -2,13 +2,13 @@ const cheerio = require('cheerio')
 const request = require('supertest')
 const { expect } = require('chai')
 const { castToArray } = require('@vapaaradikaali/helpers.js')
-const init = require('../../../init')
+const init = require('../../../../init')
 
-const router = require('../../../../routers/renderers/react')
-const metadataRouter = require('../../../../routers/application/metadata')
-const langRouter = require('../../../../routers/application/lang')
-const configRouter = require('../../../../routers/application/config')
-const errorRouter = require('../../../../routers/renderers/errors/api')
+const router = require('../../../../../lib/routers/renderers/react')
+const metadataRouter = require('../../../../../lib/routers/application/metadata')
+const langRouter = require('../../../../../lib/routers/application/lang')
+const configRouter = require('../../../../../lib/routers/application/config')
+const errorRouter = require('../../../../../lib/routers/renderers/errors/api')
 
 describe('routers/renderers/react:metadata', () => {
   let app, siteImage, defaultLocale, defaultLocales, defaultLanguages

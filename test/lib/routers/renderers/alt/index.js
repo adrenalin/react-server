@@ -1,12 +1,12 @@
 const { expect } = require('chai')
 const request = require('supertest')
-const init = require('../../../init')
+const init = require('../../../../init')
 
-const altRouter = require('../../../../routers/renderers/alt')
+const altRouter = require('../../../../../lib/routers/renderers/alt')
 
 describe('routers/renderers/alt', () => {
   let app, callback
-  const testUrl = '/test/routers/renderers/alt'
+  const testUrl = '/test/lib/routers/renderers/alt'
 
   before(async () => {
     app = await init()

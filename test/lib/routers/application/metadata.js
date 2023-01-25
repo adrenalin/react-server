@@ -1,16 +1,16 @@
 const { expect } = require('chai')
 const request = require('supertest')
 const { getValue } = require('@vapaaradikaali/helpers.js')
-const init = require('../../init')
-const Metadata = require('../../../client/lib/metadata')
+const init = require('../../../init')
+const Metadata = require('../../../../client/lib/metadata')
 
-const router = require('../../../routers/application/metadata')
-const altRouter = require('../../../routers/renderers/alt')
-const errorRouter = require('../../../routers/renderers/errors/api')
+const router = require('../../../../lib/routers/application/metadata')
+const altRouter = require('../../../../lib/routers/renderers/alt')
+const errorRouter = require('../../../../lib/routers/renderers/errors/api')
 
 describe('routers/application/metadata', () => {
   let app
-  const testUrl = '/test/lib/application/metadata'
+  const testUrl = '/test/lib/routers/application/metadata'
 
   let callback = (req, res, next) => {
     next()
