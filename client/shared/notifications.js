@@ -224,6 +224,16 @@ module.exports = class Notifications extends Widget {
   }
 
   /**
+   * Get close button size
+   *
+   * @method Notifications#getCloseButtonSize
+   * @return { string }               Button size
+   */
+  getCloseButtonSize () {
+    return 'sm'
+  }
+
+  /**
    * Get default color for a notification
    *
    * @method Notifications#getDefaultColor
@@ -335,7 +345,7 @@ module.exports = class Notifications extends Widget {
       <Button
         className='close'
         color={this.getNotificationColor(notification)}
-        size='xs'
+        size={this.getCloseButtonSize()}
         onClick={(e) => {
           e.preventDefault()
           e.stopPropagation()
