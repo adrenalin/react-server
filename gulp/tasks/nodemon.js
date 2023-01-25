@@ -35,12 +35,14 @@ const nodemonInstance = () => {
   // Start nodemon
   this.nodemonInstance = nodemon(nodemonConfig)
     .on('start', () => {
+      config.events.emit('nodemon', 'restart')
       notify({
         title: config.get('name', 'Nodemon'),
         message: 'Nodemon restarted'
       })
     })
     .on('error', (err) => {
+      config.events.emit('nodemon', 'error', err)
       notify({
         title: config.get('name', 'Nodemon'),
         message: err.message
