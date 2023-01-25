@@ -245,6 +245,26 @@ module.exports = class Notifications extends Widget {
   }
 
   /**
+   * Get notification class name
+   *
+   * @method Notifications#getNotificationColor
+   * @param { object } notification   Notification
+   * @return { string }               Notification class name
+   */
+  getNotificationClassName (notification) {
+    const classes = new Set([
+      `bg-${this.getNotificationColor(notification)}`,
+      `text-bg-${this.getNotificationColor(notification)}`
+    ])
+
+    if (notification.className) {
+      classes.add(notification.className)
+    }
+
+    return Array.from(classes).filter(c => c).join(' ')
+  }
+
+  /**
    * Render an individual notification
    *
    * @method Notifications#renderNotification
@@ -257,7 +277,7 @@ module.exports = class Notifications extends Widget {
       <Toast
         key={index}
         isOpen
-        color={this.getNotificationColor(notification)}
+        className={this.getNotificationClassName(notification)}
       >
         {this.renderNotificationHeader(notification)}
         {this.renderNotificationBody(notification)}
