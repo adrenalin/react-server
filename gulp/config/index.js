@@ -1,4 +1,5 @@
 const path = require('path')
+const EventEmitter = require('node:events')
 const ServerConfig = require('@vapaaradikaali/helpers.js/lib/ServerConfig')
 
 const moduleRoot = path.join(__dirname, '..', '..')
@@ -18,5 +19,7 @@ config
 config
   .loadFile(path.join(clientRoot, 'config', 'gulp'), true)
   .loadFile(path.join(clientRoot, 'config', 'local-gulp'), true)
+
+config.events = new EventEmitter()
 
 module.exports = config
