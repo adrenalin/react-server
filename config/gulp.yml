@@ -9,6 +9,8 @@ nodemon:
     - 'config/*.yml'
     - 'lib/*.js'
     - 'lib/**/*.js'
+    - 'routers/*.js'
+    - 'routers/**/*.js'
     - 'server/*.js'
     - 'server/**/*.js'
     - 'services/*.js'
