@@ -7,8 +7,10 @@ nodemon:
     - 'client/*.js'
     - 'client/**/*.js'
     - 'config/*.yml'
-    - 'routers/*.js'
-    - 'routers/**/*.js'
+    - 'lib/*.js'
+    - 'lib/**/*.js'
+    - 'server/*.js'
+    - 'server/**/*.js'
     - 'services/*.js'
     - 'services/**/*.js'
 
