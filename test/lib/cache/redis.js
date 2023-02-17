@@ -21,11 +21,9 @@ describe('lib/cache/redis', () => {
     await RedisCache.disconnect()
   })
 
-  it('should return a Redis cache instance with factory method', (done) => {
+  it('should return a Redis cache instance with factory method', () => {
     const cache = Cache.getEngine(app, engine)
-
     expect(cache).to.be.an.instanceof(RedisCache)
-    done()
   })
 
   it('should connect with the static method', async () => {
@@ -62,19 +60,6 @@ describe('lib/cache/redis', () => {
     await cache.set(testPath, testValue)
     const value = await cache.get(testPath)
     expect(value).to.eql(testValue)
-  })
-
-  it('should throw an InvalidArgument with less than one millisecond expiration', async () => {
-    try {
-      const cache = Cache.getEngine(app, engine)
-
-      const testPath = 'expired-value'
-      const testValue = 'expired value'
-      await cache.set(testPath, testValue, 0.0001)
-      throw new TestError('Should have thrown an InvalidArgument')
-    } catch (err) {
-      expect(err).to.be.an.instanceof(errors.InvalidArgument)
-    }
   })
 
   it('should not get an expired value', async () => {

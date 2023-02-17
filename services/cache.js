@@ -166,8 +166,8 @@ class CacheService extends Service {
    *
    * @method CacheService#hydrate
    * @param { string } key            Cache storage key
-   * @param { function } callback     Hydrate callback when there is a cache miss
-   * @param { number } [expires]      Number of seconds the value should be stored
+   * @param { function } callback       Hydrate callback when there is a cache miss
+   * @param { number|string } [expires] Number of seconds or a ISO 8601 string the value should be stored
    * @return { mixed }                Whatever the callback returns
    */
   async hydrate (key, callback, expires = null) {
