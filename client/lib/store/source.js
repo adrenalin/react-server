@@ -90,10 +90,10 @@ function buildSource (name, actions, methods, options) {
      * Get action
      *
      * @param { string||function } needle           Action to search
-     * @param { object } options                    Source options
+     * @param { string } type                       Action type for error logging
      * @return { Function }                         Matching action
      */
-    getAction (needle) {
+    getAction (needle, type) {
       if (needle instanceof Function) {
         return needle
       }
@@ -102,7 +102,7 @@ function buildSource (name, actions, methods, options) {
         return actions[needle]
       }
 
-      throw new InvalidArgument(`Cannot get action for "${needle}"`)
+      throw new InvalidArgument(`Cannot get ${type} action for "${needle}"`)
     }
 
     /**
@@ -128,9 +128,9 @@ function buildSource (name, actions, methods, options) {
         local: options.local,
 
         // Bind actions
-        loading: this.getAction(options.loading || name),
-        success: this.getAction(options.success || name.replace(/[A-Z][a-z]+$/, 'Success')),
-        error: this.getAction(options.error || this.onError)
+        loading: this.getAction(options.loading || name, 'loading'),
+        success: this.getAction(options.success || name.replace(/[A-Z][a-z]+$/, 'Success'), 'success'),
+        error: this.getAction(options.error || this.onError, 'error')
       }
 
       remote.method = (remote.method || 'get').toUpperCase()
