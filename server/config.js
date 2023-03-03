@@ -26,11 +26,13 @@ module.exports = (app, overrides) => {
   // Then set schema which may otherwise override other values
   config.setSchema(schema)
 
+  const env = app.environment || process.env.ENVIRONMENT
+
   config
     .loadFile(path.join(appRoot, 'config', 'defaults.yml'))
-    .loadFile(path.join(appRoot, 'config', `${app.environment}.yml`), true)
+    .loadFile(path.join(appRoot, 'config', `${env}.yml`), true)
     .loadFile(path.join(appRoot, 'config', 'local.yml'), true)
-    .loadFile(path.join(appRoot, 'config', `local-${app.environment}.yml`), true)
+    .loadFile(path.join(appRoot, 'config', `local-${env}.yml`), true)
 
   logger.log('Configuration loaded')
   logger.debug('Loaded configuration', config.get())
