@@ -40,11 +40,26 @@ describe('lib/cache/memcache', () => {
     clearInterval(cache.timer)
 
     const testPath = 'set-value'
-    const testValue = 'set value'
+    const testValue = ['set value']
 
     await cache.set(testPath, testValue)
     const value = await cache.get(testPath)
     expect(value).to.eql(testValue)
+    expect(value).not.to.equal(testValue)
+  })
+
+  it('should get a set value with pointer when configured', async () => {
+    const cache = Cache.getEngine(app, engine)
+    cache.usePointers = true
+    clearInterval(cache.timer)
+
+    const testPath = 'set-value'
+    const testValue = ['set value']
+
+    await cache.set(testPath, testValue)
+    const value = await cache.get(testPath)
+    expect(value).to.eql(testValue)
+    expect(value).to.equal(testValue)
   })
 
   it('should not get an expired value', async () => {
