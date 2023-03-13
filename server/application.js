@@ -75,10 +75,5 @@ module.exports = async (opts = {}) => {
   await require('./routers')(app, opts)
   logger.dt('Applied routers')
 
-  /* istanbul ignore next */
-  if (app.services.events) {
-    app.services.events.emit('initialized')
-  }
-
   return app
 }
