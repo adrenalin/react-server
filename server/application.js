@@ -59,34 +59,13 @@ module.exports = async (opts = {}) => {
   logger.dt('Config loaded')
   app.config.set(opts || {})
 
-  // logger.debug('Apply constants')
-  // await require('./constants')(app, opts)
-  // logger.dt('Applied constants')
-
   logger.debug('Apply services')
   await require('./services')(app, opts)
   logger.dt('Applied services')
 
-  // logger.debug('Apply error handlers')
-  // await require('./errors')(app, opts)
-  // logger.dt('Applied error handlers')
-
   logger.debug('Apply middleware')
   await require('./middleware')(app, opts)
   logger.dt('Applied middleware')
-
-  // logger.debug('Apply cache')
-  // await require('./cache')(app, opts)
-  // logger.dt('Applied cache')
-  //
-  // logger.debug('Apply logger')
-  // await require('./logger')(app, opts)
-  // logger.dt('Applied logger')
-  //
-  // logger.debug('Apply locales')
-  // await require('./locales')(app, opts)
-  // logger.dt('Applied locales')
-  //
 
   logger.debug('Apply session')
   await require('./session')(app, opts)
@@ -95,6 +74,11 @@ module.exports = async (opts = {}) => {
   logger.debug('Apply routers')
   await require('./routers')(app, opts)
   logger.dt('Applied routers')
+
+  /* istanbul ignore next */
+  if (app.services.events) {
+    app.services.events.emit('initialized')
+  }
 
   return app
 }
