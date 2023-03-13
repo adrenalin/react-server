@@ -4,7 +4,7 @@ const { InternalServerError } = require('@vapaaradikaali/errors')
 const helpers = require('@vapaaradikaali/helpers.js')
 const Service = require('../../../services')
 const WorkerService = require('../../../services/worker')
-const { WorkerError } = WorkerService.errors
+const { WorkerError, WorkerUnresolved } = WorkerService.errors
 const config = new helpers.Config()
 
 describe('services/worker', () => {
@@ -12,6 +12,12 @@ describe('services/worker', () => {
     helpers,
     config
   }
+
+  const worker = new WorkerService(app)
+
+  before(async () => {
+    await worker.register()
+  })
 
   it('should register a name', () => {
     expect(WorkerService.SERVICE_NAME).to.equal('worker')
@@ -23,16 +29,12 @@ describe('services/worker', () => {
   })
 
   it('should be an instance of service', async () => {
-    const worker = new WorkerService(app)
-    await worker.register()
     expect(worker).to.be.an.instanceof(Service)
     expect(worker).to.be.an.instanceof(WorkerService)
   })
 
   it('should reject an error message', async () => {
     try {
-      const worker = new WorkerService(app)
-      await worker.register()
       await worker.do('error')
       throw new Error('Should have thrown a WorkerError')
     } catch (err) {
@@ -42,8 +44,6 @@ describe('services/worker', () => {
 
   it('should receive an echo', async () => {
     const testData = ['foo', 'bar']
-    const worker = new WorkerService(app)
-    await worker.register()
     const [response] = await worker.do('echo', testData)
 
     expect(response).to.eql(testData)
@@ -52,8 +52,6 @@ describe('services/worker', () => {
   it('should throw a WorkerError for path that cannot be found', async () => {
     try {
       const testData = { random: Math.random() }
-      const worker = new WorkerService(app)
-      await worker.register()
       await worker.do('execute', { path: 'foobar' }, testData)
       throw new Error('Should have thrown a WorkerError')
     } catch (err) {
@@ -63,8 +61,6 @@ describe('services/worker', () => {
 
   it('should execute the given file path', async () => {
     const testData = { random: Math.random() }
-    const worker = new WorkerService(app)
-    await worker.register()
     const f = path.join(__dirname, '..', '..', 'resources', 'lib', 'workers', 'test-callback')
     const response = await worker.do('execute', { path: f }, testData)
 
@@ -73,11 +69,23 @@ describe('services/worker', () => {
 
   it('should execute the given file path and function', async () => {
     const testData = { random: Math.random() }
-    const worker = new WorkerService(app)
-    await worker.register()
     const f = path.join(__dirname, '..', '..', 'resources', 'lib', 'workers', 'test-callback')
-    const response = await worker.do('execute', { path: f, method: 'testCallback' }, testData)
+    const response = await worker.do('execute', { path: f, method: 'testCallback', timeout: 6 }, testData)
 
     expect(response).to.eql(testData)
+  })
+
+  it('should clear unresolved worker if it does not resolve within the given time', (done) => {
+    const testData = { random: Math.random() }
+    const f = path.join(__dirname, '..', '..', 'resources', 'lib', 'workers', 'test-no-resolve')
+
+    worker.do('execute', { path: f, timeout: 0.010 }, testData)
+      .then(() => {
+        done(new Error('Should not have resolved'))
+      })
+      .catch((err) => {
+        expect(err).to.be.an.instanceof(WorkerUnresolved)
+        done()
+      })
   })
 })
