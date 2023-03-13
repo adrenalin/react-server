@@ -90,4 +90,22 @@ describe('services/events', () => {
       done()
     }, 20)
   })
+
+  it('should have trigger as an alias of emit', () => {
+    const app = createApp()
+    const service = new EventsService(app)
+    expect(service.trigger).to.equal(service.emit)
+  })
+
+  it('should have listen as an alias of on', () => {
+    const app = createApp()
+    const service = new EventsService(app)
+    expect(service.listen).to.equal(service.on)
+  })
+
+  it('should have unlisten as an alias of off', () => {
+    const app = createApp()
+    const service = new EventsService(app)
+    expect(service.unlisten).to.equal(service.off)
+  })
 })
