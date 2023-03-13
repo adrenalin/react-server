@@ -352,6 +352,24 @@
               }
             }
           }
+        },
+
+        "worker": {
+          "description": "Worker service",
+          "oneOf": [
+            {
+              "type": "null"
+            },
+            {
+              "$ref": "/config#/$defs/worker"
+            },
+            {
+              "type": "array",
+              "items": {
+                "$ref": "/config#/$defs/worker"
+              }
+            }
+          ]
         }
       }
     },
@@ -487,6 +505,22 @@
               "type": "string"
             }
           }
+        }
+      }
+    },
+
+    "worker": {
+      "description": "Worker",
+      "type": "object",
+      "properties": {
+        "enabled": {
+          "description": "Worker enabled flag",
+          "default": false
+        },
+        "alias": {
+          "description": "Service alias",
+          "type": "string",
+          "default": "worker"
         }
       }
     },
