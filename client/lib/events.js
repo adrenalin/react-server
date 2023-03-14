@@ -8,7 +8,7 @@ module.exports = class EventHandler {
   }
 
   constructor () {
-    this.logger = new Logger('Events')
+    this.logger = new Logger('@avpaaradikaali/react-server/client/lib/events')
     this.logger.setLevel(this.constructor.LOG_LEVEL)
   }
 
