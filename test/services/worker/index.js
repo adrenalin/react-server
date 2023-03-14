@@ -49,6 +49,11 @@ describe('services/worker', () => {
     expect(response).to.eql(testData)
   })
 
+  it('should set log level', async () => {
+    const level = await worker.setLogLevel(0)
+    expect(level).to.eql(0)
+  })
+
   it('should throw a WorkerError for path that cannot be found', async () => {
     try {
       const testData = { random: Math.random() }

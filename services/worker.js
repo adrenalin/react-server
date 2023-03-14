@@ -128,4 +128,11 @@ module.exports = class WorkerService extends Service {
 
     return promise
   }
+
+  /**
+   * Set log level
+   */
+  setLogLevel (level) {
+    return this.do('log_level', null, 0)
+  }
 }
