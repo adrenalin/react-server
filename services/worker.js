@@ -1,6 +1,8 @@
-const Service = require('./')
+const path = require('path')
+const { Worker } = require('node:worker_threads')
 const { getRandomString, parseTemporal } = require('@vapaaradikaali/helpers.js')
 const { InternalServerError } = require('@vapaaradikaali/errors')
+const Service = require('./')
 
 /**
  * Worker error baseclass
@@ -60,7 +62,7 @@ module.exports = class WorkerService extends Service {
    * @method WorkerService#register
    */
   async register () {
-    this.worker = require('../lib/worker')
+    this.worker = new Worker(path.join(__dirname, '..', 'lib', 'worker'))
     this.actions = {}
 
     this.worker.on('message', (message) => {
@@ -68,6 +70,7 @@ module.exports = class WorkerService extends Service {
       this.logger.log('Received from worker', id, err, response)
       const promise = this.actions[id]
 
+      /* istanbul ignore if possibly untestable due to earlier failsafes */
       if (!promise) {
         return
       }
