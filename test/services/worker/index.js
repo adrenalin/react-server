@@ -81,8 +81,8 @@ describe('services/worker', () => {
   })
 
   it('should clear unresolved worker if it does not resolve within the given time', (done) => {
-    const testData = { random: Math.random() }
-    const f = path.join(__dirname, '..', '..', 'resources', 'lib', 'workers', 'test-no-resolve')
+    const testData = 60
+    const f = path.join(__dirname, '..', '..', 'resources', 'lib', 'workers', 'test-sleep')
 
     worker.do('execute', { path: f, timeout: 0.010 }, testData)
       .then(() => {
@@ -92,5 +92,16 @@ describe('services/worker', () => {
         expect(err).to.be.an.instanceof(WorkerUnresolved)
         done()
       })
+  })
+
+  it('should not crash when a worker resolves after the given timeout', async () => {
+    const testData = 60
+    const f = path.join(__dirname, '..', '..', 'resources', 'lib', 'workers', 'test-sleep')
+
+    worker.do('execute', { path: f, timeout: 0.05 }, testData)
+    for (const key in worker.actions) {
+      delete worker.actions[key]
+    }
+    await helpers.sleep(100)
   })
 })
