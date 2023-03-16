@@ -54,6 +54,11 @@ describe('services/worker', () => {
     expect(level).to.eql(0)
   })
 
+  it('should get worker pid', async () => {
+    const pid = await worker.getPid()
+    expect(pid).to.be.a('number')
+  })
+
   it('should throw a WorkerError for path that cannot be found', async () => {
     try {
       const testData = { random: Math.random() }
@@ -103,5 +108,26 @@ describe('services/worker', () => {
       delete worker.actions[key]
     }
     await helpers.sleep(100)
+  })
+
+  it('should kill a worker', async () => {
+    const w = new WorkerService(app)
+    await w.register()
+    await w.kill()
+    expect(w.worker).to.eql(undefined)
+  })
+
+  it('should not fail to kill an uninitialized worker', async () => {
+    const w = new WorkerService(app)
+    await w.kill()
+  })
+
+  it('should register worker service in do', async () => {
+    const w = new WorkerService(app)
+    const testData = ['foo', 'bar']
+    const [response] = await w.do('echo', testData)
+
+    expect(response).to.eql(testData)
+    await w.kill()
   })
 })

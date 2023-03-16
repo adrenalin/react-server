@@ -99,7 +99,11 @@ module.exports = class WorkerService extends Service {
    * @param { mixed[] } args          Action arguments
    * @return { Promise }              Resolves with action or rejects with an error
    */
-  do (action, options, ...args) {
+  async do (action, options, ...args) {
+    if (!this.worker) {
+      await this.register()
+    }
+
     options = options || {}
 
     const id = getRandomString(16)
@@ -134,8 +138,37 @@ module.exports = class WorkerService extends Service {
 
   /**
    * Set log level
+   *
+   * @method WorkerService#setLogLevel
+   * @return { number }               Current log level
    */
-  setLogLevel (level) {
+  async setLogLevel (level) {
     return this.do('log_level', null, 0)
+  }
+
+  /**
+   * Get worker process id
+   *
+   * @method WorkerService#getPid
+   * @return { number }               Worker PID
+   */
+  async getPid () {
+    return this.do('pid')
+  }
+
+  /**
+   * Kill a worker
+   *
+   * @method WorkerService#kill
+   * @return { WorkerService }        This instance
+   */
+  async kill () {
+    if (!this.worker) {
+      return this
+    }
+
+    await this.worker.terminate()
+    delete this.worker
+    return this
   }
 }
