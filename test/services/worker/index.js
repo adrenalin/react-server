@@ -19,6 +19,10 @@ describe('services/worker', () => {
     await worker.register()
   })
 
+  beforeEach(async () => {
+    app.config.set('services.worker.maxThreadSize', null)
+  })
+
   it('should register a name', () => {
     expect(WorkerService.SERVICE_NAME).to.equal('worker')
   })
@@ -129,5 +133,33 @@ describe('services/worker', () => {
 
     expect(response).to.eql(testData)
     await w.kill()
+  })
+
+  it('should register only one worker per service', async () => {
+    const w = new WorkerService(app)
+    await w.register()
+    const thread = w.worker
+
+    await w.register()
+    expect(thread).to.equal(w.worker)
+  })
+
+  it('should respect the maxThreads and do round robin after that', async () => {
+    WorkerService.WORKERS.splice(0, WorkerService.WORKERS.length)
+    app.config.set('services.worker.maxThreadSize', 2)
+    const w1 = new WorkerService(app)
+    await w1.register()
+    expect(WorkerService.WORKERS.length).to.eql(1)
+
+    const w2 = new WorkerService(app)
+    await w2.register()
+    expect(WorkerService.WORKERS.length).to.eql(2)
+
+    const w3 = new WorkerService(app)
+    await w3.register()
+    expect(WorkerService.WORKERS.length).to.eql(2)
+
+    expect(w1.worker).not.to.equal(w2.worker)
+    expect(w1.worker).to.equal(w3.worker)
   })
 })

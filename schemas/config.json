@@ -521,6 +521,11 @@
           "description": "Service alias",
           "type": "string",
           "default": "worker"
+        },
+        "maxThreadSize": {
+          "description": "Maximum thread size",
+          "type": "number",
+          "minimum": 1
         }
       }
     },

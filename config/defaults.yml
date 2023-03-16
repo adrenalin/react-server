@@ -54,6 +54,10 @@ services:
         host: 'mail.example.net'
         port: 587
 
+  worker:
+    enabled: true
+    # maxThreadSize: 12
+
 session:
   enabled: true
   secret: 'session secret'

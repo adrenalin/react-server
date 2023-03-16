@@ -4,6 +4,9 @@ const { getRandomString, parseTemporal } = require('@vapaaradikaali/helpers.js')
 const { InternalServerError } = require('@vapaaradikaali/errors')
 const Service = require('./')
 
+const workers = []
+let roundRobin = 0
+
 /**
  * Worker error baseclass
  *
@@ -38,6 +41,10 @@ module.exports = class WorkerService extends Service {
     return 'worker'
   }
 
+  static get WORKERS () {
+    return workers
+  }
+
   /**
    * @const { object } WorkerService.errors
    */
@@ -60,8 +67,19 @@ module.exports = class WorkerService extends Service {
    * Register worker service
    *
    * @method WorkerService#register
+   * @return { WorkerService }        This instance
    */
   async register () {
+    if (this.worker) {
+      return
+    }
+
+    if (this.config.get('services.worker.maxThreadSize') === this.constructor.WORKERS.length) {
+      this.worker = this.constructor.WORKERS[roundRobin]
+      roundRobin = roundRobin >= this.config.get('services.worker.maxThreadSize') ? 0 : roundRobin + 1
+      return this
+    }
+
     this.worker = new Worker(path.join(__dirname, '..', 'lib', 'worker'))
     this.actions = {}
 
@@ -89,6 +107,9 @@ module.exports = class WorkerService extends Service {
 
       promise.resolve(response)
     })
+
+    this.constructor.WORKERS.push(this.worker)
+    return this
   }
 
   /**
@@ -166,6 +187,9 @@ module.exports = class WorkerService extends Service {
     if (!this.worker) {
       return this
     }
+
+    const indexOf = this.constructor.WORKERS.indexOf(this.worker)
+    this.constructor.WORKERS.slice(indexOf, 1)
 
     await this.worker.terminate()
     delete this.worker
