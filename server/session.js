@@ -10,10 +10,13 @@ module.exports = async (app) => {
   const { createClient } = require('redis')
   const redisClient = createClient({ legacyMode: true })
   redisClient.connect(app.config.get('redis', {})).catch(console.error)
+  const store = new RedisStore({ client: redisClient })
+
+  app.sessionStore = store
 
   app.use(
     session({
-      store: new RedisStore({ client: redisClient }),
+      store,
       saveUninitialized: false,
       secret: app.config.get('session.secret'),
       resave: false
