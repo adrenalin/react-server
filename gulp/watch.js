@@ -8,7 +8,20 @@ config.set('exitOnError', false)
 // Register scripts needed for building
 
 const build = require('./build')
-const { buildApiDoc, compileStyles, buildClient, copyFiles, copyFonts, copyImages, copyJS, lintSCSS, jsdoc, minifyJS, minifyStyles, nodemon } = require('./tasks')
+const {
+  buildApiDoc,
+  compileStyles,
+  buildClient,
+  copyFiles,
+  copyFonts,
+  copyImages,
+  copyJS,
+  lintSCSS,
+  jsdoc,
+  minifyJS,
+  minifyStyles,
+  nodemon
+} = require('./tasks')
 
 function buildApiDocWatcher () {
   return gulpWatch([
