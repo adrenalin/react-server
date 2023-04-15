@@ -1,6 +1,6 @@
 {
   "name": "@vapaaradikaali/react-server",
-  "version": "0.9.9",
+  "version": "0.9.11",
   "description": "React server",
   "main": "index.js",
   "scripts": {
