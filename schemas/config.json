@@ -187,7 +187,8 @@
               "type": "string",
               "enum": [
                 "memcache",
-                "redis"
+                "redis",
+                "nocache"
               ],
               "default": "memcache"
             },
