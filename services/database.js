@@ -15,6 +15,12 @@ class DatabaseService extends Service {
     return this.connect
   }
 
+  constructor (app) {
+    super(app)
+    this.db = null
+    this.connection = null
+  }
+
   /**
    * Register database service
    *
@@ -22,7 +28,7 @@ class DatabaseService extends Service {
    */
   async register (config) {
     this.options = config || {}
-    await this.connect(config)
+    this.connection = await this.connect(config)
 
     return this
   }
@@ -46,7 +52,23 @@ class DatabaseService extends Service {
   async connect () {
     const engine = this.helpers.getValue(this.options || {}, 'engine') || this.config.get('services.database.engine')
     this.db = this.db || Database.getEngine(this.app, engine, this.options || {})
-    return this.db.connect()
+    this.connection = await this.db.connect()
+    return this.connection
+  }
+
+  /**
+   * Close the connection
+   */
+  async close () {
+    if (this.connection) {
+      await this.connection.release()
+      this.connection = null
+    }
+
+    if (this.connection) {
+      await this.db.close()
+      this.db = null
+    }
   }
 }
 

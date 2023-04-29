@@ -29,6 +29,15 @@ describe('lib/database/psql', () => {
     expect(row).to.have.property('now')
   })
 
+  it('should be able to close a connection', async () => {
+    const psql = Database.getEngine(app, engine)
+    await psql.connect()
+    expect(psql.connection).not.to.equal(null)
+
+    await psql.close()
+    expect(psql.connection).to.equal(null)
+  })
+
   it('should accept explicit definitions for the connection', async () => {
     const testOptions = {
       connection: {

@@ -44,4 +44,26 @@ describe('services/database', () => {
 
     expect(response.rows[0]).to.have.property('now')
   })
+
+  it('should disconnect the client', async () => {
+    const app = await require('../../../server/application')()
+    app.config.set('services.database.engine', 'psql')
+
+    const service = new DatabaseService(app)
+    expect(service.connection).to.eql(null)
+
+    await service.connect()
+    expect(service.connection).not.to.eql(null)
+
+    await service.close()
+    expect(service.connection).to.eql(null)
+  })
+
+  it('should allow to disconnect without an active connection', async () => {
+    const app = await require('../../../server/application')()
+    app.config.set('services.database.engine', 'psql')
+
+    const service = new DatabaseService(app)
+    await service.close()
+  })
 })
