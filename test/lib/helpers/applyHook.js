@@ -25,4 +25,14 @@ describe('lib/helpers/applyHook', () => {
     const rval = await applyHook(app, 'return-value')
     expect(rval).to.equal(app)
   })
+
+  it('should not fail when APPLICATION_ROOT is not found', async () => {
+    await applyHook()
+  })
+
+  it('should pass arguments to the hook callback', async () => {
+    const args = [1, 2, 3]
+    const rval = await applyHook(app, 'multiple-arguments', ...args)
+    expect(rval).to.eql(args)
+  })
 })
