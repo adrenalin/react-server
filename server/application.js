@@ -2,6 +2,7 @@ const path = require('path')
 const EventEmitter = require('events')
 const Logger = require('@vapaaradikaali/logger')
 const helpers = require('@vapaaradikaali/helpers.js')
+const applyHook = require('../lib/helpers/applyHook')
 
 const getValue = helpers.getValue
 
@@ -13,8 +14,11 @@ module.exports = async (opts = {}) => {
   logger.info('Start initializing application')
 
   const app = require('express')()
-  app.disable('x-powered-by')
   app.APPLICATION_ROOT = getValue(options, 'applicationRoot', path.join(__dirname, '..'))
+
+  await applyHook(app, 'onInitializing')
+
+  app.disable('x-powered-by')
   app.environment = process.env.ENVIRONMENT || 'public'
   app.helpers = helpers
 
@@ -55,25 +59,36 @@ module.exports = async (opts = {}) => {
 
   logger.debug('Get config')
   logger.ts = Date.now()
+  await applyHook('onConfiguring')
   await require('./config')(app, opts)
+  await applyHook('onConfigured')
   logger.dt('Config loaded')
   app.config.set(opts || {})
 
   logger.debug('Apply services')
+  await applyHook('onServicesLoad')
   await require('./services')(app, opts)
+  await applyHook('onServicesLoaded')
   logger.dt('Applied services')
 
   logger.debug('Apply middleware')
+  await applyHook('onMiddlewareLoad')
   await require('./middleware')(app, opts)
+  await applyHook('onMiddlewareLoaded')
   logger.dt('Applied middleware')
 
   logger.debug('Apply session')
+  await applyHook('onSessionLoad')
   await require('./session')(app, opts)
+  await applyHook('onSessionLoaded')
   logger.dt('Applied session')
 
   logger.debug('Apply routers')
+  await applyHook('onRoutersLoad')
   await require('./routers')(app, opts)
+  await applyHook('onRoutersLoaded')
   logger.dt('Applied routers')
 
+  await applyHook('onInitialized')
   return app
 }
