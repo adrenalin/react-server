@@ -59,36 +59,36 @@ module.exports = async (opts = {}) => {
 
   logger.debug('Get config')
   logger.ts = Date.now()
-  await applyHook('onConfiguring')
+  await applyHook(app, 'onConfiguring')
   await require('./config')(app, opts)
-  await applyHook('onConfigured')
+  await applyHook(app, 'onConfigured')
   logger.dt('Config loaded')
   app.config.set(opts || {})
 
   logger.debug('Apply services')
-  await applyHook('onServicesLoad')
+  await applyHook(app, 'onServicesLoad')
   await require('./services')(app, opts)
-  await applyHook('onServicesLoaded')
+  await applyHook(app, 'onServicesLoaded')
   logger.dt('Applied services')
 
   logger.debug('Apply middleware')
-  await applyHook('onMiddlewareLoad')
+  await applyHook(app, 'onMiddlewareLoad')
   await require('./middleware')(app, opts)
-  await applyHook('onMiddlewareLoaded')
+  await applyHook(app, 'onMiddlewareLoaded')
   logger.dt('Applied middleware')
 
   logger.debug('Apply session')
-  await applyHook('onSessionLoad')
+  await applyHook(app, 'onSessionLoad')
   await require('./session')(app, opts)
-  await applyHook('onSessionLoaded')
+  await applyHook(app, 'onSessionLoaded')
   logger.dt('Applied session')
 
   logger.debug('Apply routers')
-  await applyHook('onRoutersLoad')
+  await applyHook(app, 'onRoutersLoad')
   await require('./routers')(app, opts)
-  await applyHook('onRoutersLoaded')
+  await applyHook(app, 'onRoutersLoaded')
   logger.dt('Applied routers')
 
-  await applyHook('onInitialized')
+  await applyHook(app, 'onInitialized')
   return app
 }
