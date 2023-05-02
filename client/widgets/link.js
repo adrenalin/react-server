@@ -55,7 +55,7 @@ module.exports = class LinkWidget extends Widget {
 
     const props = this.helpers.copyObject(this.props)
 
-    if (this.lang && props.to) {
+    if (this.lang && props.to != null) {
       props.to = `/${this.lang}${props.to === '/' ? '' : props.to}`.replace(/^\/\//, '/')
     }
 
