@@ -35,6 +35,8 @@ if (!PropTypes.child) {
   ])
 }
 
+const storage = new helpers.Storage(typeof window !== 'undefined' ? window.localStorage : null)
+
 /**
  * Baseclass for React components
  *
@@ -195,6 +197,7 @@ module.exports = class Component extends React.Component {
     this.config = config
     this.metadata = metadata
     this.l10n = localization
+    this.storage = storage
 
     // User
     this.user = UserStore.getState().user
