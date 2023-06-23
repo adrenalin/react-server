@@ -387,6 +387,45 @@
           "description": "Session secret key",
           "type": "string",
           "default": "session-secret"
+        },
+        "proxy": {
+          "description": "Trust the reverse proxy when setting secure cookies",
+          "type": "boolean"
+        },
+        "cookie": {
+          "description": "Cookie settings",
+          "type": "object",
+          "properties": {
+            "httpOnly": {
+              "description": "HTTP only flag for the cookie",
+              "type": "boolean"
+            },
+            "maxAge": {
+              "description": "Cookie maximum age in milliseconds",
+              "type": "integer",
+              "minValue": 0
+            },
+            "path": {
+              "description": "Cookie path",
+              "type": "string"
+            },
+            "sameSite": {
+              "description": "SAMESITE flag for the cookie",
+              "type": ["boolean", "string"],
+              "enum": [
+                null,
+                true,
+                false,
+                "lax",
+                "none",
+                "strict"
+              ]
+            },
+            "secure": {
+              "description": "Secure flag for cookie",
+              "type": "boolean"
+            }
+          }
         }
       },
       "required": ["enabled", "secret"]
