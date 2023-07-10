@@ -19,7 +19,7 @@ module.exports = async (app) => {
       store,
       saveUninitialized: false,
       secret: app.config.get('session.secret'),
-      cookie: app.config.get('session.cookie', {}),
+      // cookie: app.config.get('session.cookie', {}),
       resave: false
     })
   )
