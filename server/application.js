@@ -3,6 +3,7 @@ const EventEmitter = require('events')
 const Logger = require('@vapaaradikaali/logger')
 const helpers = require('@vapaaradikaali/helpers.js')
 const applyHook = require('../lib/helpers/applyHook')
+const getApplicationRoot = require('../lib/helpers/getApplicationRoot')
 
 const getValue = helpers.getValue
 
@@ -14,7 +15,7 @@ module.exports = async (opts = {}) => {
   logger.info('Start initializing application')
 
   const app = require('express')()
-  app.APPLICATION_ROOT = getValue(options, 'applicationRoot', path.join(__dirname, '..'))
+  app.APPLICATION_ROOT = getApplicationRoot(options)
 
   await applyHook(app, 'onInitializing')
 
