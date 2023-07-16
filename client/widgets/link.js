@@ -12,6 +12,7 @@ module.exports = class LinkWidget extends Widget {
         Widget.PropTypes.string,
         Widget.PropTypes.func
       ]),
+      noLang: Widget.PropTypes.bool,
       to: Widget.PropTypes.string
     }
   }
@@ -57,6 +58,11 @@ module.exports = class LinkWidget extends Widget {
 
     if (this.lang && props.to != null) {
       props.to = `/${this.lang}${props.to === '/' ? '' : props.to}`.replace(/^\/\//, '/')
+    }
+
+    // Omit language
+    if (this.props.noLang) {
+      props.to = this.props.to
     }
 
     nopass.forEach((key) => {
