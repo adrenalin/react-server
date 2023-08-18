@@ -53,7 +53,7 @@ class CacheService extends Service {
    */
   async get (key, defaultValue) {
     if (this.config.get('services.cache.bypass')) {
-      this.logger.warn('services.cache.bypass flag is on, all cache requests will be bypassed')
+      this.logger.warn('services.cache.bypass flag is on, cache request for', key, 'is bypassed')
       return defaultValue
     }
 
