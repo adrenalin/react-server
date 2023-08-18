@@ -44,6 +44,8 @@ services:
   cache:
     enabled: true
     engine: 'memcache'
+    bypass: false
+    prefix: ''
 
   events:
     enabled: true
