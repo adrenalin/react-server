@@ -1,5 +1,6 @@
 const path = require('path')
 const Logger = require('@vapaaradikaali/logger')
+const { argparse } = require('@vapaaradikaali/helpers.js')
 const ServerConfig = require('@vapaaradikaali/helpers.js/lib/ServerConfig')
 
 module.exports = (app, overrides) => {
@@ -33,6 +34,13 @@ module.exports = (app, overrides) => {
     .loadFile(path.join(appRoot, 'config', `${env}.yml`), true)
     .loadFile(path.join(appRoot, 'config', 'local.yml'), true)
     .loadFile(path.join(appRoot, 'config', `local-${env}.yml`), true)
+
+  const args = argparse(process.argv)
+  const configFile = args['config-file'] || process.env.CONFIG_FILE
+
+  if (configFile) {
+    config.loadFile(path.join(process.cwd(), configFile))
+  }
 
   logger.log('Configuration loaded')
   logger.debug('Loaded configuration', config.get())

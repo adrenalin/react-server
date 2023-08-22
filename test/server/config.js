@@ -2,7 +2,9 @@ const { expect } = require('chai')
 const { Config } = require('@vapaaradikaali/helpers.js')
 const application = require('../../server/application')
 
-describe('server/configuration', () => {
+describe('server/config', () => {
+  const envConfig = process.env.CONFIG_FILE
+
   it('should register the configuration schema', async () => {
     const app = await application()
     app.config.set('middleware.renderers.foobar', {
@@ -58,5 +60,17 @@ describe('server/configuration', () => {
     } catch (err) {
       expect(err).to.be.an.instanceof(Config.errors.ValidationError)
     }
+  })
+
+  it('should load config by environment variable', async () => {
+    process.env.CONFIG_FILE = 'test/resources/server/config/envConfig.yml'
+    const app = await application()
+    expect(app.config.get('envConfig')).to.eql('env-config')
+  })
+
+  it('should load config by argument', async () => {
+    process.argv.push('--config-file=test/resources/server/config/argConfig.yml')
+    const app = await application()
+    expect(app.config.get('argConfig')).to.eql('arg-config')
   })
 })
