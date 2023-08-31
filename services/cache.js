@@ -70,7 +70,8 @@ class CacheService extends Service {
    * @return { mixed }                Stored value
    */
   async getCacheTimestamp (key) {
-    return this.cache.getCacheTimestamp(key)
+    const cacheKey = this.getCacheKey(key)
+    return this.cache.getCacheTimestamp(cacheKey)
   }
 
   /**
