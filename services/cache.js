@@ -62,6 +62,18 @@ class CacheService extends Service {
   }
 
   /**
+   * Get timestamp for a cache key
+   *
+   * @method CacheService#get
+   * @param { string } key            Storage key
+   * @param { mixed } defaultValue    Default value
+   * @return { mixed }                Stored value
+   */
+  async getCacheTimestamp (key) {
+    return this.cache.getCacheTimestamp(key)
+  }
+
+  /**
    * Set value
    *
    * @method CacheService#set

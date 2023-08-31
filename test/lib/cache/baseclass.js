@@ -102,6 +102,17 @@ describe('lib/cache', () => {
     expect(CacheBaseclass.getExpiresIn('PT5S')).to.equal(5)
   })
 
+  it('should have the abstract method getCacheTimestamp', async () => {
+    try {
+      const cache = new CacheBaseclass(app)
+      expect(cache.getCacheTimestamp).to.be.a('function')
+      await cache.expire('foo', 1)
+      throw new Error('Should have thrown a NotImplemented')
+    } catch (err) {
+      expect(err).to.be.an.instanceof(errors.NotImplemented)
+    }
+  })
+
   it('should accept a time as an ISO 8601 timestamp for getExpiresIn', () => {
     const m = new Moment()
     m.add(10, 'seconds')

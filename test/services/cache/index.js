@@ -110,6 +110,24 @@ describe('services/cache', () => {
     expect(stored).to.eql([1, 3])
   })
 
+  it('should have interface method "getCacheTimestamp"', async () => {
+    const testKey = 'tests-services-cache-add'
+
+    const app = await require('../../../server/application')()
+    app.config.set('services.cache.engine', 'memcache')
+    app.config.set('services.cache.bypass', false)
+
+    const service = new CacheService(app)
+    await service.register()
+
+    await service.set(testKey, [1, 2, 3], 1)
+
+    const cachedAt = await service.getCacheTimestamp(testKey)
+    console.log('cachedAt', cachedAt)
+    const d = new Date(cachedAt)
+    expect(d - Date.now()).to.be.below(1000)
+  })
+
   it('should get hydrated value if it exists', async () => {
     const testKey = 'tests-services-cache-hydrate-exists-key'
     const testValue = 'tests-services-cache-hydrate-exists-value'

@@ -87,6 +87,30 @@ describe('lib/cache/redis', () => {
     expect(value).to.eql(defaultValue)
   })
 
+  it('should get cache timestamp', async () => {
+    const cache = Cache.getEngine(app, engine)
+    const testPath = 'expired-default-value'
+    const testValue = 'expired defalt value'
+    const defaultValue = 'default value'
+
+    await cache.set(testPath, testValue, 1)
+    const cachedAt = await cache.getCacheTimestamp(testPath)
+
+    const d = new Date(cachedAt)
+    expect(d - Date.now()).to.be.below(1000)
+  })
+
+  it('should get null cache timestamp for cache misses', async () => {
+    const cache = Cache.getEngine(app, engine)
+    const testPath = 'expired-default-value'
+    const testValue = 'expired defalt value'
+    const defaultValue = 'default value'
+
+    await cache.set(testPath, testValue, -0)
+    const cachedAt = await cache.getCacheTimestamp(testPath)
+    expect(cachedAt).to.eql(null)
+  })
+
   it('should get a copy of the stored object to avoid unexpected side effects', async () => {
     const cache = Cache.getEngine(app, engine)
 

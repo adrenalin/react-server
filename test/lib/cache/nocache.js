@@ -39,6 +39,18 @@ describe('lib/cache/no', () => {
     expect(value).to.eql(undefined)
   })
 
+  it('should get null cache timestamp', async () => {
+    const cache = Cache.getEngine(app, engine)
+    const testPath = 'expired-default-value'
+    const testValue = 'expired defalt value'
+    const defaultValue = 'default value'
+
+    await cache.set(testPath, testValue, 1)
+    const cachedAt = await cache.getCacheTimestamp(testPath)
+
+    expect(cachedAt).to.eql(null)
+  })
+
   it('should have a method del', async () => {
     const cache = Cache.getEngine(app, engine)
     const testPath = 'set-value'
