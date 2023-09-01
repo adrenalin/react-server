@@ -28,7 +28,7 @@
     "@babel/runtime": ">=7.20.1",
     "@babel/runtime-corejs3": ">=7.20.1",
     "@vapaaradikaali/errors": ">=1.0.7",
-    "@vapaaradikaali/helpers.js": ">=0.36.3",
+    "@vapaaradikaali/helpers.js": ">=0.36.4",
     "@vapaaradikaali/logger": ">=1.0.9",
     "alt": ">=0.18.6",
     "axios": ">=1.2.0",
