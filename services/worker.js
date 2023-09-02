@@ -83,8 +83,8 @@ module.exports = class WorkerService extends Service {
     this.worker = new Worker(path.join(__dirname, '..', 'lib', 'worker'))
     this.actions = {}
 
-    this.worker.on('message', (message) => {
-      const { id, err, response } = message
+    this.worker.on('message', async (message) => {
+      const { id, err, response, options = {} } = message
       this.logger.log('Received from worker', id, err, response)
       const promise = this.actions[id]
 
@@ -98,6 +98,13 @@ module.exports = class WorkerService extends Service {
       }
 
       delete this.actions[id]
+
+      if (options.terminate) {
+        await this.worker.terminate()
+        const indexOf = this.constructor.WORKERS.indexOf(this.worker)
+        this.constructor.WORKERS.splice(indexOf, 1)
+        delete this.worker
+      }
 
       if (err) {
         const error = new WorkerReject(err.message)
@@ -189,7 +196,7 @@ module.exports = class WorkerService extends Service {
     }
 
     const indexOf = this.constructor.WORKERS.indexOf(this.worker)
-    this.constructor.WORKERS.slice(indexOf, 1)
+    this.constructor.WORKERS.splice(indexOf, 1)
 
     await this.worker.terminate()
     delete this.worker

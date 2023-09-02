@@ -126,6 +126,14 @@ describe('services/worker', () => {
     await w.kill()
   })
 
+  it.only('should kill the worker after it is ready when terminate option is given', async () => {
+    const w = new WorkerService(app)
+    const testData = ['foo', 'bar']
+    const workers = WorkerService.WORKERS.length
+    await w.do('echo', { terminate: true }, testData)
+    expect(WorkerService.WORKERS.length).to.eql(workers)
+  })
+
   it('should register worker service in do', async () => {
     const w = new WorkerService(app)
     const testData = ['foo', 'bar']
