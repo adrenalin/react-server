@@ -392,6 +392,10 @@
           "description": "Trust the reverse proxy when setting secure cookies",
           "type": "boolean"
         },
+        "prefix": {
+          "description": "Redis prefix",
+          "type": ["null", "string"]
+        },
         "cookie": {
           "description": "Cookie settings",
           "type": "object",

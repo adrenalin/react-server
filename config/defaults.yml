@@ -63,3 +63,4 @@ services:
 session:
   enabled: true
   secret: 'session secret'
+  prefix: null
