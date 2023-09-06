@@ -185,6 +185,46 @@ describe('services/cache', () => {
     expect(value).to.equal(1)
   })
 
+  it('should throw an exception to all listening watchers', (done) => {
+    let app, service
+    let i = 0
+    let n = 0
+
+    const testKey = 'test-services-cache-hydrate-reject-all'
+
+    const watcher = async () => {
+      await sleep(10)
+      throw new errors.OK('Planned failure')
+    }
+
+    require('../../../server/application')()
+      .then(appInstance => {
+        app = appInstance
+
+        app.config.set('services.cache.engine', 'memcache')
+
+        service = new CacheService(app)
+        return service.register()
+      })
+      .then(() => {
+        const errorHandler = () => {
+          if (n) {
+            done()
+          }
+
+          n++
+        }
+
+        service
+          .hydrate(testKey, watcher)
+          .catch(errorHandler)
+
+        service
+          .hydrate(testKey, watcher)
+          .catch(errorHandler)
+      })
+  })
+
   it('should bypass cache when configured to bypass', async () => {
     const testKey = 'tests-services-cache-hydrate-bypass-key'
     const testValue = 'tests-services-cache-hydrate-bypass-value'
