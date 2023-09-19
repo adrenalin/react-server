@@ -394,7 +394,7 @@ module.exports = class Component extends React.Component {
    * @return { string }               Current URL
    */
   getCurrentUrl (omitLang = false) {
-    const url = typeof window !== 'undefined' && window.location ? String(window.location) : ApplicationStore.getState().currentUrl || ''
+    const url = typeof window !== 'undefined' && window.location.pathname ? String(window.location.pathname) : ApplicationStore.getState().currentUrl || ''
     return omitLang ? url.substr(3) : url
   }
 
