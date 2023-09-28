@@ -59,6 +59,11 @@ module.exports = class Application extends Component {
    */
   initConfig () {
     this.config.set(ApplicationStore.getState().config || {})
+    const constants = ApplicationStore.getState().constants || {}
+
+    for (const key in constants) {
+      this.constants[key] = constants[key]
+    }
   }
 
   /**

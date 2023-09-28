@@ -22,6 +22,7 @@ const events = new EventHandler()
 const metadata = new Metadata()
 const localization = new helpers.Localization()
 const validate = require('../lib/helpers/validate')
+const constants = {}
 
 let currentLang = null
 
@@ -65,6 +66,24 @@ const storage = new helpers.Storage(typeof window !== 'undefined' ? window.local
  * @param { object } props          Component props
  */
 module.exports = class Component extends React.Component {
+  /**
+   * Constants
+   *
+   * @const { object } Component.constants
+   */
+  static get constants () {
+    return constants
+  }
+
+  /**
+   * Instance constants
+   *
+   * @const { object } Component#constants
+   */
+  get constants () {
+    return constants
+  }
+
   /**
    * Log level for the logger
    *
