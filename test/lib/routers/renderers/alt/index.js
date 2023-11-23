@@ -18,7 +18,7 @@ describe('routers/renderers/alt', () => {
     app.use(testUrl, altRouter(app, ['Array']))
   })
 
-  it('should return a scalar store name', (done) => {
+  it('should return a scalar store name', async () => {
     const value = {
       scalar: true
     }
@@ -28,17 +28,14 @@ describe('routers/renderers/alt', () => {
       next()
     }
 
-    request(app)
+    const response = await request(app)
       .get(testUrl)
       .expect(200)
-      .then((response) => {
-        expect(response.body.scalar).to.eql(value.scalar)
-        done()
-      })
-      .catch(done)
+
+    expect(response.body.scalar).to.eql(value.scalar)
   })
 
-  it('should return an array store name', (done) => {
+  it('should return an array store name', async () => {
     const value = {
       array: true
     }
@@ -48,17 +45,14 @@ describe('routers/renderers/alt', () => {
       next()
     }
 
-    request(app)
+    const response = await request(app)
       .get(testUrl)
       .expect(200)
-      .then((response) => {
-        expect(response.body.array).to.eql(value.array)
-        done()
-      })
-      .catch(done)
+
+    expect(response.body.array).to.eql(value.array)
   })
 
-  it('should return ErrorStore with no status code', (done) => {
+  it('should return ErrorStore with no status code',  async () => {
     const value = {
       error: true
     }
@@ -68,17 +62,14 @@ describe('routers/renderers/alt', () => {
       next()
     }
 
-    request(app)
+    const response = await request(app)
       .get(testUrl)
       .expect(400)
-      .then((response) => {
-        expect(response.body.error).to.eql(value.error)
-        done()
-      })
-      .catch(done)
+
+    expect(response.body.error).to.eql(value.error)
   })
 
-  it('should return ErrorStore with status code', (done) => {
+  it('should return ErrorStore with status code', async () => {
     const value = {
       error: true,
       code: 409
@@ -89,13 +80,10 @@ describe('routers/renderers/alt', () => {
       next()
     }
 
-    request(app)
+    const response = await request(app)
       .get(testUrl)
       .expect(value.code)
-      .then((response) => {
-        expect(response.body.error).to.eql(value.error)
-        done()
-      })
-      .catch(done)
+
+    expect(response.body.error).to.eql(value.error)
   })
 })
