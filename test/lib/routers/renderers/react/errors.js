@@ -73,7 +73,7 @@ describe('routers/renderers/react:errors', () => {
 
     const $ = cheerio.load(response.text)
     const stored = JSON.parse($('#errorStore').text())
-    expect(stored).to.eql({ error, errors: errs, data })
+    expect(stored).to.eql({ error, errors: errs, data, code: 400 })
   })
 
   it('should pass site title and logo to the view', async () => {
