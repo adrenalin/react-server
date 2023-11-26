@@ -28,7 +28,7 @@ class CacheService extends Service {
   }
 
   /**
-   * Register database service
+   * Register cache service
    *
    * @method CacheService#register
    * @return { CacheService }         This instance
