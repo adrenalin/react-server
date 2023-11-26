@@ -47,7 +47,7 @@ module.exports = async (app) => {
       continue
     }
 
-    const name = ServiceClass.SERVICE_NAME || ServiceClass.name.toLowerCase().replace(/service$/, '')
+    const name = ServiceClass.SERVICE_NAME || (ServiceClass.name || path.basename(filename, '.js')).toLowerCase().replace(/service$/, '')
     classes[name] = ServiceClass
   }
 
