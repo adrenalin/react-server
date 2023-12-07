@@ -236,6 +236,7 @@ module.exports = class Component extends React.Component {
   /**
    * Get initial state for the component
    *
+   * @method Component#getInitialState
    * @return { object }               Initial component state
    */
   getInitialState () {
