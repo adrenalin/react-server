@@ -31,6 +31,19 @@
         "format": "email"
       }
     },
+    "headers": {
+      "description": "Message headers",
+      "type": "object",
+      "patternProperties": {
+        "^[a-zA-Z0-9-]+$": {
+          "description": "Headers are either strings or arrays of strings",
+          "type": ["string", "array"],
+          "items": {
+            "type": ["string"]
+          }
+        }
+      }
+    },
     "subject": {
       "description": "Message subject",
       "type": "string"
