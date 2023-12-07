@@ -21,31 +21,24 @@ describe('lib/mailer/smtp', () => {
     app.config.set('services.mailer.smtp.server.port', port)
   })
 
-  it('should create an instance of MailerInterface with the factory method', (done) => {
+  it('should create an instance of MailerInterface with the factory method', () => {
     const instance = MailerInterface.getEngine(app, 'smtp')
     expect(instance).to.be.an.instanceof(MailerInterfaceSMTP)
-    done()
   })
 
-  it('should send a message', (done) => {
+  it('should send a message', async () => {
     const message = {
       to: 'test-should-send-a-message@example.net',
       subject: 'Should send a message',
       text: 'Test'
     }
 
-    const callback = (addr, id, email) => {
-      server.unbind(message.to, callback)
-      done()
-    }
-
-    server.bind(message.to, callback)
-
     const instance = MailerInterface.getEngine(app, 'smtp')
     instance.send(message)
+    await server.captureOne(message.to)
   })
 
-  it('should send a message to the cc addresses', (done) => {
+  it('should send a message to the cc addresses', async () => {
     const message = {
       to: 'test-should-send-a-message@example.net',
       cc: 'test-should-send-a-message-to-cc@example.net',
@@ -53,18 +46,12 @@ describe('lib/mailer/smtp', () => {
       text: 'Test'
     }
 
-    const callback = (addr, id, email) => {
-      server.unbind(message.cc, callback)
-      done()
-    }
-
-    server.bind(message.cc, callback)
-
     const instance = MailerInterface.getEngine(app, 'smtp')
     instance.send(message)
+    await server.captureOne(message.cc)
   })
 
-  it('should send a message to the cc addresses', (done) => {
+  it('should send a message to the bcc addresses', async () => {
     const message = {
       to: 'test-should-send-a-message@example.net',
       bcc: 'test-should-send-a-message-to-bcc@example.net',
@@ -72,14 +59,36 @@ describe('lib/mailer/smtp', () => {
       text: 'Test'
     }
 
-    const callback = (addr, id, email) => {
-      server.unbind(message.bcc, callback)
-      done()
-    }
+    const instance = MailerInterface.getEngine(app, 'smtp')
+    instance.send(message)
+    await server.captureOne(message.bcc)
+  })
 
-    server.bind(message.bcc, callback)
+  it('should set message headers', async () => {
+    const headers = {
+      'in-reply-to': 'foobar@example.net',
+      references: [
+        'foobar@example.net'
+      ]
+    }
+    const message = {
+      to: 'test-should-set-message-headers@example.net',
+      subject: 'Should set message headers',
+      text: 'Test',
+      headers
+    }
 
     const instance = MailerInterface.getEngine(app, 'smtp')
     instance.send(message)
+    const { email } = await server.captureOne(message.to)
+
+    expect(email.headers).to.have.property('in-reply-to')
+    expect(email.headers['in-reply-to']).to.eql(`<${headers['in-reply-to']}>`)
+
+    expect(email.headers).to.have.property('references')
+
+    for (const v of headers.references) {
+      expect(email.headers.references).to.contain(v)
+    }
   })
 })
