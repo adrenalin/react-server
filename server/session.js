@@ -15,11 +15,27 @@ module.exports = async (app) => {
     prefix: app.config.get('session.prefix')
   })
 
+  const cookie = {
+    path: app.config.get('session.cookie.path', '/'),
+    httpOnly: app.config.get('session.cookie.httpOnly', true)
+  }
+
+  const cookieParams = ['maxAge', 'sameSite', 'domain', 'secure']
+
+  cookieParams.forEach((p) => {
+    const v = app.config.get(`session.cookie.${p}`)
+
+    if (v) {
+      cookie[p] = v
+    }
+  })
+
   app.sessionStore = store
 
   app.use(
     session({
       store,
+      cookie,
       saveUninitialized: false,
       secret: app.config.get('session.secret'),
       resave: false
