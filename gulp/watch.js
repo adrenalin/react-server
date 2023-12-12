@@ -40,9 +40,12 @@ function buildClientWatcher () {
 function compileStylesWatcher () {
   // Watch SCSS changes
   const t = [
-    compileStyles,
-    lintSCSS
+    compileStyles
   ]
+
+  if (config.get('sass.lint')) {
+    t.push(lintSCSS)
+  }
 
   if (config.get('minify')) {
     t.push(minifyStyles)
