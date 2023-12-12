@@ -54,7 +54,7 @@
     },
     "html": {
       "description": "Message body as HTML text",
-      "type": ["null", "text"]
+      "type": ["null", "string"]
     }
   },
   "$defs": {
