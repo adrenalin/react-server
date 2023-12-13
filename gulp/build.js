@@ -11,10 +11,12 @@ const tasks = [
   copyFonts,
   copyImages,
   copyJS,
-  bundler,
-  lintSCSS
+  bundler
 ]
 
+if (config.get('sass.lint')) {
+  tasks.push(lintSCSS)
+}
 if (config.get('build.client')) {
   const buildClient = require('./tasks/buildClient')
   tasks.push(buildClient)

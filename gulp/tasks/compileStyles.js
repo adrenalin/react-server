@@ -6,6 +6,10 @@ const config = require('../config')
 const target = path.join(config.get('root'), config.get('target.css'))
 
 module.exports = function compileStyles () {
+  if (!config.get('sass.build')) {
+    return Promise.resolve()
+  }
+
   const size = require('gulp-size')
   const sourcemaps = require('gulp-sourcemaps')
   const sass = require('gulp-sass')(require(config.get('sass.module', 'sass')))
