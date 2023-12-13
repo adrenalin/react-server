@@ -12,6 +12,7 @@ const config = new ServerConfig()
 
 config
   .setSchema(require(path.join(moduleRoot, 'schemas', 'gulp.json')))
+  .loadFile(path.join(moduleRoot, 'config', 'gulp'))
   .set('name', pkg.name)
   .set('main', pkg.main)
   .set('root', clientRoot)
