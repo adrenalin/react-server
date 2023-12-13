@@ -15,18 +15,16 @@ describe('lib/mailer', () => {
     }
   })
 
-  it('should provide errors as a static attribute', (done) => {
+  it('should provide errors as a static attribute', () => {
     expect(MailerInterface).to.have.property('errors')
 
     for (const err in mailerErrors) {
       expect(MailerInterface.errors).to.have.property(err)
       expect(MailerInterface.errors[err]).to.equal(mailerErrors[err])
     }
-
-    done()
   })
 
-  it('should provide errors as an instance attribute', (done) => {
+  it('should provide errors as an instance attribute', () => {
     const app = {}
     const instance = new MailerInterface(app)
     expect(instance).to.have.property('errors')
@@ -35,95 +33,108 @@ describe('lib/mailer', () => {
       expect(instance.errors).to.have.property(err)
       expect(instance.errors[err]).to.equal(mailerErrors[err])
     }
-
-    done()
   })
 
-  it('should have an abstract method "send"', (done) => {
+  it('should have an abstract method "send"', () => {
     const app = {}
     const instance = new MailerInterface(app)
     expect(instance.send).to.be.a('function')
-    done()
   })
 
-  it('should have a static factory method "getEngine"', (done) => {
+  it('should have a static factory method "getEngine"', () => {
     expect(MailerInterface.getEngine).to.be.a('function')
-    done()
   })
 
-  it('should create an instance with the getEngine method', (done) => {
+  it('should create an instance with the getEngine method', () => {
     const app = {}
     const instance = MailerInterface.getEngine(app, 'index')
     expect(instance).to.be.an.instanceof(MailerInterface)
-    done()
   })
 
-  it('should require an alphabetical engine name', (done) => {
+  it('should require an alphabetical engine name', () => {
     const app = {}
     expect(() => MailerInterface.getEngine(app, '../calendar')).to.throw()
-    done()
   })
 
-  it('should get the engine interface class with getEngine', (done) => {
+  it('should get the engine interface class with getEngine', () => {
     const app = {}
     const instance = MailerInterface.getEngine(app, 'index')
     expect(instance).to.be.an.instanceof(MailerInterface)
-    done()
   })
 
-  it('should require "to" for a message', (done) => {
+  it('should require "to" for a message', () => {
     try {
       const message = {
         subject: 'Test message',
         text: 'Test'
       }
       MailerInterface.validateMessage(message)
-      throw new Error('Should have thrown an error')
+      throw new Error('Should have thrown a ValidationError')
     } catch (err) {
       expect(err).to.be.an.instanceof(errors.ValidationError)
-      done()
     }
   })
 
-  it('should require "subject" for a message', (done) => {
+  it('should require "subject" for a message', () => {
     try {
       const message = {
         to: 'test@example.net',
         text: 'Test'
       }
       MailerInterface.validateMessage(message)
-      throw new Error('Should have thrown an error')
+      throw new Error('Should have thrown a ValidationError')
     } catch (err) {
       expect(err).to.be.an.instanceof(errors.ValidationError)
-      done()
     }
   })
 
-  it('should require "text" or "html" for a message', (done) => {
+  it('should require "text" or "html" for a message', () => {
     try {
       const message = {
         to: 'test@example.net',
         subject: 'Test message'
       }
       MailerInterface.validateMessage(message)
-      throw new Error('Should have thrown an error')
+      throw new Error('Should have thrown a ValidationError')
     } catch (err) {
       expect(err).to.be.an.instanceof(errors.ValidationError)
-      done()
     }
   })
 
-  it('should accept "to" as a string', (done) => {
+  it('should require accept only "text" or "html" for a message', () => {
+    MailerInterface.validateMessage({
+      to: 'test@example.net',
+      subject: 'Test message',
+      text: 'foo'
+    })
+
+    MailerInterface.validateMessage({
+      to: 'test@example.net',
+      subject: 'Test message',
+      html: '<p>foo</p>'
+    })
+  })
+
+  it('should require accept both "text" and "html" for a message', () => {
+    const message = {
+      to: 'test@example.net',
+      subject: 'Test message',
+      text: 'foo',
+      html: '<p>foo</p>'
+    }
+    MailerInterface.validateMessage(message)
+  })
+
+  it('should accept "to" as a string', () => {
     const message = {
       to: 'test@example.net',
       subject: 'Test',
       text: 'Test'
     }
     MailerInterface.validateMessage(message)
-    done()
   })
 
-  it('should reject faulty email address', (done) => {
+  it('should reject faulty email address', () => {
     try {
       const message = {
         to: 'test',
@@ -131,24 +142,22 @@ describe('lib/mailer', () => {
         text: 'Test'
       }
       MailerInterface.validateMessage(message)
-      throw new Error('Should have thrown an error')
+      throw new Error('Should have thrown a ValidationError')
     } catch (err) {
       expect(err).to.be.an.instanceof(errors.ValidationError)
-      done()
     }
   })
 
-  it('should accept "to" as an array', (done) => {
+  it('should accept "to" as an array', () => {
     const message = {
       to: ['test@example.net'],
       subject: 'Test',
       text: 'Test'
     }
     MailerInterface.validateMessage(message)
-    done()
   })
 
-  it('should reject faulty email address in an array', (done) => {
+  it('should reject faulty email address in an array', () => {
     try {
       const message = {
         to: [
@@ -159,10 +168,9 @@ describe('lib/mailer', () => {
         text: 'Test'
       }
       MailerInterface.validateMessage(message)
-      throw new Error('Should have thrown an error')
+      throw new Error('Should have thrown a ValidationError')
     } catch (err) {
       expect(err).to.be.an.instanceof(errors.ValidationError)
-      done()
     }
   })
 })

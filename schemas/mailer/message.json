@@ -75,7 +75,7 @@
       ]
     }
   },
-  "oneOf": [
+  "anyOf": [
     {
       "required": ["text"]
     },
