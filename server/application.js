@@ -22,6 +22,7 @@ module.exports = async (opts = {}) => {
   app.disable('x-powered-by')
   app.environment = process.env.ENVIRONMENT || 'public'
   app.helpers = helpers
+  app.startedAt = new Date().toISOString()
 
   app.IS_DEVELOPMENT = ['dev', 'development'].includes(process.env.NODE_ENV)
   app.CLIENT_ROOT = path.join(app.APPLICATION_ROOT, 'build', 'client', helpers.Localization.toCase(app.environment, 'title'))
