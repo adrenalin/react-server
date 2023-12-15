@@ -6,7 +6,9 @@ const init = require('../../../init')
 const router = require('../../../../lib/routers/application/lang')
 const configRouter = require('../../../../lib/routers/application/config')
 
-describe('routers/application/lang', () => {
+const getLangMatches = router.getLangMatches
+
+describe('lib/routers/application/lang', () => {
   let app, configuredLang, configuredLanguages, callback
   const testUrl = '/test/lib/application/lang'
 
@@ -50,6 +52,58 @@ describe('routers/application/lang', () => {
 
     expect(response.body).to.have.property('lang')
     expect(response.body.lang).to.equal(lang)
+  })
+
+  it('should get empty lang matches for the root', () => {
+    const req = {
+      url: '/'
+    }
+
+    expect(getLangMatches(req)).to.eql([])
+  })
+
+  it('should get lang matches for the user session', () => {
+    const lang = 'xy'
+    const req = {
+      url: '/',
+      session: {
+        user: {
+          lang
+        }
+      }
+    }
+
+    expect(getLangMatches(req)).to.eql([lang])
+  })
+
+  it('should get lang matches for the query parameter', () => {
+    const lang = 'xy'
+    const req = {
+      url: '/',
+      query: {
+        lang
+      }
+    }
+
+    expect(getLangMatches(req)).to.eql([lang])
+  })
+
+  it('should get lang matches for the first part of the URL', () => {
+    const lang = 'xy'
+    const req = {
+      url: `/${lang}`
+    }
+
+    expect(getLangMatches(req)).to.eql([lang])
+  })
+
+  it('should get lang matches for the first part of the URL when there is a query', () => {
+    const lang = 'xy'
+    const req = {
+      url: `/${lang}?foo=bar`
+    }
+
+    expect(getLangMatches(req)).to.eql([lang])
   })
 
   it('should apply the request lang when available', async () => {
