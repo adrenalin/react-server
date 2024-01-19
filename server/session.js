@@ -25,7 +25,7 @@ module.exports = async (app) => {
   cookieParams.forEach((p) => {
     const v = app.config.get(`session.cookie.${p}`)
 
-    if (v) {
+    if (v != null) {
       cookie[p] = v
     }
   })
