@@ -122,7 +122,7 @@ describe('lib/database/psql', () => {
       `)
 
       const result = await psql.query({
-        text: 'SELECT * FROM tests_named_parameters WHERE p1 = :p1 AND p2 = :p2',
+        text: 'SELECT * FROM tests_named_parameters WHERE p1 = $p1 AND p2 = $p2',
         values: {
           p1: 'foo',
           p2: 'bar'
@@ -133,6 +133,45 @@ describe('lib/database/psql', () => {
       expect(result.rows[0]).to.eql({
         p1: 'foo',
         p2: 'bar'
+      })
+
+      await c.query('DROP TABLE tests_named_parameters')
+    } catch (err) {
+      // Cleanup
+      await c.query('ROLLBACK')
+      throw err
+    } finally {
+      // Release the connections
+      c.release()
+    }
+  })
+
+  it('should not convert missing named parameters as a precaution', async () => {
+    const psql = Database.getEngine(app, engine)
+    const c = await psql.connect()
+    await c.query('DROP TABLE IF EXISTS tests_named_parameters')
+
+    try {
+      await c.query('CREATE TABLE tests_named_parameters (p1 TEXT, p2 TEXT)')
+      await c.query(`
+        INSERT INTO
+          tests_named_parameters (p1, p2)
+        VALUES
+          ('foo', '$p2'),
+          ('bar', '$p1')
+      `)
+
+      const result = await psql.query({
+        text: 'SELECT * FROM tests_named_parameters WHERE p1 = $p1 AND p2 = \'$p2\'',
+        values: {
+          p1: 'foo'
+        }
+      })
+
+      expect(result.rows.length).to.equal(1)
+      expect(result.rows[0]).to.eql({
+        p1: 'foo',
+        p2: '$p2'
       })
 
       await c.query('DROP TABLE tests_named_parameters')
