@@ -98,10 +98,51 @@ describe('lib/database/psql', () => {
       // Cleanup
       await c1.query('ROLLBACK')
       await c1.query('DROP TABLE tests_transaction')
+      throw err
     } finally {
       // Release the connections
       c1.release()
       c2.release()
+    }
+  })
+
+  it('should convert an object with named parameters', async () => {
+    const psql = Database.getEngine(app, engine)
+    const c = await psql.connect()
+    await c.query('DROP TABLE IF EXISTS tests_named_parameters')
+
+    try {
+      await c.query('CREATE TABLE tests_named_parameters (p1 TEXT, p2 TEXT)')
+      await c.query(`
+        INSERT INTO
+          tests_named_parameters (p1, p2)
+        VALUES
+          ('foo', 'bar'),
+          ('bar', 'foo')
+      `)
+
+      const result = await psql.query({
+        text: 'SELECT * FROM tests_named_parameters WHERE p1 = :p1 AND p2 = :p2',
+        values: {
+          p1: 'foo',
+          p2: 'bar'
+        }
+      })
+
+      expect(result.rows.length).to.equal(1)
+      expect(result.rows[0]).to.eql({
+        p1: 'foo',
+        p2: 'bar'
+      })
+
+      await c.query('DROP TABLE tests_named_parameters')
+    } catch (err) {
+      // Cleanup
+      await c.query('ROLLBACK')
+      throw err
+    } finally {
+      // Release the connections
+      c.release()
     }
   })
 })
