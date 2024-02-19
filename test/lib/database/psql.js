@@ -301,5 +301,7 @@ describe('lib/database/psql', () => {
 
     const r3 = await cursor.read(3)
     expect(r3.length).to.equal(0)
+
+    cursor.close()
   })
 })
