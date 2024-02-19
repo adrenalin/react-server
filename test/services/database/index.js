@@ -13,13 +13,14 @@ describe('services/database', () => {
     expect(service).to.equal(registered)
   })
 
-  it('should have interface methods "query", "connect" and "getClient"', async () => {
+  it('should have interface methods "query", "cursor", "connect" and "getClient"', async () => {
     const app = await require('../../../server/application')()
     app.config.set('services.database.engine', 'psql')
 
     const service = new DatabaseService(app)
     expect(service.query).to.be.a('function')
     expect(service.connect).to.be.a('function')
+    expect(service.cursor).to.be.a('function')
     expect(service.getClient).to.be.a('function')
   })
 
@@ -57,6 +58,24 @@ describe('services/database', () => {
 
     await service.close()
     expect(service.connection).to.eql(null)
+  })
+
+  it('should create a cursor', async () => {
+    const app = await require('../../../server/application')()
+    app.config.set('services.database.engine', 'psql')
+
+    const service = new DatabaseService(app)
+    expect(service.connection).to.eql(null)
+
+    await service.connect()
+    expect(service.connection).not.to.eql(null)
+
+    const cursor = await service.cursor('SELECT * FROM generate_series(1, 5)')
+    let rows = await cursor.read(5)
+    expect(rows.length).to.equal(5)
+
+    rows = await cursor.read(5)
+    expect(rows.length).to.equal(0)
   })
 
   it('should allow to disconnect without an active connection', async () => {

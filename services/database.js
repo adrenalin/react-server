@@ -9,6 +9,7 @@ class DatabaseService extends Service {
   /**
    * Convenience alias for connect
    *
+   * @const DatabaseService#getClient
    * @return { function }             Return the connect method of this instance
    */
   get getClient () {
@@ -24,6 +25,7 @@ class DatabaseService extends Service {
   /**
    * Register database service
    *
+   * @method DatabaseService#register
    * @return { DatabaseService }      This instance
    */
   async register (config) {
@@ -36,6 +38,7 @@ class DatabaseService extends Service {
   /**
    * Pass the query to the engine
    *
+   * @method DatabaseService#query
    * @param { mixed } args            Query arguments
    * @return { mixed }                Pass through the database engine response
    */
@@ -44,8 +47,20 @@ class DatabaseService extends Service {
   }
 
   /**
+   * Create a cursor
+   *
+   * @method DatabaseService#cursor
+   * @param { mixed } args            Query arguments
+   * @return { DatabaseCursor }       An instance of DatabaseCursor
+   */
+  async cursor (...args) {
+    return this.db.cursor(...args)
+  }
+
+  /**
    * Pass the connection to the engine
    *
+   * @method DatabaseService#connect
    * @param { mixed } args            Query arguments
    * @return { mixed }                Pass through the database engine response
    */
