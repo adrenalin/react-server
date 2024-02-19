@@ -3,6 +3,14 @@ const { expect } = require('chai')
 const DatabaseCursor = require('../../../lib/database/cursor')
 
 describe('lib/database/cursor', () => {
+  it('should store the client', () => {
+    const client = {
+      foo: 'bar'
+    }
+    const cursor = new DatabaseCursor(client)
+    expect(cursor.client).to.equal(client)
+  })
+
   it('should have abstract method "read"', async () => {
     try {
       const cursor = new DatabaseCursor()
