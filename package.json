@@ -1,6 +1,6 @@
 {
   "name": "@vapaaradikaali/react-server",
-  "version": "0.9.45",
+  "version": "0.9.46",
   "description": "React server",
   "main": "index.js",
   "scripts": {
@@ -37,7 +37,6 @@
     "iso": ">=5.2.0",
     "moment": ">=2.29.4",
     "moment-timezone": ">=0.5.39",
-    "pg-cursor": "^2.10.3",
     "prop-types": ">=15.8.1",
     "react": ">=18.2.0",
     "react-dom": ">=18.2.0",
@@ -59,6 +58,7 @@
     "nodemon": ">=2.0.20",
     "nyc": ">=15.1.0",
     "pg": ">=8.8.0",
+    "pg-cursor": "^2.10.3",
     "sass": ">=1.56.1",
     "should": ">=13.2.3",
     "smtp-tester": ">=2.0.1",
