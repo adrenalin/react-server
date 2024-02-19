@@ -106,7 +106,68 @@ describe('lib/database/psql', () => {
     }
   })
 
-  it('should convert an object with named parameters', async () => {
+  it('should keep plain text in PsqlDatabase.getQuery unchanged', () => {
+    const query = 'SELECT true'
+    expect(PsqlDatabase.getQuery(query)).to.equal(query)
+  })
+
+  it('should keep values as array in PsqlDatabase.getQuery unchanged', () => {
+    const query = {
+      text: 'SELECT foo FROM bar WHERE foo = $1',
+      values: ['foo']
+    }
+
+    expect(PsqlDatabase.getQuery(query)).to.equal(query)
+  })
+
+  it('should convert an object in PsqlDatabase.getQuery with named parameters', () => {
+    const params = {
+      label: 'this-is-a-label',
+      name: 'this-is-a-name',
+      foo: 'bar'
+    }
+
+    const { text, values } = PsqlDatabase.getQuery({
+      text: 'SELECT foo FROM bar WHERE name = $name OR name = $label',
+      values: params
+    })
+
+    expect(text).to.equal('SELECT foo FROM bar WHERE name = $1 OR name = $2')
+    expect(values).to.eql([params.name, params.label])
+  })
+
+  it('should ignore missing named parameters', () => {
+    const params = {
+      label: 'this-is-a-label',
+      foo: 'bar'
+    }
+
+    const { text, values } = PsqlDatabase.getQuery({
+      text: 'SELECT foo FROM bar WHERE name = $name OR name = $label',
+      values: params
+    })
+
+    expect(text).to.equal('SELECT foo FROM bar WHERE name = $name OR name = $1')
+    expect(values).to.eql([params.label])
+  })
+
+  it('should ignore escaped named parameters', () => {
+    const params = {
+      label: 'this-is-a-label',
+      name: 'this-is-a-name',
+      foo: 'bar'
+    }
+
+    const { text, values } = PsqlDatabase.getQuery({
+      text: 'SELECT foo FROM bar WHERE name = \\$name OR name = $label',
+      values: params
+    })
+
+    expect(text).to.equal('SELECT foo FROM bar WHERE name = $name OR name = $1')
+    expect(values).to.eql([params.label])
+  })
+
+  it('should execute an object with named parameters', async () => {
     const psql = Database.getEngine(app, engine)
     const c = await psql.connect()
     await c.query('DROP TABLE IF EXISTS tests_named_parameters')
@@ -222,5 +283,23 @@ describe('lib/database/psql', () => {
       // Release the connections
       c.release()
     }
+  })
+
+  it('should get a cursor', async () => {
+    const query = 'SELECT * FROM generate_series(1, 5)'
+
+    const psql = Database.getEngine(app, engine)
+    await psql.connect()
+
+    const cursor = await psql.cursor(query)
+
+    const r1 = await cursor.read(3)
+    expect(r1.length).to.equal(3)
+
+    const r2 = await cursor.read(3)
+    expect(r2.length).to.equal(2)
+
+    const r3 = await cursor.read(3)
+    expect(r3.length).to.equal(0)
   })
 })
