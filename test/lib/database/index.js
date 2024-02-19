@@ -30,6 +30,17 @@ describe('lib/database', () => {
     }
   })
 
+  it('should have the abstract method "cursor"', async () => {
+    try {
+      const db = new DatabaseBaseclass(app)
+      expect(db.query).to.be.a('function')
+      await db.cursor()
+      throw new Error('Should have thrown an exception')
+    } catch (err) {
+      expect(err).to.be.an.instanceof(errors.NotImplemented)
+    }
+  })
+
   it('should have a static method getEngine', (done) => {
     expect(DatabaseBaseclass).to.have.property('getEngine')
     expect(DatabaseBaseclass.getEngine).to.be.a('function')
