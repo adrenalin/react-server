@@ -1,7 +1,7 @@
 const path = require('path')
 const Logger = require('@vapaaradikaali/logger')
 const { argparse } = require('@vapaaradikaali/helpers.js')
-const ServerConfig = require('@vapaaradikaali/helpers.js/lib/ServerConfig')
+const config = require('../lib/config')
 
 module.exports = (app, overrides) => {
   const logger = new Logger('@adrenalin/react-server/server/config')
@@ -15,17 +15,9 @@ module.exports = (app, overrides) => {
   app = app || defaults
   overrides = overrides || {}
 
+  app.config = config
+
   const appRoot = overrides.APPLICATION_ROOT || app.APPLICATION_ROOT || defaults.APPLICATION_ROOT
-
-  const config = app.config = new ServerConfig()
-  const schema = require(path.join(__dirname, '..', 'schemas', 'config.json'))
-
-  // Load first the defaults
-  config
-    .loadFile(path.join(__dirname, '..', 'config', 'defaults.yml'))
-
-  // Then set schema which may otherwise override other values
-  config.setSchema(schema)
 
   const env = app.environment || process.env.ENVIRONMENT
 
