@@ -3,12 +3,17 @@ const Cache = require('../../../lib/cache')
 const NoCache = require('../../../lib/cache/nocache')
 const { sleep, Config } = require('@vapaaradikaali/helpers.js')
 
-describe('lib/cache/no', () => {
+describe('lib/cache/nocache', () => {
   const app = {
     config: new Config()
   }
 
   const engine = 'nocache'
+
+  it('should define connect', async () => {
+    const cache = Cache.getEngine(app, 'nocache')
+    await cache.connect()
+  })
 
   it('should return a nocache instance with factory method', async () => {
     const cache = Cache.getEngine(app, engine)

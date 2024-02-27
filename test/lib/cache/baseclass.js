@@ -30,6 +30,17 @@ describe('lib/cache', () => {
     expect(cache.getStorageKey()).to.equal(storageKey)
   })
 
+  it('should have the abstract method "connect"', async () => {
+    try {
+      const cache = new CacheBaseclass(app)
+      expect(cache.connect).to.be.a('function')
+      await cache.connect()
+      throw new Error('Should have thrown a NotImplemented')
+    } catch (err) {
+      expect(err).to.be.an.instanceof(errors.NotImplemented)
+    }
+  })
+
   it('should have the abstract method "get"', async () => {
     try {
       const cache = new CacheBaseclass(app)

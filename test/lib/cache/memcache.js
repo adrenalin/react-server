@@ -10,6 +10,11 @@ describe('lib/cache/memcache', () => {
 
   const engine = 'memcache'
 
+  it('should define connect', async () => {
+    const cache = Cache.getEngine(app, 'memcache')
+    await cache.connect()
+  })
+
   it('should return a memcache instance with factory method', async () => {
     const cache = Cache.getEngine(app, 'memcache')
     clearInterval(cache.timer)
