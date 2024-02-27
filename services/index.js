@@ -1,4 +1,5 @@
 const Logger = require('@vapaaradikaali/logger')
+const helpers = require('@vapaaradikaali/helpers.js')
 
 module.exports = class Service {
   static get LOG_LEVEL () {
@@ -11,7 +12,7 @@ module.exports = class Service {
 
   constructor (app) {
     this.app = app
-    this.helpers = app.helpers
+    this.helpers = helpers
     this.logger = new Logger(this)
     this.config = app.config
 
