@@ -26,11 +26,12 @@ class DatabaseService extends Service {
    * Register database service
    *
    * @method DatabaseService#register
+   * @param { object } config         Extra configuration
    * @return { DatabaseService }      This instance
    */
   async register (config) {
     this.options = config || {}
-    this.connection = await this.connect(config)
+    this.connection = await this.connect()
 
     return this
   }
