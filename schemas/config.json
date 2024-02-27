@@ -176,33 +176,68 @@
 
         "cache": {
           "description": "Cache service",
-          "type": "object",
-          "properties": {
-            "enabled": {
-              "description": "Cache enabled flag",
-              "default": true
+          "allOf": [
+            {
+              "type": "object",
+              "properties": {
+                "enabled": {
+                  "description": "Cache enabled flag",
+                  "type": "boolean"
+                },
+                "prefix": {
+                  "description": "Cache prefix string to prepend to cache key when storing",
+                  "type": "string"
+                },
+                "bypass": {
+                  "description": "Bypass cache flag",
+                  "type": "boolean",
+                  "default": false
+                }
+              }
             },
-            "engine": {
-              "description": "Cache storage engine",
-              "type": "string",
-              "enum": [
-                "memcache",
-                "redis",
-                "nocache"
-              ],
-              "default": "memcache"
-            },
-            "bypass": {
-              "description": "Bypass cache flag",
-              "type": "boolean",
-              "default": false
-            },
-            "prefix": {
-              "description": "Cache prefix string to prepend to cache key when storing",
-              "type": "string"
+            {
+              "oneOf": [
+                {
+                  "type": "object",
+                  "properties": {
+                    "engine": {
+                      "description": "Cache storage engine",
+                      "type": "string",
+                      "enum": [
+                        "memcache",
+                        "redis",
+                        "nocache"
+                      ],
+                      "default": "memcache"
+                    }
+                  }
+                },
+                {
+                  "type": "object",
+                  "properties": {
+                    "engine": {
+                      "description": "Cache storage engine",
+                      "type": "string",
+                      "enum": [
+                        "database"
+                      ]
+                    },
+                    "schema": {
+                      "description": "Cache database storage schema",
+                      "type": "string",
+                      "default": "public"
+                    },
+                    "table": {
+                      "description": "Cache database storage table",
+                      "type": "string",
+                      "default": "cache"
+                    }
+                  }
+                }
+              ]
             }
-          },
-          "required": ["engine"]
+          ],
+          "required": ["engine", "enabled"]
         },
 
         "events": {

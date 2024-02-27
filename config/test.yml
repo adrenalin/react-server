@@ -26,7 +26,12 @@ services:
         host: 'localhost'
         port: 4001
 
+  cache:
+    engine: 'memcache'
+    enabled: false
+
   database:
+    engine: 'psql'
     connection:
       database: 'reactserver'
       username: 'reactserver'
