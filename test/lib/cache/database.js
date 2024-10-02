@@ -4,7 +4,6 @@ const { sleep } = require('@vapaaradikaali/helpers.js')
 const Cache = require('../../../lib/cache')
 const DatabaseCache = require('../../../lib/cache/database')
 const DatabaseService = require('../../../services/database')
-class TestError extends Error {}
 const config = require('../../../lib/config')
 
 describe('lib/cache/database', () => {
@@ -15,14 +14,23 @@ describe('lib/cache/database', () => {
   const tmpTable = 'tmp_test_lib_cache_database'
   const cacheSchema = config.get('services.cache.schema')
   const cacheTable = config.get('services.cache.table')
+  const engine = 'database'
 
   app.services.db = new DatabaseService(app)
 
   before(async () => {
-    config.set('services.cache.schema', 'public')
-    config.set('services.cache.table', tmpTable)
+    app.config.set('services.cache.schema', '')
+    app.config.set('services.cache.table', tmpTable)
 
     await app.services.db.register()
+  })
+
+  beforeEach(async () => {
+    await app.services.db.query({
+      text: `
+        DROP TABLE IF EXISTS ${tmpTable}
+      `
+    })
     await app.services.db.query({
       text: `
         CREATE TEMPORARY TABLE ${tmpTable} (
@@ -36,11 +44,9 @@ describe('lib/cache/database', () => {
   })
 
   after(async () => {
-    config.set('services.cache.schema', cacheSchema)
-    config.set('services.cache.table', cacheTable)
+    app.config.set('services.cache.schema', cacheSchema)
+    app.config.set('services.cache.table', cacheTable)
   })
-
-  const engine = 'database'
 
   it('should return a database cache instance with factory method', () => {
     const cache = Cache.getEngine(app, engine)
@@ -203,5 +209,40 @@ describe('lib/cache/database', () => {
     expect(v11).to.equal(undefined)
     expect(v12).to.equal(undefined)
     expect(v21).to.equal('test-value-2-1')
+  })
+
+  it('should clean up the expired cache keys', async () => {
+    const cache = Cache.getEngine(app, engine)
+    const p = 'foo'
+    const v = 'bar'
+
+    const query = {
+      text: `
+        SELECT
+          *
+        FROM
+          ${tmpTable}
+        WHERE
+          path = $1`,
+      values: [p]
+    }
+
+    await cache.db.query({
+      text: `INSERT INTO ${tmpTable} (path, value, expires_at) VALUES ($1, $2, $3)`,
+      values: [
+        p,
+        JSON.stringify(v),
+        '1980-04-09T00:00:00'
+      ]
+    })
+
+    const r1 = await cache.db.query(query)
+    expect(r1.rows.length).to.eql(1)
+
+    await cache.cleanup()
+
+    const r2 = await cache.db.query(query)
+    console.log('r2', r2.rows)
+    expect(r2.rows.length).to.eql(0)
   })
 })
