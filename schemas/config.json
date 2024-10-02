@@ -224,8 +224,7 @@
                     },
                     "schema": {
                       "description": "Cache database storage schema",
-                      "type": "string",
-                      "default": "public"
+                      "type": "string"
                     },
                     "table": {
                       "description": "Cache database storage table",
