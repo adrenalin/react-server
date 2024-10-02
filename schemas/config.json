@@ -182,7 +182,7 @@
               "properties": {
                 "enabled": {
                   "description": "Cache enabled flag",
-                  "type": "boolean"
+                  "type": ["null", "boolean"]
                 },
                 "prefix": {
                   "description": "Cache prefix string to prepend to cache key when storing",
@@ -236,7 +236,7 @@
               ]
             }
           ],
-          "required": ["engine", "enabled"]
+          "required": ["engine"]
         },
 
         "events": {
